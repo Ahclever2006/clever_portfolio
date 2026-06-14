@@ -11,6 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Clean web URLs (PathUrlStrategy) — Flutter SDK package.
+  flutter_web_plugins:
+    sdk: flutter
+
   # State management (BLoC/Cubit) — all cubits extend core/abstract/BaseCubit<T>.
   flutter_bloc: ^9.1.1
   bloc: ^9.0.1

@@ -39,7 +39,7 @@ This is the single source of truth for building **Ahmed Maher's Flutter Web port
 | `font_awesome_flutter` | `^10.10.0` | Social / store / brand glyphs (GitHub, store affordances); broader coverage than `simple_icons`. |
 | `flutter_animate` | `^4.5.2` | Declarative entrance animations (fade + 16px translate, staggered), hairline `scaleX` reveals, hero clip reveal — all reduced-motion gated. |
 | `visibility_detector` | `^0.4.0+2` | Triggers scroll-in reveals, count-up stats, and section-active detection feeding `NavigationCubit`. |
-| `shared_preferences` | `^2.5.3` | Persists `ThemeMode` (`ThemeCubit`) + last `Locale` (`LocaleCubit`). |
+| `shared_preferences` | `^2.5.3` | Persists `ThemeMode` (`ThemeCubit`); `easy_localization` persists the locale itself (`saveLocale`). |
 | `easy_localization` | `^3.0.8` | **Localization (house standard).** Loads `assets/translations/en.json` + `ar.json`; drives `.tr()`, runtime locale switch, and RTL `Directionality`. EN + AR + RTL are first-class (§7.1). |
 | `freezed_annotation` | `^3.1.0` | Annotations for Freezed unions / data classes — all Cubit states + data models (codegen by `freezed`). |
 | `json_annotation` | `^4.12.0` | `@JsonSerializable` annotations for model `fromJson`/`toJson` (codegen by `json_serializable`). |
@@ -195,7 +195,7 @@ Single long-scroll page composed of 11 sections (folios `00`–`10`). Each is a 
 
 | Folio | Section | Layout spec | Data consumed |
 |---|---|---|---|
-| `00` | **Nav** (fixed glass) | Full-width glass bar (blur + `glassTint`). Mono wordmark `ahmed.maher` left; center anchors (About · Work · Experience · Contact); right `ThemeCubit` toggle + **language toggle (EN ⇄ ع, `LocaleCubit`)** + ghost **Download CV**. Hairline bottom border gains emerald glow once scrolled past hero. | Static nav model, `cvAssetPath`, current `ThemeMode` + `Locale`. |
+| `00` | **Nav** (fixed glass) | Full-width glass bar (blur + `glassTint`). Mono wordmark `ahmed.maher` left; center anchors (About · Work · Experience · Contact); right `ThemeCubit` toggle + **language toggle (EN ⇄ ع, `context.setLocale`)** + ghost **Download CV**. Hairline bottom border gains emerald glow once scrolled past hero. | Static nav model, `cvAssetPath`, current `ThemeMode` + `Locale`. |
 | `01` | **Hero** | Full-viewport (`100vh`) dark canvas. Mono eyebrow `// flutter team lead — 6th october city, eg`; `displayHero` headline; Inter summary (≤62ch); primary **View Work** + ghost **Download Resume**; terminal status strip with blinking caret + pulsing emerald dot: `> apps_shipped: 37 | platforms: ios + android | status: live`. Faint dot-grid + single top-left radial emerald glow, no particles. | `Profile`, `apps.length` (37), `cvAssetPath`. |
 | `02` | **Stats band** | 4-up hairline-celled metrics (1 col mobile / 2 tablet / 4 desktop). Mono counters count up on scroll-in. | `Stats`: **37 Published Apps, 5+ Years Flutter, 15 Yrs Data Engineering, 8 Countries**. |
 | `03` | **About** | Two-column: left sticky folio + Flutter-lead narrative with the 15-yr Oil & Gas career-switch **pull quote**; right `career.log` monospace timeline. One column on mobile. | `Profile.summary`, condensed `Experience` for the log. |
@@ -270,10 +270,7 @@ lib/
 │   │   ├── app_assets.dart                # asset paths (apps.json, profile.json, CV pdf, store SVGs)
 │   │   └── app_strings.dart               # static const i18n KEYS (e.g. heroTitle = 'hero.title') -> AppStrings.x.tr(); never inline raw key literals
 │   │
-│   ├── localization/
-│   │   ├── locale_cubit.dart              # active Locale (en/ar) + persistence; drives language toggle + RTL
-│   │   └── locale_state.dart              # Freezed union
-│   │
+│   │                                      # (locale handled by easy_localization — no cubit; see §7.1)
 │   ├── utils/
 │   │   ├── typedefs.dart                  # ResultFuture<T>, ResultVoid, DataMap
 │   │   └── store_link_builder.dart        # build App Store / Google Play URLs from raw ids
@@ -612,7 +609,7 @@ Driven by scroll/`VisibilityDetector`. `scrollTo(SectionId)` animates to the anc
 
 **`ContactCubit extends BaseCubit<ContactState>`** — form lifecycle (Dio-backed), Freezed union: `ContactIdle / ContactSubmitting / ContactSuccess / ContactFailure(Failure)`. `submit(ContactMessage) → SendMessage`. `ContactInfo` loaded once via `GetContactInfo` so the panel renders independent of network state.
 
-**`LocaleCubit extends BaseCubit<LocaleState>`** — holds the active `Locale` (en/ar), persists it via `shared_preferences`, and is dispatched by the navbar language toggle; `EasyLocalization` + `MaterialApp.locale` react to it (§7.1).
+> **Locale** is handled by `easy_localization` directly (no cubit): the navbar toggle calls `context.setLocale`, which persists the choice (`saveLocale`) and drives `MaterialApp.locale` (§7.1).
 
 > `ProfileCubit` and `ExperienceCubit` are Freezed unions of the same trivial `initial / loading / loaded(entity) / error(failure)` shape (single load via a `NoParams` use case), each extending `BaseCubit`.
 
@@ -667,7 +664,6 @@ class PortfolioApp extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider(create: (_) => getIt<ThemeCubit>()..load()),
-      BlocProvider(create: (_) => getIt<LocaleCubit>()..load()),
       BlocProvider(create: (_) => getIt<NavigationCubit>()),
       BlocProvider(create: (_) => getIt<ProjectsCubit>()..load()),
       BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
@@ -687,7 +683,7 @@ class PortfolioApp extends StatelessWidget {
           // easy_localization (en/ar) + automatic RTL Directionality:
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
-          locale: context.locale,                  // tracks LocaleCubit via context.setLocale
+          locale: context.locale,                  // driven by easy_localization (context.setLocale)
           routerConfig: getIt<AppRouter>().config,
         ),
       ),
@@ -952,7 +948,7 @@ The audience is bilingual (Arabic native / English fluent; Egypt + Gulf), so **E
 
 - **Source files:** `assets/translations/en.json` + `ar.json`. A CI key-parity check (+ a unit test, §13) fails if the two files' key sets diverge.
 - **No inline keys:** every key is a `static const` on `AppStrings` (`core/constants/app_strings.dart`) and used as `AppStrings.heroTitle.tr()` — never a bare `'hero.title'.tr()` literal. New sections add their keys to `AppStrings` first.
-- **Wiring:** `EasyLocalization` wraps the app in `bootstrap()` (§5.5); `MaterialApp.router` consumes `context.localizationDelegates / supportedLocales / locale`. `LocaleCubit` persists the choice (`shared_preferences`) and the **navbar language toggle** (`EN ⇄ ع`) calls `context.setLocale(...)`.
+- **Wiring:** `EasyLocalization` wraps the app in `bootstrap()` (§5.5); `MaterialApp.router` consumes `context.localizationDelegates / supportedLocales / locale`. The **navbar language toggle** (`EN ⇄ ع`) calls `context.setLocale(...)`, which `easy_localization` persists automatically (`saveLocale`).
 - **RTL is a first-class concern, not an afterthought.** The design leans on directional layout (left accent line, flush-left index `01–37`, sticky left-margin folio column, list-row 6px rightward nudge). All of these use **`start`/`end`** primitives (`EdgeInsetsDirectional`, `AlignmentDirectional`, `PositionedDirectional`) so Flutter mirrors them automatically under `Directionality(textDirection: rtl)`. Mono folio/index numerals stay Latin-digit LTR but anchor to the correct side.
 - **Arabic type:** JetBrains Mono + Inter cover Latin; Arabic glyphs fall back to a bundled Arabic face (e.g. `GoogleFonts.cairo` / `notoKufiArabic`) selected per-locale in `app_text_theme.dart`.
 - **Content:** UI chrome (nav, buttons, eyebrows, stat labels, contact form) is translated. App names and store IDs stay verbatim; per-app taglines carry `en`/`ar` variants in `apps.json`.
@@ -1312,7 +1308,6 @@ Run with `flutter test` (also gated in CI above).
 **Cubit tests** (`bloc_test`):
 - `projects_cubit_test.dart` — load emits `Loading → Loaded(37)`; `setCategory(games)` narrows `visible`; platform toggle filters; search narrows; `toggleViewMode` flips list↔grid.
 - `contact_cubit_test.dart` — validation `Left(ValidationFailure)` path; submit success/failure.
-- `locale_cubit_test.dart` — toggles en↔ar and persists the choice.
 
 **Localization**:
 - `l10n_parity_test.dart` — asserts `en.json` and `ar.json` have **identical key sets** (guards the no-orphan-key rule); optionally that every `AppStrings` const resolves in both.
@@ -1353,23 +1348,24 @@ Phased so the site is buildable/runnable after every milestone.
 - [x] Demo screen (`ThemeDemoPage`) with working **theme** + **language (EN⇄ع)** toggles; 300ms cross-fade. **Note:** `ScreenUtilInit` was pulled into M1 (the `.sp` type scale needs it); M2 formalizes `core/responsive/`.
 - [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 · `flutter test` green · `flutter build web` ✓. Adversarially reviewed (3-lens workflow) — radii tokenized per findings; all hex/parity confirmed correct.
 
-### M2 — Core + architecture scaffolding
-- [ ] `core/abstract/base_cubit.dart` (`BaseCubit<T>`); `core/usecase/usecase.dart` (`UseCase`, `SyncUseCase`, `NoParams`), `error/failures.dart`, `error/exceptions.dart`, `utils/typedefs.dart`.
-- [ ] `core/responsive/`: `app_breakpoints.dart`, `responsive.dart` (`context.bp`), `responsive_layout.dart`, `screen_util_init.dart` (ScreenUtilInit boundary).
-- [ ] `core/network/`: `dio_client.dart`, `api_endpoints.dart`, logging interceptor.
-- [ ] `core/di/`: `injection.dart` + `register_module.dart`; run `build_runner` to generate `injection.config.dart` (+ `*.freezed.dart` / `*.g.dart`).
-- [ ] `core/localization/`: `LocaleCubit`; wrap app in `EasyLocalization` (bootstrap) + wire `MaterialApp` locale delegates + navbar language toggle.
-- [ ] `core/router/`: single `/` GoRouter + `PathUrlStrategy`; `app_routes.dart`.
-- [ ] `core/utils/store_link_builder.dart`; `constants/app_assets.dart` + `app_strings.dart`.
-- [ ] `SectionScaffold` + `FolioLabel` + `RevealOnScroll` + `TerminalStatusStrip` + `GlassNavContainer` shells.
-- [ ] Verify DI graph resolves and app still boots.
+### M2 — Core + architecture scaffolding  ✅ DONE (2026-06-14)
+- [x] `core/abstract/base_cubit.dart` (M1); `core/usecase/usecase.dart` (`UseCase`, `SyncUseCase`, `NoParams`), `error/failures.dart` (sealed), `error/exceptions.dart`, `utils/typedefs.dart`.
+- [x] `core/responsive/`: `app_breakpoints.dart` (`Breakpoint` enum), `responsive.dart` (`Responsive<T>` + `context.bp/isMobile/isDesktop/responsive()`), `responsive_layout.dart`, `screen_util_init.dart` (`AppScreenUtilInit`).
+- [x] `core/network/`: `dio_client.dart` (`Either`-returning), `api_endpoints.dart`, `interceptors/logging_interceptor.dart`.
+- [x] `core/di/`: `injection.dart` (`getIt` + `configureDependencies`) + `register_module.dart` (Dio / AssetBundle / `@preResolve` SharedPreferences); `build_runner` generated `injection.config.dart`.
+- [x] **Localization decision:** dropped `LocaleCubit` — `easy_localization` already owns locale state **and** persistence (`saveLocale`). The navbar language toggle calls `context.setLocale`; `MaterialApp` reads `context.locale/supportedLocales/localizationDelegates`. Simpler, single source of truth.
+- [x] `core/router/`: `AppRouter` (`@lazySingleton`) single `/` `GoRouter` → `HomePage`; `app_routes.dart`; `usePathUrlStrategy()` in bootstrap.
+- [x] `core/utils/store_link_builder.dart` (store-aware, null when no id); `constants/app_assets.dart` (+ `app_strings.dart` from M1).
+- [x] Section-shell widgets: `SectionScaffold` (folio column + eyebrow + animated hairline + reveal), `FolioLabel`, `RevealOnScroll` (visibility_detector + flutter_animate, reduced-motion aware), `TerminalStatusStrip` (pulsing dot + blinking caret), `GlassNavContainer` (the one glassmorphism surface; consumes `glassTint`).
+- [x] **`ThemeCubit` refactored** onto `GetThemeMode`/`SaveThemeMode` use cases + `ThemeRepository` (SharedPreferences) — all DI-wired. `bootstrap` now sets `Bloc.observer`, runs `configureDependencies()`, `usePathUrlStrategy()`; `MaterialApp.router` consumes `getIt<AppRouter>().config`.
+- [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 (11 files) · `flutter test` green incl. a **DI-resolution test** (`ThemeRepository`/`ThemeCubit`/`AppRouter`/`DioClient` all resolve; dark-first holds) · `flutter build web` ✓.
 
 ### M3 — Data layer + content
 - [ ] Author `assets/data/apps.json` (37 apps, raw store ids, featured flags) from §6.3, and `assets/data/profile.json` (profile, skills, experience, education, stats, contact).
 - [ ] Domain entities + enums for all features (§6.1).
 - [ ] `projects` feature: Freezed + `json_serializable` model (`fromJson`/`toEntity`), local data source, repository impl, `GetProjects`/`FilterProjects`/`GetFeaturedProjects`.
 - [ ] `profile`, `experience`, `contact` (local) features: same pattern; `contact` adds remote data source + `SendMessage` over `DioClient`.
-- [ ] Cubits (all extend `BaseCubit`, Freezed states): `ProjectsCubit`, `ProfileCubit`, `ExperienceCubit`, `ContactCubit`, `NavigationCubit`, `LocaleCubit`. Run `build_runner` for state/model codegen.
+- [ ] Cubits (all extend `BaseCubit`, Freezed states): `ProjectsCubit`, `ProfileCubit`, `ExperienceCubit`, `ContactCubit`, `NavigationCubit`. Run `build_runner` for state/model codegen.
 - [ ] Tests: use-case, repository (mocktail `Either`), model `fromJson`, `ProjectsCubit` (bloc_test). Green.
 
 ### M4 — Sections build
