@@ -1,4 +1,6 @@
+import 'package:clever_portfolio/core/constants/app_strings.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,29 +25,32 @@ class BackToTopButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final reduce = MediaQuery.of(context).disableAnimations;
 
-    Widget button = DecoratedBox(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: context.colors.primary.withValues(alpha: 0.55),
-            blurRadius: 24,
-            spreadRadius: 1,
-          ),
-        ],
-      ),
-      child: Material(
-        color: context.colors.primary,
-        shape: const CircleBorder(),
-        child: InkWell(
-          onTap: onTap,
-          customBorder: const CircleBorder(),
-          child: Padding(
-            padding: EdgeInsets.all(context.spacing.md.w),
-            child: Icon(
-              Icons.arrow_upward_rounded,
-              color: context.colors.onPrimary,
-              size: 20.sp,
+    Widget button = Tooltip(
+      message: AppStrings.footerBackToTop.tr(),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: context.colors.primary.withValues(alpha: 0.55),
+              blurRadius: 24,
+              spreadRadius: 1,
+            ),
+          ],
+        ),
+        child: Material(
+          color: context.colors.primary,
+          shape: const CircleBorder(),
+          child: InkWell(
+            onTap: onTap,
+            customBorder: const CircleBorder(),
+            child: Padding(
+              padding: EdgeInsets.all(context.spacing.md.w),
+              child: Icon(
+                Icons.arrow_upward_rounded,
+                color: context.colors.onPrimary,
+                size: 20.sp,
+              ),
             ),
           ),
         ),

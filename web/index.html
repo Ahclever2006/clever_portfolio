@@ -1,46 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ahmed Maher — Flutter Team Lead | 35 Published Apps</title>
+  <meta name="description" content="Ahmed Maher, Flutter Team Lead based in 6th October City, Egypt. 35 cross-platform apps shipped to the App Store and Google Play across e-commerce, booking, games and business. 5+ years Flutter, 15 years data engineering.">
+  <meta name="author" content="Ahmed Maher">
+  <meta name="keywords" content="Ahmed Maher, Flutter, Flutter Team Lead, Dart, mobile developer, cross-platform, App Store, Google Play, portfolio, Egypt, Kuwait">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://ahmedmaher.dev/">
+  <link rel="alternate" hreflang="en" href="https://ahmedmaher.dev/">
+  <link rel="alternate" hreflang="x-default" href="https://ahmedmaher.dev/">
+
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A0C10">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F8FA">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Ahmed Maher — Flutter Team Lead">
+  <meta property="og:description" content="35 cross-platform apps shipped to the App Store and Google Play. 5+ years Flutter, 15 years data engineering.">
+  <meta property="og:url" content="https://ahmedmaher.dev/">
+  <meta property="og:image" content="og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ahmed Maher — Flutter Team Lead">
+  <meta name="twitter:description" content="35 cross-platform apps shipped to the App Store and Google Play.">
+  <meta name="twitter:image" content="og-cover.png">
+
+  <!-- Faster google_fonts fetch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="clever_portfolio">
+  <meta name="apple-mobile-web-app-title" content="Ahmed Maher">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>clever_portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Structured data: Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ahmed Maher",
+    "jobTitle": "Flutter Team Lead",
+    "email": "mailto:Ahclever2006@gmail.com",
+    "url": "https://ahmedmaher.dev/",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "6th October City, Giza",
+      "addressCountry": "EG"
+    },
+    "knowsLanguage": ["Arabic", "English"],
+    "knowsAbout": ["Flutter", "Dart", "Mobile Development", "Clean Architecture"]
+  }
+  </script>
+
+  <style>
+    body { background-color: #0A0C10; margin: 0; }
+    #loading {
+      position: fixed; inset: 0; display: flex; align-items: center;
+      justify-content: center; background-color: #0A0C10; z-index: 1;
+    }
+    #loading .ring {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 3px solid rgba(61, 245, 163, 0.18);
+      border-top-color: #3DF5A3; animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #loading .ring { animation: none; } }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <div id="loading"><div class="ring"></div></div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('loading');
+      if (el) el.remove();
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -59,6 +59,22 @@ class _HomePageState extends State<HomePage> {
     context.read<NavigationCubit>().setElevated(value: offset > 24);
     final show = offset > 600;
     if (show != _showBackToTop) setState(() => _showBackToTop = show);
+    _updateActiveSection();
+  }
+
+  // Scroll-spy: the active section is the last one whose top has passed just
+  // below the navbar.
+  void _updateActiveSection() {
+    const threshold = 120.0;
+    SectionId? current;
+    for (final id in SectionId.values) {
+      final ctx = _keys[id]?.currentContext;
+      if (ctx == null) continue;
+      final box = ctx.findRenderObject();
+      if (box is! RenderBox || !box.attached) continue;
+      if (box.localToGlobal(Offset.zero).dy <= threshold) current = id;
+    }
+    if (current != null) context.read<NavigationCubit>().setActive(current);
   }
 
   Future<void> _scrollTo(SectionId id) async {
