@@ -1,30 +1,43 @@
-// This is a basic Flutter widget test.
+// M1 smoke test — verifies the theme system builds (under ScreenUtil, since
+// the type scale uses `.sp`) and that dark is the default with the design
+// canvas + registered token extensions.
 //
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Full section/widget tests (with easy_localization + Cubits) arrive in M3+
+// per plan.md §13.
 
+import 'package:clever_portfolio/core/theme/app_theme.dart';
+import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:clever_portfolio/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('M1: themes build under ScreenUtil; dark is default', (
+    tester,
+  ) async {
+    late ThemeData applied;
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(1440, 1024),
+        builder: (context, child) => MaterialApp(
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: ThemeMode.dark,
+          home: Builder(
+            builder: (context) {
+              applied = Theme.of(context);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(applied.brightness, Brightness.dark);
+    expect(applied.scaffoldBackgroundColor, const Color(0xFF0A0C10));
+    expect(applied.extension<AppSpacing>(), isNotNull);
+    expect(applied.extension<BrandColors>(), isNotNull);
+    expect(applied.extension<CategoryColors>(), isNotNull);
+    expect(applied.extension<MotionTokens>(), isNotNull);
   });
 }

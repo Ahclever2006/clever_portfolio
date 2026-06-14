@@ -1,0 +1,22 @@
+{
+  "app": {
+    "title": "أحمد ماهر — قائد فريق Flutter"
+  },
+  "nav": {
+    "about": "نبذة",
+    "work": "الأعمال",
+    "experience": "الخبرات",
+    "contact": "تواصل",
+    "downloadCv": "تحميل السيرة الذاتية"
+  },
+  "hero": {
+    "eyebrow": "قائد فريق Flutter — مدينة السادس من أكتوبر، مصر",
+    "title": "أحمد ماهر",
+    "tagline": "أبني وأنشر تطبيقات متعددة المنصّات — 37 تطبيقًا منشورة على App Store و Google Play.",
+    "viewWork": "تصفّح الأعمال",
+    "downloadResume": "تحميل السيرة الذاتية"
+  },
+  "common": {
+    "scaffolding": "جارٍ الإعداد"
+  }
+}

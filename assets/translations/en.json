@@ -1,0 +1,22 @@
+{
+  "app": {
+    "title": "Ahmed Maher — Flutter Team Lead"
+  },
+  "nav": {
+    "about": "About",
+    "work": "Work",
+    "experience": "Experience",
+    "contact": "Contact",
+    "downloadCv": "Download CV"
+  },
+  "hero": {
+    "eyebrow": "Flutter Team Lead — 6th October City, EG",
+    "title": "Ahmed Maher",
+    "tagline": "I build and ship cross-platform apps — 37 of them, live on the App Store and Google Play.",
+    "viewWork": "View Work",
+    "downloadResume": "Download Resume"
+  },
+  "common": {
+    "scaffolding": "Scaffolding in progress"
+  }
+}

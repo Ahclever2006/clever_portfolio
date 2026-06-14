@@ -1332,25 +1332,26 @@ Run with `flutter test` (also gated in CI above).
 
 Phased so the site is buildable/runnable after every milestone.
 
-### M0 — Project setup, deps, cleanup
-- [ ] Branch from default; confirm Flutter 3.41.4 / Dart 3.11.1 toolchain.
-- [ ] Add all §2 `dependencies` + `dev_dependencies` to `pubspec.yaml`; `flutter pub get`.
-- [ ] Declare assets in `pubspec.yaml` (§10.5); create `assets/{data,docs,icons,images,images/projects}`.
-- [ ] Copy `Ahmed_Maher_cv.pdf` + `Ahmed_Maher_Portfolio.pdf` from repo root into `assets/docs/` **and** `web/docs/`.
-- [ ] Remove the default counter `lib/main.dart`; add `bootstrap.dart` + minimal `PortfolioApp` shell that boots and shows an empty themed `Scaffold`.
-- [ ] Add `very_good_analysis` to `analysis_options.yaml`; add `scripts/check_design_tokens.sh` (no-hardcode + `.sp/.w/.h/.r` + start/end RTL + `App*`-widget + `.tr()` gate) and run it in CI.
-- [ ] Create `assets/translations/en.json` + `ar.json` (seed UI keys); declare both in the `assets:` block.
-- [ ] Verify `flutter run -d chrome` boots the empty app.
+### M0 — Project setup, deps, cleanup  ✅ DONE (2026-06-14)
+- [~] ~~Branch from default~~ — N/A: repo is **not git-initialized yet** (`git init` before CI / M7). Toolchain confirmed: Flutter 3.41.4 / Dart 3.11.1.
+- [x] Add all §2 `dependencies` + `dev_dependencies` to `pubspec.yaml`; `flutter pub get` → `Got dependencies!`.
+- [x] Declare assets in `pubspec.yaml`; created `assets/{docs,translations}`. **Note:** only `assets/docs/` + `assets/translations/` are declared now (they have files); `assets/data/`, `assets/icons/`, `assets/images/` are commented out and enabled in M1/M3 when authored (declaring an empty/missing asset dir breaks the build).
+- [x] Copy `Ahmed_Maher_cv.pdf` + `Ahmed_Maher_Portfolio.pdf` from repo root into `assets/docs/` **and** `web/docs/` (verified served at `build/web/docs/`).
+- [x] Replace the default counter `lib/main.dart`; added `bootstrap.dart` (EasyLocalization-wrapped) + minimal `PortfolioApp` shell (themed `Scaffold`, placeholder `AppTheme.light/dark`). DI / Cubits / router deferred to M1–M2.
+- [x] **Kept `flutter_lints`** (house standard; `very_good_analysis` was optional) — `flutter analyze` → `No issues found!`. Added `scripts/check_design_tokens.sh` (no-hardcode + `.sp/.w/.h/.r` + start/end RTL + `App*`-widget + `.tr()` gate; passes — no `features/` yet). Wired into CI in M7.
+- [x] Created `assets/translations/en.json` + `ar.json` (seeded nav/hero/common keys, key-parity matched); declared in the `assets:` block.
+- [x] Verified the app **boots/compiles**: `flutter build web --base-href "/clever_portfolio/"` → `✓ Built build/web`; `flutter test` → all pass. (Interactive `flutter run -d chrome` is the user's local check.)
 
-### M1 — Theming + design system
-- [ ] `app_color_scheme.dart` — light + dark `ColorScheme` from §3.1 hex.
-- [ ] `app_text_theme.dart` — `TextTheme` via google_fonts per §3.2 type scale (weight subset).
-- [ ] ThemeExtensions: `AppSpacing`, `AppRadii`, `CategoryColors` (9 hues × 2 themes), `MotionTokens`; `theme_extensions.dart` context getters.
-- [ ] `app_theme.dart` — `AppTheme.light`/`dark` with all component themes (buttons, card, chip, input, appbar) + extensions registered.
-- [ ] `ThemeCubit` (extends `BaseCubit`) + Freezed `ThemeState` (dark-first) + `Get/SaveThemeMode` (SharedPreferences); wire `AnimatedTheme`/`themeMode`.
-- [ ] Build atomic widgets in `core/widgets/`: `AppButton` (primary/ghost), `AppTextField`, `AppTextLink`, `AppFilterChip`, `AppPlatformChip`, `AppSkillChip`.
-- [ ] Seed `AppStrings` i18n keys + `en.json`/`ar.json`; pick the Arabic typeface in `app_text_theme.dart`.
-- [ ] Quick theme-toggle demo screen verifies light↔dark cross-fade and no-hardcode compliance.
+### M1 — Theming + design system  ✅ DONE (2026-06-14)
+- [x] `app_colors.dart` (raw hex source) + `app_color_scheme.dart` — light + dark `ColorScheme` from §3.1 (built via `fromSeed().copyWith(...)`). **Reviewed: every hex matches the spec exactly.**
+- [x] `app_typography.dart` (named styles, `.sp`) + `app_text_theme.dart` — `TextTheme` via google_fonts per §3.2. Arabic face chosen: **Cairo** (wired per-locale in M4).
+- [x] ThemeExtensions: `AppSpacing`, `AppRadii`, `CategoryColors` (9 hues × 2 themes), `MotionTokens`, **plus `BrandColors`** (tokens with no `ColorScheme` slot: accentSoft/focusRing/glow/codeText/folio/glassTint/…); `theme_extensions.dart` context getters (`spacing/radii/brand/categoryColors/motion/colors/text`).
+- [x] `app_theme.dart` — `AppTheme.light`/`dark` with component themes (filled/outlined buttons, card, chip, input, appbar) drawing radii/padding from `AppRadii`/`AppSpacing` tokens + all 5 extensions registered on both themes.
+- [x] `ThemeCubit` (extends `BaseCubit`) + Freezed `ThemeState` (dark-first) + persistence. **Note:** M1 reads/writes `SharedPreferences` directly; the formal `Get/SaveThemeMode` use cases + DI are deferred to M2.
+- [x] Atomic widgets in `core/widgets/`: `AppButton` (primary/ghost), `AppTextField`, `AppTextLink`, `AppFilterChip`, `AppPlatformChip`, `AppSkillChip` — all token-driven (gate 0/0).
+- [x] Seeded `AppStrings` i18n keys + `en.json`/`ar.json` (parity matched).
+- [x] Demo screen (`ThemeDemoPage`) with working **theme** + **language (EN⇄ع)** toggles; 300ms cross-fade. **Note:** `ScreenUtilInit` was pulled into M1 (the `.sp` type scale needs it); M2 formalizes `core/responsive/`.
+- [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 · `flutter test` green · `flutter build web` ✓. Adversarially reviewed (3-lens workflow) — radii tokenized per findings; all hex/parity confirmed correct.
 
 ### M2 — Core + architecture scaffolding
 - [ ] `core/abstract/base_cubit.dart` (`BaseCubit<T>`); `core/usecase/usecase.dart` (`UseCase`, `SyncUseCase`, `NoParams`), `error/failures.dart`, `error/exceptions.dart`, `utils/typedefs.dart`.
