@@ -4,6 +4,7 @@ import 'package:clever_portfolio/core/router/app_router.dart';
 import 'package:clever_portfolio/core/theme/app_theme.dart';
 import 'package:clever_portfolio/core/theme/cubit/theme_cubit.dart';
 import 'package:clever_portfolio/core/theme/cubit/theme_state.dart';
+import 'package:clever_portfolio/core/widgets/app_scroll_behavior.dart';
 import 'package:clever_portfolio/features/contact/presentation/cubit/contact_cubit.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:clever_portfolio/features/projects/presentation/cubit/projects_cubit.dart';
@@ -35,6 +36,7 @@ class PortfolioApp extends StatelessWidget {
               return MaterialApp.router(
                 title: 'Ahmed Maher — Flutter Team Lead', // no-tr
                 debugShowCheckedModeBanner: false,
+                scrollBehavior: const AppScrollBehavior(),
                 theme: AppTheme.light,
                 darkTheme: AppTheme.dark,
                 themeMode: context.read<ThemeCubit>().mode,

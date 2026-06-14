@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                 _anchor(SectionId.experience, const ExperienceSection()),
                 _anchor(SectionId.education, const EducationSection()),
                 _anchor(SectionId.contact, const ContactSection()),
-                FooterSection(onBackToTop: _backToTop),
+                const FooterSection(),
               ],
             ),
           ),

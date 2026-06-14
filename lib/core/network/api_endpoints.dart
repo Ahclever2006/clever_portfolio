@@ -1,14 +1,18 @@
-/// API endpoints (plan.md §5.3). Empty [baseUrl] disables remote calls — the
-/// site is static; Dio is reserved for the optional contact-form POST.
+/// API endpoints (plan.md §5.3). The site is static; Dio is used only for the
+/// contact form, relayed to email by Web3Forms (no backend to run).
 abstract final class ApiEndpoints {
   const ApiEndpoints._();
 
-  /// Injected at build time via `--dart-define=API_BASE_URL=...`; empty = none.
-  static const String baseUrl = String.fromEnvironment('API_BASE_URL');
+  /// Web3Forms submit endpoint (CORS-enabled; safe to call from the browser).
+  static const String web3formsSubmit = 'https://api.web3forms.com/submit';
 
-  /// Contact-form submission path (relative to [baseUrl]).
-  static const String contact = '/contact';
+  /// Web3Forms access key — create a FREE one at https://web3forms.com (enter
+  /// the email you want messages delivered to), then paste it here OR pass it
+  /// at build time via `--dart-define=WEB3FORMS_KEY=xxxxxxxx`.
+  static const String web3formsAccessKey = String.fromEnvironment(
+    'WEB3FORMS_KEY',
+  );
 
-  /// Whether a remote backend is configured.
-  static bool get hasRemote => baseUrl.isNotEmpty;
+  /// Whether the contact form can actually deliver to email.
+  static bool get hasContactBackend => web3formsAccessKey.isNotEmpty;
 }

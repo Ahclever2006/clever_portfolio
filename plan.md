@@ -1403,12 +1403,15 @@ Phased so the site is buildable/runnable after every milestone.
 - [x] **Verified:** `flutter analyze` clean · gate 0/0 (62 files) · `flutter test` 23 green · `flutter build web` ✓ (`og-cover.png` + `index.html` + screenshots bundled).
 - **Screenshots update:** user supplied real screenshots for **edu-market, falta, thabbit, mashro3y, glamor** (resized to 600px, wired into `apps.json`) → **30/35 apps now have screenshots**; remaining without: sphoto, nuqat, montajat, almulla-farms, slots-admin.
 
-### M7 — Deploy
-- [ ] Create `.github/workflows/deploy.yml` (§12); enable Pages → Source: GitHub Actions.
-- [ ] First build with `--base-href "/clever_portfolio/"`; add `404.html` SPA fallback.
-- [ ] Confirm live site, store links open correctly, both themes, downloads work.
-- [ ] (If custom domain) add `CNAME`, DNS records, switch base href to `/`, update canonical/OG/JSON-LD.
-- [ ] (Optional) document Firebase Hosting alternative.
+### M7 — Deploy  ◑ READY (2026-06-15) — needs the user to push + enable Pages
+- [x] Created `.github/workflows/deploy.yml`: builds on push to `main` (codegen → design-token gate → analyze → test → `flutter build web --base-href "/${{ github.event.repository.name }}/"`), copies `index.html`→`404.html` (SPA fallback), uploads + deploys via GitHub Pages Actions. Repo: `Ahclever2006/clever_portfolio` (branch `main`).
+- [ ] **User action:** push the repo (incl. the new workflow), then GitHub → **Settings → Pages → Source: GitHub Actions**. Site will be `https://ahclever2006.github.io/clever_portfolio/`.
+- [ ] Confirm live site (store links, themes, EN/AR, downloads, contact form).
+- [ ] (Custom domain) add `CNAME`, DNS, switch base href to `/`, update canonical/OG/JSON-LD.
+
+### Contact form → email (added 2026-06-15)
+- `ContactRepository` posts to **Web3Forms** (`api.web3forms.com/submit`) — a free form-to-email relay (no backend). **User action:** create a free key at web3forms.com (with the destination email) and set `WEB3FORMS_KEY` (paste into `ApiEndpoints.web3formsAccessKey` or pass `--dart-define=WEB3FORMS_KEY=...`). Until set, the form falls back to the "email me" `mailto`.
+- **WhatsApp**: contact section has a WhatsApp button → `wa.me/<phone>`.
 
 ---
 

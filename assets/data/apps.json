@@ -32,7 +32,13 @@
       "appStore": "6746163624"
     },
     "iconAsset": "assets/images/projects/sphoto_icon.png",
-    "description": "اس فوتو :\nأول تطبيق الكتروني في الكويت يجمع بين حجز تذاكر التصوير وتوثيق لحظاتك مع الفنانين في مكان واحد!\nأكيد مليت من الانتظار في الطوابير الطويلة لحجز التصوير أو شراء التذاكر؟\nاس فوتو يقدم لك الحل!\nإس فوتو توفر تجربة سلسة وممتعة تتيح لك:\n- احجز صور شخصية مع نجوم المسرح والفعاليات: خصص وقتك مع فنانك المفضل بضغطة زر.\n- تذاكر إلكترونية سريعة: استلم تذكرتك مباشرة في هاتفك بدون تعب.\n- دفع آمن وسريع: مع أنظمة دفع محلية وعالمية موثوقة.\n- دخول بدون زحمة: استخدم تذكرك الإلكترونية لدخول سريع ومريح.\nليش إس فوتو؟\nنعرف شغفكم بالفعاليات والمسرحيات في الكويت\nنوفر عليكم الوقت والجهد\nنضمن لكم تجربة خالية من التعقيدات\nانتم بأيدي أمينة!\nتعتبر اس فوتو جزء من sphoto group company، الرائدة في حلول حجز التذاكر وإدارة الفعاليات بدولة الكويت.\nحمل التطبيق الحين مجاناً\n \nواحجز تذكرتك وصورتك القادمة بكل سهولة ، وخلّد لحظاتك مع النجوم والفنانين بفعاليات ما تنسي!"
+    "description": "اس فوتو :\nأول تطبيق الكتروني في الكويت يجمع بين حجز تذاكر التصوير وتوثيق لحظاتك مع الفنانين في مكان واحد!\nأكيد مليت من الانتظار في الطوابير الطويلة لحجز التصوير أو شراء التذاكر؟\nاس فوتو يقدم لك الحل!\nإس فوتو توفر تجربة سلسة وممتعة تتيح لك:\n- احجز صور شخصية مع نجوم المسرح والفعاليات: خصص وقتك مع فنانك المفضل بضغطة زر.\n- تذاكر إلكترونية سريعة: استلم تذكرتك مباشرة في هاتفك بدون تعب.\n- دفع آمن وسريع: مع أنظمة دفع محلية وعالمية موثوقة.\n- دخول بدون زحمة: استخدم تذكرك الإلكترونية لدخول سريع ومريح.\nليش إس فوتو؟\nنعرف شغفكم بالفعاليات والمسرحيات في الكويت\nنوفر عليكم الوقت والجهد\nنضمن لكم تجربة خالية من التعقيدات\nانتم بأيدي أمينة!\nتعتبر اس فوتو جزء من sphoto group company، الرائدة في حلول حجز التذاكر وإدارة الفعاليات بدولة الكويت.\nحمل التطبيق الحين مجاناً\n \nواحجز تذكرتك وصورتك القادمة بكل سهولة ، وخلّد لحظاتك مع النجوم والفنانين بفعاليات ما تنسي!",
+    "screenshots": [
+      "assets/images/projects/sphoto_1.webp",
+      "assets/images/projects/sphoto_2.webp",
+      "assets/images/projects/sphoto_3.webp",
+      "assets/images/projects/sphoto_4.webp"
+    ]
   },
   {
     "index": 3,
@@ -63,7 +69,7 @@
     "name": "Fishtail",
     "category": "services",
     "tagline": "For the artistic-swimming community",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "googlePlay": "com.perfectneeds.fishtailapp",
       "appStore": "6463719006"
@@ -99,7 +105,7 @@
     "name": "Thabbit Game",
     "category": "games",
     "tagline": "Trivia game",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "appStore": "6737889402"
     },
@@ -144,7 +150,7 @@
     "name": "Prestige",
     "category": "ecommerce",
     "tagline": "Perfume & bakhoor store",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "appStore": "1554715657"
     },
@@ -165,7 +171,7 @@
     "name": "Mashro3y",
     "category": "business",
     "tagline": "Invoice scanner for businesses",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "appStore": "6737435318"
     },
@@ -185,7 +191,7 @@
     "name": "Glamor",
     "category": "business",
     "tagline": "Gym management",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "appStore": "6479636026"
     },
@@ -425,7 +431,7 @@
     "name": "Ghaslah",
     "category": "services",
     "tagline": "Car-wash booking",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "appStore": "6463858126"
     },
@@ -465,7 +471,7 @@
     "name": "Lions",
     "category": "food",
     "tagline": "Diet & meal-plan systems",
-    "featured": false,
+    "featured": true,
     "storeLinks": {
       "googlePlay": "com.baramjk.lionskw",
       "appStore": "6450896898"

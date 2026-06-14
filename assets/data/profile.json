@@ -18,10 +18,12 @@
   ],
   "skillGroups": [
     { "label": "Languages", "skills": ["Flutter", "Dart"] },
-    { "label": "State Management", "skills": ["BLoC / Cubit", "Provider"] },
-    { "label": "Backend & APIs", "skills": ["RESTful APIs", "Firebase", "Google Maps"] },
-    { "label": "Architecture & Quality", "skills": ["Clean Architecture", "OOP", "TDD", "Unit Testing"] },
-    { "label": "Tooling", "skills": ["Git", "Trello", "Responsive UI", "Animations"] }
+    { "label": "State Management", "skills": ["BLoC / Cubit", "Provider", "Freezed"] },
+    { "label": "Architecture & Quality", "skills": ["Clean Architecture", "SOLID", "OOP", "Offline-first", "TDD", "Unit Testing"] },
+    { "label": "Backend & APIs", "skills": ["RESTful APIs", "GraphQL", "Firebase", "WebSockets", "Google Maps"] },
+    { "label": "Realtime & Features", "skills": ["Live Tracking", "Live Chat", "Push Notifications", "Payments"] },
+    { "label": "Tooling & Design", "skills": ["Git", "CI/CD", "Linear", "Trello", "Figma"] },
+    { "label": "Craft", "skills": ["Responsive UI", "Animations", "Localization / RTL"] }
   ],
   "experience": [
     {

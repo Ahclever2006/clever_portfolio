@@ -18,17 +18,20 @@ class ContactRepositoryImpl implements ContactRepository {
 
   @override
   ResultVoid send(ContactMessage message) {
-    if (!ApiEndpoints.hasRemote) {
+    if (!ApiEndpoints.hasContactBackend) {
       return Future.value(
-        const Left(ServerFailure(message: 'Contact endpoint not configured.')),
+        const Left(ServerFailure(message: 'Contact backend not configured.')),
       );
     }
     return _client.post(
-      ApiEndpoints.contact,
+      ApiEndpoints.web3formsSubmit,
       body: {
+        'access_key': ApiEndpoints.web3formsAccessKey,
         'name': message.name,
         'email': message.email,
         'message': message.message,
+        'subject': 'Portfolio contact from ${message.name}',
+        'from_name': 'Portfolio Website',
       },
     );
   }

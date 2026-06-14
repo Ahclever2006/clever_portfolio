@@ -16,6 +16,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// Contact section (folio 09): direct contact details on the left and a
 /// contact form on the right (stacked on mobile), per plan.md §4.
@@ -121,6 +122,14 @@ class _ContactDetails extends StatelessWidget {
           ),
           SizedBox(height: context.spacing.xs.h),
         ],
+        SizedBox(height: context.spacing.sm.h),
+        AppButton.ghost(
+          label: 'WhatsApp', // no-tr
+          icon: FontAwesomeIcons.whatsapp,
+          onPressed: () => AppLauncher.open(
+            'https://wa.me/${profile.phone.replaceAll(RegExp(r'[^0-9]'), '')}',
+          ),
+        ),
       ],
     );
   }

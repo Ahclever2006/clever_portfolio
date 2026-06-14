@@ -1,5 +1,4 @@
 import 'package:clever_portfolio/core/error/failures.dart';
-import 'package:clever_portfolio/core/network/api_endpoints.dart';
 import 'package:clever_portfolio/core/network/interceptors/logging_interceptor.dart';
 import 'package:clever_portfolio/core/utils/typedefs.dart';
 import 'package:dartz/dartz.dart';
@@ -16,7 +15,6 @@ class DioClient {
   DioClient(this._dio) {
     _dio
       ..options = BaseOptions(
-        baseUrl: ApiEndpoints.baseUrl,
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
       )
