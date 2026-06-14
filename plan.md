@@ -318,13 +318,9 @@ lib/
 │   │       └── widgets/{hero_section.dart, stats_band.dart, about_section.dart,
 │   │                    skills_matrix.dart, education_line.dart}
 │   │
-│   ├── experience/                        # section 07
-│   │   ├── domain/{entities/experience_item.dart, repositories/experience_repository.dart,
-│   │   │           usecases/get_experience.dart}
-│   │   ├── data/{datasources/experience_local_data_source.dart, models/experience_item_model.dart,
-│   │   │          repositories/experience_repository_impl.dart}
-│   │   └── presentation/{cubit/{experience_cubit.dart, experience_state.dart},
-│   │                      widgets/{experience_section.dart, role_card.dart}}
+│   │                    # NOTE (M3): experience/education/skills/stats are NOT a
+│   │                    # separate feature — folded into `profile` (one CV aggregate).
+│   │                    # The experience SECTION (07) is presentation reading ProfileCubit.
 │   │
 │   └── contact/                           # section 09 (Dio-backed optional POST)
 │       ├── domain/
@@ -611,7 +607,7 @@ Driven by scroll/`VisibilityDetector`. `scrollTo(SectionId)` animates to the anc
 
 > **Locale** is handled by `easy_localization` directly (no cubit): the navbar toggle calls `context.setLocale`, which persists the choice (`saveLocale`) and drives `MaterialApp.locale` (§7.1).
 
-> `ProfileCubit` and `ExperienceCubit` are Freezed unions of the same trivial `initial / loading / loaded(entity) / error(failure)` shape (single load via a `NoParams` use case), each extending `BaseCubit`.
+> `ProfileCubit` is a Freezed union of the trivial `initial / loading / loaded(Profile) / error(failure)` shape (single load via `GetProfile(NoParams)`), extending `BaseCubit`. (Experience/education/skills/stats are fields on the loaded `Profile` — no separate cubit.)
 
 ### 5.5 Dependency injection + bootstrap
 
@@ -667,7 +663,6 @@ class PortfolioApp extends StatelessWidget {
       BlocProvider(create: (_) => getIt<NavigationCubit>()),
       BlocProvider(create: (_) => getIt<ProjectsCubit>()..load()),
       BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
-      BlocProvider(create: (_) => getIt<ExperienceCubit>()..load()),
       BlocProvider(create: (_) => getIt<ContactCubit>()),
     ],
     child: BlocBuilder<ThemeCubit, ThemeState>(
@@ -1360,13 +1355,16 @@ Phased so the site is buildable/runnable after every milestone.
 - [x] **`ThemeCubit` refactored** onto `GetThemeMode`/`SaveThemeMode` use cases + `ThemeRepository` (SharedPreferences) — all DI-wired. `bootstrap` now sets `Bloc.observer`, runs `configureDependencies()`, `usePathUrlStrategy()`; `MaterialApp.router` consumes `getIt<AppRouter>().config`.
 - [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 (11 files) · `flutter test` green incl. a **DI-resolution test** (`ThemeRepository`/`ThemeCubit`/`AppRouter`/`DioClient` all resolve; dark-first holds) · `flutter build web` ✓.
 
-### M3 — Data layer + content
-- [ ] Author `assets/data/apps.json` (37 apps, raw store ids, featured flags) from §6.3, and `assets/data/profile.json` (profile, skills, experience, education, stats, contact).
-- [ ] Domain entities + enums for all features (§6.1).
-- [ ] `projects` feature: Freezed + `json_serializable` model (`fromJson`/`toEntity`), local data source, repository impl, `GetProjects`/`FilterProjects`/`GetFeaturedProjects`.
-- [ ] `profile`, `experience`, `contact` (local) features: same pattern; `contact` adds remote data source + `SendMessage` over `DioClient`.
-- [ ] Cubits (all extend `BaseCubit`, Freezed states): `ProjectsCubit`, `ProfileCubit`, `ExperienceCubit`, `ContactCubit`, `NavigationCubit`. Run `build_runner` for state/model codegen.
-- [ ] Tests: use-case, repository (mocktail `Either`), model `fromJson`, `ProjectsCubit` (bloc_test). Green.
+### M3 — Data layer + content  ✅ DONE (2026-06-14)
+- [x] Authored `assets/data/apps.json` (37 apps, raw store ids, featured flags) + `assets/data/profile.json` (profile/skills/experience/education/stats/contact).
+- [x] **Real app media fetched** from Apple's iTunes Lookup API (`scripts/fetch_app_media.py`): **35 icons (256px) + 140 screenshots (600px) + descriptions**, downscaled & bundled under `assets/images/projects/` (~13 MB), wired into `apps.json`. *Stock Delivery* (Android-only) + *Dr-Raed* (not in any storefront) use the letter-tile fallback; 10 newer apps have icon+desc but no screenshots. Gulf-app descriptions are Arabic (suit the AR locale).
+- [x] Domain entities + enums: `AppPlatform`, `AppCategory` (9-bucket taxonomy), `AppProject`; the `Profile` aggregate (+ `Language`/`SocialLink`/`StatMetric`/`SkillGroup`/`ExperienceItem`/`EducationItem`); `ContactMessage`; `SectionId`.
+- [x] `projects` feature: Freezed + `json_serializable` `AppProjectModel` (+`StoreLinksModel`, `toEntity`), local data source, repository impl (`Either`), `GetProjects`/`GetFeaturedProjects`/`FilterProjects` (+`ProjectFilter`).
+- [x] **Consolidation:** `experience`/`education`/`skills`/`stats` folded into the **`profile`** feature (one CV aggregate root + one JSON source — cleaner than separate features). No standalone `experience` feature / `ExperienceCubit`. `profile` feature: model + data source + repo + `GetProfile`.
+- [x] `contact` feature (form submission): `ContactRepository` over `DioClient` (graceful failure when no endpoint), `SendMessage` (in-domain validation).
+- [x] Cubits (all extend `BaseCubit`, Freezed states): `ProjectsCubit` (filter/search/view-mode), `ProfileCubit`, `ContactCubit`, `NavigationCubit` — DI-wired into `PortfolioApp`, loading on boot. `build_runner` ran (25 outputs).
+- [x] **Tests (23, green):** model fromJson/toEntity, repository (mocktail `Either`/AssetFailure), `ProjectsCubit` (bloc_test), `SendMessage` validation, + a **content-integrity test** parsing the real `apps.json` (37, unique indices) + `profile.json`.
+- [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 (44 files) · `flutter test` green · `flutter build web` ✓.
 
 ### M4 — Sections build
 - [ ] `00` Glass navbar + nav links + theme toggle + **language toggle (EN ⇄ ع)** + Download CV + mobile drawer.
@@ -1420,7 +1418,7 @@ Phased so the site is buildable/runnable after every milestone.
 
 - **Deployment target** — confirm **GitHub Pages** (primary plan) vs Firebase Hosting.
 - **Custom domain** — use `ahmedmaher.dev` (or another)? Determines base href (`/` vs `/clever_portfolio/`) and canonical/OG/JSON-LD URLs.
-- **App screenshots / icons** — provide real app icons + screenshots now, or ship with letter/placeholder tiles and add later?
+- ~~**App screenshots / icons**~~ — ✅ resolved (M3): real **icons + screenshots + descriptions** fetched from the App Store and bundled. (Android-only *Stock Delivery* + *Dr-Raed* use placeholder tiles.)
 - **Arabic / RTL scope** — plan defaults to **EN + AR + full RTL in v1** (matches your house stack). Confirm, or ship **EN-only** first and add AR later?
 - **Contact form** — wire a real Dio-backed endpoint (which provider?), or ship a `mailto:` fallback for v1?
 - **Responsive layer** — plan uses **`flutter_screenutil`** as the mandated "sizeHelper" (matches your Rolli stack; no package literally named `sizeHelper` exists on pub.dev). Flag if you intend a different package.

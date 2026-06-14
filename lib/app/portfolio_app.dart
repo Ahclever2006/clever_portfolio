@@ -4,6 +4,10 @@ import 'package:clever_portfolio/core/router/app_router.dart';
 import 'package:clever_portfolio/core/theme/app_theme.dart';
 import 'package:clever_portfolio/core/theme/cubit/theme_cubit.dart';
 import 'package:clever_portfolio/core/theme/cubit/theme_state.dart';
+import 'package:clever_portfolio/features/contact/presentation/cubit/contact_cubit.dart';
+import 'package:clever_portfolio/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:clever_portfolio/features/projects/presentation/cubit/projects_cubit.dart';
+import 'package:clever_portfolio/shared/navigation/cubit/navigation_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +21,13 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => getIt<ThemeCubit>()..load())],
+      providers: [
+        BlocProvider(create: (_) => getIt<ThemeCubit>()..load()),
+        BlocProvider(create: (_) => getIt<NavigationCubit>()),
+        BlocProvider(create: (_) => getIt<ProjectsCubit>()..load()),
+        BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
+        BlocProvider(create: (_) => getIt<ContactCubit>()),
+      ],
       child: AppScreenUtilInit(
         builder: (context, child) {
           return BlocBuilder<ThemeCubit, ThemeState>(

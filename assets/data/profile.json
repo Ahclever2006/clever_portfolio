@@ -1,0 +1,68 @@
+{
+  "name": "Ahmed Maher",
+  "title": "Flutter Team Lead",
+  "location": "6th October City, Giza — Egypt",
+  "email": "Ahclever2006@gmail.com",
+  "phone": "+201155728617",
+  "summary": "Flutter Developer with 5+ years building and leading cross-platform mobile apps, and a prior 15-year career in Oil & Gas as a Data Engineer. Specialized in E-commerce, Booking, and Business apps — published and maintained 30+ apps on Google Play and the App Store.",
+  "languages": [
+    { "name": "Arabic", "level": "Native" },
+    { "name": "English", "level": "Fluent" }
+  ],
+  "socials": [],
+  "stats": [
+    { "value": "37", "label": "Published Apps" },
+    { "value": "5+", "label": "Years Flutter" },
+    { "value": "15", "label": "Years Data Engineering" },
+    { "value": "8", "label": "Countries Worked" }
+  ],
+  "skillGroups": [
+    { "label": "Languages", "skills": ["Flutter", "Dart"] },
+    { "label": "State Management", "skills": ["BLoC / Cubit", "Provider"] },
+    { "label": "Backend & APIs", "skills": ["RESTful APIs", "Firebase", "Google Maps"] },
+    { "label": "Architecture & Quality", "skills": ["Clean Architecture", "OOP", "TDD", "Unit Testing"] },
+    { "label": "Tooling", "skills": ["Git", "Trello", "Responsive UI", "Animations"] }
+  ],
+  "experience": [
+    {
+      "role": "Flutter Team Lead",
+      "company": "Baramjk",
+      "location": "Remote — Kuwait",
+      "period": "Mar 2023 – Present",
+      "bullets": [
+        "Lead the Flutter team and deliver multiple production apps.",
+        "Built and launched large-scale e-commerce and gaming apps.",
+        "Mentored developers and improved team workflow with Git & Trello."
+      ]
+    },
+    {
+      "role": "Flutter Developer",
+      "company": "Spark Systems",
+      "location": "Giza — Egypt",
+      "period": "Jan 2020 – Mar 2023",
+      "bullets": [
+        "Developed and maintained mobile apps for retail and logistics.",
+        "Delivered Stock Client and Stock Delivery (Android/iOS).",
+        "Improved performance with responsive UI and optimized APIs."
+      ]
+    },
+    {
+      "role": "Data Engineer",
+      "company": "Oil & Gas — Halliburton, Oilserv, DHI",
+      "location": "Egypt · Qatar · KSA · Spain · Ghana · Kuwait · Iraq · Malaysia",
+      "period": "Jun 2008 – Feb 2023",
+      "bullets": [
+        "Designed, managed, and analyzed large datasets for oilfield operations.",
+        "Contributed to multinational projects with Halliburton and partners."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.Sc. in Chemistry & Geology",
+      "institution": "Cairo University",
+      "period": "2001 – 2006",
+      "grade": "Good"
+    }
+  ]
+}

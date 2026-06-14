@@ -89,9 +89,7 @@ flutter:
   assets:
     - assets/docs/
     - assets/translations/
-    # Enabled in later milestones (files authored in M1 / M3):
-    # - assets/data/apps.json
-    # - assets/data/profile.json
-    # - assets/icons/
-    # - assets/images/
-    # - assets/images/projects/
+    - assets/data/
+    - assets/images/
+    - assets/images/projects/
+    # - assets/icons/   # store-badge SVGs (added in M4)
