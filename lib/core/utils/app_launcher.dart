@@ -10,6 +10,12 @@ abstract final class AppLauncher {
     await launchUrl(uri, webOnlyWindowName: '_blank');
   }
 
+  /// Opens a WhatsApp chat with [phone] (any format; non-digits are stripped).
+  static Future<void> whatsApp(String phone) {
+    final digits = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    return open('https://wa.me/$digits');
+  }
+
   /// Opens a `mailto:` composer for [address].
   static Future<void> email(String address, {String? subject}) async {
     final uri = Uri(

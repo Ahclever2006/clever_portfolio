@@ -19,6 +19,9 @@ Future<void> bootstrap() async {
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
+      // English-only for now (toggle hidden). Forces EN even if AR was saved;
+      // remove startLocale to re-enable Arabic later.
+      startLocale: const Locale('en'),
       child: const PortfolioApp(),
     ),
   );

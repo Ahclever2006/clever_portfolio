@@ -7,12 +7,15 @@ import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:clever_portfolio/core/utils/app_launcher.dart';
 import 'package:clever_portfolio/core/widgets/app_button.dart';
 import 'package:clever_portfolio/core/widgets/glass_nav_container.dart';
+import 'package:clever_portfolio/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:clever_portfolio/features/profile/presentation/cubit/profile_state.dart';
 import 'package:clever_portfolio/shared/navigation/cubit/navigation_cubit.dart';
 import 'package:clever_portfolio/shared/navigation/section_id.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// Folio 00 — the fixed glass navbar (the one glassmorphism surface).
 class GlassNavBar extends StatelessWidget {
@@ -30,6 +33,10 @@ class GlassNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     const wordmark = 'ahmed.maher';
     final nav = context.watch<NavigationCubit>().state;
+    final profileState = context.watch<ProfileCubit>().state;
+    final phone = profileState is ProfileLoaded
+        ? profileState.profile.phone
+        : null;
     final hPad = context.responsive(
       mobile: context.spacing.gutterMobile,
       desktop: context.spacing.gutterDesktop,
@@ -80,21 +87,19 @@ class GlassNavBar extends StatelessWidget {
                 ),
                 SizedBox(width: context.spacing.sm.w),
               ],
-              IconButton(
-                tooltip: 'EN / ع', // no-tr
-                icon: const Icon(Icons.translate),
-                onPressed: () {
-                  final next = context.locale.languageCode == 'en'
-                      ? const Locale('ar')
-                      : const Locale('en');
-                  context.setLocale(next);
-                },
-              ),
+              // Language toggle hidden for now (English only). The AR
+              // translations + Arabic font remain wired for later.
               IconButton(
                 tooltip: 'Theme', // no-tr
                 icon: const Icon(Icons.brightness_6_outlined),
                 onPressed: () => context.read<ThemeCubit>().toggle(),
               ),
+              if (phone != null)
+                IconButton(
+                  tooltip: 'WhatsApp', // no-tr
+                  icon: const Icon(FontAwesomeIcons.whatsapp),
+                  onPressed: () => AppLauncher.whatsApp(phone),
+                ),
               if (context.isDesktop) ...[
                 SizedBox(width: context.spacing.sm.w),
                 AppButton.ghost(
