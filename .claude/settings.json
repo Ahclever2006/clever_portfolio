@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "opusplan",
+  "availableModels": ["fable", "opus", "sonnet", "haiku", "opusplan"],
+  "instructions": [
+    "DESIGN SYSTEM RULES:",
+    "  - ALWAYS read ai_docs/DESIGN_SYSTEM.md before implementing any UI",
+    "  - ALWAYS read ai_docs/COMPONENT_CATALOG.md and use existing components",
+    "  - NEVER hardcode colors — use AppColors.xxx",
+    "  - NEVER hardcode font sizes — use AppTypography.xxx with .sp",
+    "  - NEVER hardcode spacing — use AppSpacing.xxx",
+    "  - NEVER hardcode radius — use AppRadius.xxx",
+    "  - NEVER use left/right — use start/end for RTL",
+    "  - ALWAYS use .tr() for user-visible strings",
+    "  - ALWAYS use flutter_screenutil (.w, .h, .sp, .r)",
+    "",
+    "ARCHITECTURE RULES:",
+    "  - Clean Architecture: data → domain → presentation",
+    "  - Cubit for state management",
+    "  - get_it + injectable for DI",
+    "  - go_router for navigation",
+    "  - easy_localization with en.json + ar.json",
+    "  - Never decode JWT client-side",
+    "  - Presentation layer must NOT import from data layer",
+    ""
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '🚀 Flutter Session' && echo '📱 '$(flutter --version 2>/dev/null | head -1 | cut -d' ' -f1-4) && echo '' && echo '📂 Modified:' && git status -s 2>/dev/null | head -10 && echo '' && echo '📝 Recent:' && git log --oneline -5 2>/dev/null && echo '' && echo '⚠️  TODOs:' $(grep -rn 'TODO' lib/ 2>/dev/null | wc -l | tr -d ' ') 'in lib/' && echo '🐛 FIXMEs:' $(grep -rn 'FIXME' lib/ 2>/dev/null | wc -l | tr -d ' ') 'in lib/'"
+          }
+        ]
+      }
+    ],
+
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command // empty' | { read cmd; if echo \"$cmd\" | grep -qE 'rm -rf|flutter clean|DROP|--force|truncate'; then echo '{\"decision\": \"block\", \"reason\": \"⛔ Destructive command blocked. Ask the user first.\"}'; fi; }"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command // empty' | { read cmd; if echo \"$cmd\" | grep -qE 'git push|git rebase'; then echo '{\"decision\": \"block\", \"reason\": \"⛔ Git push/rebase blocked. Let the user do this manually.\"}'; fi; }"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -qE '\\.g\\.dart$|\\.freezed\\.dart$|\\.mocks\\.dart$'; then echo '{\"decision\": \"block\", \"reason\": \"⛔ Cannot edit generated file. Edit the source and run build_runner instead.\"}'; fi; }"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -qE 'pubspec\\.lock$|Podfile\\.lock$|\\.flutter-plugins$'; then echo '{\"decision\": \"block\", \"reason\": \"⛔ Cannot edit lock files directly. Modify pubspec.yaml and run pub get.\"}'; fi; }"
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -q '\\.dart$'; then dart format \"$file\" 2>/dev/null && echo '✅ Formatted: '$file; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -q '\\.dart$'; then result=$(dart analyze \"$file\" 2>&1); errors=$(echo \"$result\" | grep -c 'error •' || true); warnings=$(echo \"$result\" | grep -c 'warning •' || true); if [ \"$errors\" -gt 0 ]; then echo \"🔴 $errors errors in $file\"; echo \"$result\" | grep 'error •' | head -3; elif [ \"$warnings\" -gt 0 ]; then echo \"🟡 $warnings warnings in $file\"; fi; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -q '_test\\.dart$'; then echo '🧪 Running: '$file; flutter test \"$file\" 2>&1 | tail -5; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -q 'pubspec.yaml$'; then echo '📦 pubspec changed — running pub get...'; flutter pub get 2>&1 | tail -3; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -qE 'Podfile$'; then echo '🍎 Podfile changed — run: cd ios && pod install'; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && grep -q 'part.*\\.freezed\\.dart\\|part.*\\.g\\.dart' \"$file\" 2>/dev/null; then echo '⚙️  Has code-gen parts — run: dart run build_runner build --delete-conflicting-outputs'; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -q '\\.dart$'; then lines=$(wc -l < \"$file\" 2>/dev/null | tr -d ' '); if [ \"$lines\" -gt 300 ]; then echo \"⚠️  $file is $lines lines — consider decomposing\"; fi; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -q '\\.dart$' && echo \"$file\" | grep -q '/presentation/'; then if grep -q 'import.*\\/data\\/' \"$file\" 2>/dev/null; then echo '🏗️  Architecture violation: presentation layer importing from data layer'; fi; fi; }"
+          },
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && echo \"$file\" | grep -qE '(en|ar)\\.json$'; then python3 -c \"import json,sys; en=json.load(open('assets/translations/en.json')); ar=json.load(open('assets/translations/ar.json')); missing_ar=[k for k in en if k not in ar]; missing_en=[k for k in ar if k not in en]; print('🌍 Translation sync:'); print(f'  Missing in ar.json: {len(missing_ar)}') if missing_ar else None; print(f'  Missing in en.json: {len(missing_en)}') if missing_en else None; print('  ✅ In sync') if not missing_ar and not missing_en else None\" 2>/dev/null; fi; }"
+          }
+        ]
+      }
+    ],
+
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '🔍 Final checks...' && echo '' && echo '--- Analyzer ---' && dart analyze lib/ 2>&1 | tail -5 && echo '' && echo '--- Unused imports ---' && dart analyze lib/ 2>&1 | grep 'unused_import' | wc -l | xargs -I{} echo '{} unused imports found' && echo '' && echo '--- File sizes ---' && find lib/ -name '*.dart' -exec wc -l {} + 2>/dev/null | sort -rn | head -5 | awk '{printf \"  %s lines: %s\\n\", $1, $2}'"
+          }
+        ]
+      }
+    ],
+
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.claude/logs && jq -r '.message // empty' | { read msg; if [ -n \"$msg\" ]; then echo \"$(date '+%Y-%m-%d %H:%M:%S') | $msg\" >> ~/.claude/logs/flutter-session.log; fi; }"
+          }
+        ]
+      }
+    ]
+  }
+}
