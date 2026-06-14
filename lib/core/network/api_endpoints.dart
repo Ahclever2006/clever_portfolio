@@ -11,6 +11,7 @@ abstract final class ApiEndpoints {
   /// at build time via `--dart-define=WEB3FORMS_KEY=xxxxxxxx`.
   static const String web3formsAccessKey = String.fromEnvironment(
     'WEB3FORMS_KEY',
+    defaultValue: 'a5c6e441-7266-4534-a0d0-0b4ee4b170d9',
   );
 
   /// Whether the contact form can actually deliver to email.
