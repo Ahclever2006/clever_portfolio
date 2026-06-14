@@ -10,11 +10,69 @@
     "downloadCv": "Download CV"
   },
   "hero": {
-    "eyebrow": "Flutter Team Lead — 6th October City, EG",
-    "title": "Ahmed Maher",
-    "tagline": "I build and ship cross-platform apps — 37 of them, live on the App Store and Google Play.",
+    "eyebrow": "flutter team lead — 6th october city, eg",
+    "tagline": "I build and ship cross-platform apps — 35 of them, live on the App Store and Google Play.",
     "viewWork": "View Work",
     "downloadResume": "Download Resume"
+  },
+  "about": {
+    "eyebrow": "about",
+    "title": "From oilfields to app stores"
+  },
+  "skills": {
+    "eyebrow": "skills",
+    "title": "Capabilities"
+  },
+  "work": {
+    "eyebrow": "work",
+    "title": "The Index",
+    "searchHint": "Search apps…",
+    "filterAll": "All",
+    "platformAll": "All platforms",
+    "viewList": "List",
+    "viewGrid": "Grid",
+    "empty": "No apps match these filters.",
+    "openStore": "Open"
+  },
+  "featured": {
+    "eyebrow": "featured",
+    "title": "Selected work"
+  },
+  "experience": {
+    "eyebrow": "experience",
+    "title": "Where I've worked"
+  },
+  "education": {
+    "eyebrow": "education",
+    "title": "Education"
+  },
+  "contact": {
+    "eyebrow": "get in touch",
+    "title": "Let's build something",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Thanks — your message has been sent.",
+    "errorFallback": "Couldn't send right now. Email me directly instead.",
+    "emailMe": "Email me"
+  },
+  "category": {
+    "ecommerce": "E-commerce",
+    "games": "Games",
+    "booking": "Booking",
+    "business": "Business",
+    "food": "Food & Diet",
+    "services": "Services",
+    "medical": "Medical",
+    "education": "Education",
+    "travel": "Travel"
+  },
+  "footer": {
+    "builtWith": "Built with Flutter Web · Clean Architecture",
+    "backToTop": "Back to top",
+    "rights": "© {year} Ahmed Maher"
   },
   "common": {
     "scaffolding": "Scaffolding in progress"

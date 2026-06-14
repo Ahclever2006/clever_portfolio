@@ -28,6 +28,6 @@ sealed class ProjectsState with _$ProjectsState {
     AppCategory? activeCategory,
     AppPlatform? activePlatform,
     @Default('') String query,
-    @Default(ProjectViewMode.list) ProjectViewMode viewMode,
+    @Default(ProjectViewMode.grid) ProjectViewMode viewMode,
   }) = ProjectsLoaded;
 }

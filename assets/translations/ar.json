@@ -10,11 +10,69 @@
     "downloadCv": "تحميل السيرة الذاتية"
   },
   "hero": {
-    "eyebrow": "قائد فريق Flutter — مدينة السادس من أكتوبر، مصر",
-    "title": "أحمد ماهر",
-    "tagline": "أبني وأنشر تطبيقات متعددة المنصّات — 37 تطبيقًا منشورة على App Store و Google Play.",
+    "eyebrow": "قائد فريق Flutter — السادس من أكتوبر، مصر",
+    "tagline": "أبني وأنشر تطبيقات متعددة المنصّات — 35 تطبيقًا منشورة على App Store و Google Play.",
     "viewWork": "تصفّح الأعمال",
     "downloadResume": "تحميل السيرة الذاتية"
+  },
+  "about": {
+    "eyebrow": "نبذة",
+    "title": "من حقول البترول إلى متاجر التطبيقات"
+  },
+  "skills": {
+    "eyebrow": "المهارات",
+    "title": "القدرات"
+  },
+  "work": {
+    "eyebrow": "الأعمال",
+    "title": "الفهرس",
+    "searchHint": "ابحث عن تطبيق…",
+    "filterAll": "الكل",
+    "platformAll": "كل المنصّات",
+    "viewList": "قائمة",
+    "viewGrid": "شبكة",
+    "empty": "لا توجد تطبيقات مطابقة.",
+    "openStore": "فتح"
+  },
+  "featured": {
+    "eyebrow": "مختارات",
+    "title": "أعمال مختارة"
+  },
+  "experience": {
+    "eyebrow": "الخبرات",
+    "title": "أماكن عملي"
+  },
+  "education": {
+    "eyebrow": "التعليم",
+    "title": "التعليم"
+  },
+  "contact": {
+    "eyebrow": "تواصل معي",
+    "title": "لنصنع شيئًا معًا",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "message": "الرسالة",
+    "send": "إرسال الرسالة",
+    "sending": "جارٍ الإرسال…",
+    "success": "شكرًا — تم إرسال رسالتك.",
+    "errorFallback": "تعذّر الإرسال الآن. راسلني عبر البريد مباشرة.",
+    "emailMe": "راسلني"
+  },
+  "category": {
+    "ecommerce": "تجارة إلكترونية",
+    "games": "ألعاب",
+    "booking": "حجوزات",
+    "business": "أعمال",
+    "food": "طعام وحمية",
+    "services": "خدمات",
+    "medical": "طبي",
+    "education": "تعليم",
+    "travel": "سفر"
+  },
+  "footer": {
+    "builtWith": "مبني بـ Flutter Web · Clean Architecture",
+    "backToTop": "إلى الأعلى",
+    "rights": "© {year} أحمد ماهر"
   },
   "common": {
     "scaffolding": "جارٍ الإعداد"

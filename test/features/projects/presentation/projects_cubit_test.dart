@@ -96,7 +96,7 @@ void main() {
   );
 
   blocTest<ProjectsCubit, ProjectsState>(
-    'toggleViewMode flips list -> grid',
+    'toggleViewMode flips grid -> list (grid is the default)',
     build: build,
     act: (c) async {
       await c.load();
@@ -107,7 +107,7 @@ void main() {
       isA<ProjectsLoaded>().having(
         (s) => s.viewMode,
         'viewMode',
-        ProjectViewMode.grid,
+        ProjectViewMode.list,
       ),
     ],
   );

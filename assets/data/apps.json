@@ -550,17 +550,6 @@
   },
   {
     "index": 31,
-    "id": "stock-delivery",
-    "name": "Stock Delivery",
-    "category": "business",
-    "tagline": "Sales & delivery agents app",
-    "featured": false,
-    "storeLinks": {
-      "googlePlay": "com.spark.stockdeliveryapp"
-    }
-  },
-  {
-    "index": 32,
     "id": "stock-client",
     "name": "Stock Client",
     "category": "ecommerce",
@@ -582,7 +571,7 @@
     "description": "Stop searching each item form different wholesaler or distributer, Stock is here to source all your needs from one source."
   },
   {
-    "index": 33,
+    "index": 32,
     "id": "amaken-misr",
     "name": "Amaken Misr",
     "category": "travel",
@@ -604,7 +593,7 @@
     "description": "If you're looking for fresh and unique life experiences for you and your family in multiple lifestyle categories, this application is for you.\n\nWe present experiences that will encourage you to step out of your comfort zone to try, see, and do something you've never done before. Amakin Misr is the go-to place for finding new taste journeys at unconventional cuisines in Egypt, discovering beauty at various art galleries and hand craft studios, chasing your passion for a skill or trade by learning from professional craftsmen, relaxing and meditating at one of our recommended spas and meditation centers, and engaging in festive atmospheres by keeping up with our current events list."
   },
   {
-    "index": 34,
+    "index": 33,
     "id": "tsebo",
     "name": "TSEBO",
     "category": "booking",
@@ -625,7 +614,7 @@
     "description": "With the ever changing world of catering, new styles, dishes, and levels of service can be explore much more freely without a contract, even if you utilize the same caterer for all your service. TSEBO App is designed for employees  at corporate (TSEBO Partners)  to view menu, pre order, edit order, and pay for your meal for the day or a week. With TSEBO App employees do not have to wait in line. TSEBO gives employees the ease of ordering with a few clicks to order and pay for your food. The app can help your employees to manage pickup & drop off of orders in real-time and communicate with TSEBO and customers."
   },
   {
-    "index": 35,
+    "index": 34,
     "id": "ate18",
     "name": "ATE 18",
     "category": "ecommerce",
@@ -646,18 +635,7 @@
     "description": "you can use ATE 18 app to buy varaeity of products."
   },
   {
-    "index": 36,
-    "id": "dr-raed",
-    "name": "Dr-Raed",
-    "category": "medical",
-    "tagline": "Medical app",
-    "featured": false,
-    "storeLinks": {
-      "appStore": "1490292939"
-    }
-  },
-  {
-    "index": 37,
+    "index": 35,
     "id": "gigapp",
     "name": "GigApp",
     "category": "booking",

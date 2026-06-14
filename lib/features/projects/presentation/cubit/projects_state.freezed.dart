@@ -317,7 +317,7 @@ as Failure,
 
 
 class ProjectsLoaded implements ProjectsState {
-  const ProjectsLoaded({required final  List<AppProject> all, required final  List<AppProject> visible, this.activeCategory, this.activePlatform, this.query = '', this.viewMode = ProjectViewMode.list}): _all = all,_visible = visible;
+  const ProjectsLoaded({required final  List<AppProject> all, required final  List<AppProject> visible, this.activeCategory, this.activePlatform, this.query = '', this.viewMode = ProjectViewMode.grid}): _all = all,_visible = visible;
   
 
  final  List<AppProject> _all;

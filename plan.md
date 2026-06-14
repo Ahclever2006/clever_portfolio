@@ -1366,25 +1366,32 @@ Phased so the site is buildable/runnable after every milestone.
 - [x] **Tests (23, green):** model fromJson/toEntity, repository (mocktail `Either`/AssetFailure), `ProjectsCubit` (bloc_test), `SendMessage` validation, + a **content-integrity test** parsing the real `apps.json` (37, unique indices) + `profile.json`.
 - [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 (44 files) · `flutter test` green · `flutter build web` ✓.
 
-### M4 — Sections build
-- [ ] `00` Glass navbar + nav links + theme toggle + **language toggle (EN ⇄ ع)** + Download CV + mobile drawer.
-- [ ] `01` Hero (eyebrow, headline, summary, CTAs, terminal status strip, dot-grid + radial glow).
-- [ ] `02` Stats band (count-up metrics 37 / 5+ / 15 / 8).
-- [ ] `03` About (pull quote + `career.log` timeline).
-- [ ] `04` Skills matrix (grouped glass chips).
-- [ ] `05` The Index — sticky filter bar + platform toggle + search; default list (01-37) + card grid via `AnimatedSwitcher`; store-aware buttons.
-- [ ] `06` Featured spotlight (Edu Market, Sphoto, Falta Game) split cards + dual store buttons.
-- [ ] `07` Experience role cards; `08` Education line; `09` Contact panel + Dio-wired form; `10` Footer/colophon (typeface credit, back-to-top, current year).
-- [ ] Wire anchor scroll (`NavigationCubit.scrollTo` + hash sync).
-- [ ] Route all user-facing copy through `AppStrings.*.tr()`; fill `en.json` + `ar.json` (UI chrome + per-app taglines).
+### M4 — Sections build  ✅ DONE (2026-06-14)
+- [x] `00` `GlassNavBar` + nav links (active highlight) + theme toggle + language toggle (EN ⇄ ع) + Download CV + `MobileNavDrawer` (mobile hamburger).
+- [x] `01` `HeroSection` (mono eyebrow, big name, tagline, View Work + Download Resume CTAs, `TerminalStatusStrip`). Dot-grid/radial-glow background → M5 polish.
+- [x] `02` `StatsBand` (37 / 5+ / 15 / 8 from `profile.json`). Count-up animation → M5.
+- [x] `03` `AboutSection` (summary + pull-quote + mono `career.log` from experience).
+- [x] `04` `SkillsSection` (grouped `AppSkillChip`s).
+- [x] `05` `IndexSection` — category filter chips + platform toggle + live search + list⇄grid via `AnimatedSwitcher`; `ProjectListRow` (default dense list) + `ProjectCard` (responsive grid) with **real app icons** + store-aware buttons.
+- [x] `06` `FeaturedSection` — split cards for the 6 featured apps with **real screenshots** + dual store buttons.
+- [x] `07` `ExperienceSection` role cards; `08` `EducationSection`; `09` `ContactSection` (info + Dio-wired form w/ validation + mailto fallback); `10` `FooterSection` (colophon, typeface credit, back-to-top, current year).
+- [x] Anchor scroll wired (`HomePage` `ScrollController` + per-section `GlobalKey`s + `NavigationCubit.setActive/setElevated`). Browser hash sync + scroll-spy active-section → M5.
+- [x] All UI chrome routed through `AppStrings.*.tr()`; `en.json` + `ar.json` filled (incl. bilingual category labels). Per-app taglines remain English data (full data-i18n is a future item).
+- [x] **Build approach:** 7 data-display sections built in parallel via the `m4-sections` workflow (strict token/gate spec); hero, navbar, drawer, footer, Index, and `HomePage` assembly hand-built. Shared widgets: `AppIconTile`, `StoreButtons`, `ProjectCard`, `ProjectListRow`, `category_color` helper, `AppLauncher`.
+- [x] **Verified:** `flutter analyze` clean · `check_design_tokens.sh` 0/0 (58 files) · `flutter test` 20 green · `flutter build web` ✓ · full-app render check showed no layout/overflow exceptions at desktop width.
 
-### M5 — Responsive + motion polish
-- [ ] Breakpoint behavior across mobile/tablet/desktop/wide (grid columns, gutters, folio collapse, drawer).
-- [ ] Fluid type clamps; verify hero `clamp(48→88)`.
-- [ ] Entrance reveals (480ms stagger), hairline `scaleX` openers, counters (1200ms), card lift/accent-line, list-row shift+recolor, nav glass-on-scroll, view-toggle layout animation.
-- [ ] `prefers-reduced-motion` gating (opacity-only fallback; freeze caret/dot).
-- [ ] **RTL pass:** switch to Arabic, verify every section mirrors (start/end), folio/index/accent-line sides flip, Arabic typeface renders; fix stragglers.
-- [ ] Widget tests: hero, index filtering, navbar/drawer, project card store-link conditionals. Green.
+### M5 — Responsive + motion polish  ◑ MOSTLY DONE (2026-06-14)
+- [x] Breakpoint behavior across mobile/tablet/desktop/wide (grid columns 1/2/3, gutters, folio collapse on mobile, drawer) — via `core/responsive/`.
+- [x] Fluid hero clamp (48→88 across viewport width).
+- [x] Entrance reveals + hairline `scaleX` openers (M2 `SectionScaffold`/`RevealOnScroll`), **count-up stats** (`CountUpText`, 1200ms), **card lift + hue glow + accent-line draw on hover**, **list-row shift + recolor on hover**, nav glass-on-scroll, view-toggle `AnimatedSwitcher`.
+- [x] `prefers-reduced-motion` gating across all new motion (count-up, hover, aurora, back-to-top, reveal, terminal strip).
+- [x] **Motion additions (user-requested):** animated **aurora background** (`MotionBackground` — drifting emerald/blue radial glows replacing the flat black canvas); **glowing back-to-top button** (`BackToTopButton` — slides in past 600px, pulsing glow); stronger hue glow on card hover.
+- [x] Content updates (user-requested): removed *Dr-Raed* + *Stock Delivery* (→ **35 apps**, renumbered 1–35; count updated in stats/hero/about/manifest); **default view = grid**; removed the wrongly-scraped screenshots.
+- [~] **RTL pass:** layout uses `start`/`end` so sections mirror, BUT the **Arabic typeface (Cairo) is not yet wired** — Arabic glyphs fall back and may not render correctly. **PENDING.**
+- [~] **Scroll-spy active section:** nav highlights the active section on tap; live scroll-spy (VisibilityDetector) **PENDING**.
+- [ ] Widget tests (hero/index/navbar/store-link conditionals) — **PENDING** (render harness needs EasyLocalization + ScreenUtil setup).
+- [x] **Verified:** `flutter analyze` clean · gate 0/0 (62 files) · `flutter test` 20 green · `flutter build web` ✓.
+- **Screenshots:** the 10 apps the App Store Lookup API doesn't expose screenshots for are left empty — **the user is supplying these manually** (drop `assets/images/projects/<id>_1.jpg…` and add a `screenshots` array to that app in `apps.json`).
 
 ### M6 — SEO / a11y / performance
 - [ ] Replace `web/index.html` `<head>` (§11.1) + `web/manifest.json` (§11.2); add `web/og-cover.png`; rebrand favicon/icons.
