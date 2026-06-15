@@ -91,7 +91,7 @@ class _Summary extends StatelessWidget {
           ),
           child: Text(
             // no-tr
-            '15 years in oilfields. Now 35 apps in the stores.',
+            '15 years in oilfields. Now 42 apps in the stores.',
             style: context.text.titleMedium,
           ),
         ),

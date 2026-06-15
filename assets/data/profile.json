@@ -11,7 +11,7 @@
   ],
   "socials": [],
   "stats": [
-    { "value": "35", "label": "Published Apps" },
+    { "value": "42", "label": "Published Apps" },
     { "value": "5+", "label": "Years Flutter" },
     { "value": "15", "label": "Years Data Engineering" },
     { "value": "8", "label": "Countries Worked" }
@@ -22,7 +22,7 @@
     { "label": "Architecture & Quality", "skills": ["Clean Architecture", "SOLID", "OOP", "Offline-first", "TDD", "Unit Testing"] },
     { "label": "Backend & APIs", "skills": ["RESTful APIs", "GraphQL", "Firebase", "WebSockets", "Google Maps"] },
     { "label": "Realtime & Features", "skills": ["Live Tracking", "Live Chat", "Push Notifications", "Payments"] },
-    { "label": "Tooling & Design", "skills": ["Git", "CI/CD", "Linear", "Trello", "Figma"] },
+    { "label": "Tooling & Design", "skills": ["Git", "CI/CD", "Shorebird (Code Push OTA)", "Linear", "Trello", "Figma"] },
     { "label": "Craft", "skills": ["Responsive UI", "Animations", "Localization / RTL"] }
   ],
   "experience": [

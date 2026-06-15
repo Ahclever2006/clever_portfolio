@@ -101,7 +101,7 @@ class HeroSection extends StatelessWidget {
                   SizedBox(height: context.spacing.xl.h),
                   const TerminalStatusStrip(
                     text:
-                        'apps_shipped: 35 | platforms: ios + android | status: live', // no-tr
+                        'apps_shipped: 42 | platforms: ios + android | status: live', // no-tr
                   ),
                 ],
               ),
