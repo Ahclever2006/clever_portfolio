@@ -697,5 +697,129 @@
       "assets/images/projects/gigapp_5.jpg"
     ],
     "description": "نظام يعمل على الانترنت يتضمن طلبات مضافة من قبل الشركات الطالبة لمقدمين خدمات معينه بفترة معينة وبمبلغ معين مع اختيار نوع مقدمين الخدمة المطلوبين مع اتاحة البحث لمقدمين الخدمة للتقديم لاوامر التشغيل المضافة بسهولة ويسر.\nويضم النظام تسجيل الحضور لمقدمى الخدمات المشتركين بامر شغل معين مع امكانية ظهور تقارير باعداد الموظفين سواء الذكور منهم او الاناث او تقرير مادى لتكلفة امر الشغل على الشركة العارضة لامر الشغل."
+  },
+  {
+    "index": 36,
+    "id": "4x4kw",
+    "name": "4x4kw",
+    "category": "ecommerce",
+    "tagline": "4x4 spare-parts marketplace",
+    "featured": true,
+    "storeLinks": {
+      "googlePlay": "com.baramjk.fourbyfour",
+      "appStore": "6739775969"
+    },
+    "iconAsset": "assets/images/projects/4x4kw_icon.png",
+    "description": "4x4 – بيع، شراء أو تبديل قطع غيار سيارات الدفع الرباعي\nهل تبحث عن قطع غيار لسيارتك الـ 4x4 أو SUV؟ أو لديك قطع إضافية تبي بيعها أو استبدالها؟ مع 4x4 يمكنك بكل سهولة التواصل مع الآخرين لبيع، شراء، أو تبديل قطع الغيار الخاصة بسيارات الدفع الرباعي.\nالمميزات:\nعرض قطع غيار جديدة أو مستعملة للبيع\nشراء، بيع أو تبديل القطع مع المستخدمين الآخرين\nالبحث حسب نوع القطعة\nواجهة بسيطة وسهلة الاستخدام",
+    "screenshots": [
+      "assets/images/projects/4x4kw_1.jpg",
+      "assets/images/projects/4x4kw_2.jpg",
+      "assets/images/projects/4x4kw_3.jpg",
+      "assets/images/projects/4x4kw_4.jpg",
+      "assets/images/projects/4x4kw_5.jpg",
+      "assets/images/projects/4x4kw_6.jpg"
+    ]
+  },
+  {
+    "index": 37,
+    "id": "ghaslah-man",
+    "name": "Ghaslah Man",
+    "category": "services",
+    "tagline": "Car-wash provider app",
+    "featured": true,
+    "storeLinks": {
+      "appStore": "6472717054"
+    },
+    "iconAsset": "assets/images/projects/ghaslah-man_icon.jpg",
+    "description": "Ghaslah Man is the service-provider companion app to the Ghaslah on-demand car-wash platform, used by approved washers to receive, manage, and fulfil customer wash requests across Kuwait.",
+    "screenshots": [
+      "assets/images/projects/ghaslah-man_1.png",
+      "assets/images/projects/ghaslah-man_2.png",
+      "assets/images/projects/ghaslah-man_3.png",
+      "assets/images/projects/ghaslah-man_4.png",
+      "assets/images/projects/ghaslah-man_5.png",
+      "assets/images/projects/ghaslah-man_6.png"
+    ]
+  },
+  {
+    "index": 38,
+    "id": "smile",
+    "name": "Smile kw",
+    "category": "ecommerce",
+    "tagline": "Brands & home-business marketplace",
+    "featured": false,
+    "storeLinks": {
+      "appStore": "6667118019"
+    },
+    "iconAsset": "assets/images/projects/smile_icon.png",
+    "description": "Smile is a place where all brands and home business meet in one place!"
+  },
+  {
+    "index": 39,
+    "id": "hoodifit",
+    "name": "HoodiFit",
+    "category": "ecommerce",
+    "tagline": "Activewear & sport towels",
+    "featured": false,
+    "storeLinks": {
+      "appStore": "6742096577"
+    },
+    "iconAsset": "assets/images/projects/hoodifit_icon.png",
+    "description": "Your health and body always deserve the best. train clean, train comfortably.\nYou see people lugging dirty towels to and from the gym, draping them over fitness equipment only to watch them struggle when they had to pick them back up, ultimately interrupting their workout and we have the ultimate solution.\nOur sport towel and more is here to wick away sweat comfortably and conveniently while looking cool at the same time. From your morning run, to yoga class, to and from the gym, and even a day at the beach, you won’t know how you were ever without it.\nNo matter how fast you run or go; hoodifitkw towel is always there with you.\nOne design with endless possibilities.\nNo more losing or misplacing towels during workouts.\nNo more running out of towels because the gym is crowded!\n• Washer/dryer safe, light weight, soft fabric.\n• You can wear hoodifitkw in 4 different ways/styles, and each has its own benefit and comfort.\nHoodifitkw activewear fits:\nAny and all active customers.\nMen who are looking for solid, long-living active apparel, and a wide range of customizations in wearing styles and colors.\nWomen who are looking for a product that helps them work out in style and offers a level of comfort that no other sport towel in the market does.\nYour target customers looking to source their active apparel from a trusted, local source with all the support and aftercare of international, well established, and specialized factories.\nYour future customers who are looking to stand out and be unique with their sportswear choices.\nYour customers who are into walking, jogging, running, indoor spinning, yoga, pilates, marathons, bodybuilding, paddle, beach activities, or even fishing, we can keep counting.\nYour customers who sweat a lot, used to using towels and tissues, suffer from the AC being too cold all the time, who are allergic to dirty and wet spots, want to always look clean and neat, suffer from headaches or cold sweats during workouts, or simply keep forgetting their towels.\nWE ARE A KUWAITI COMPANY.\nKUWAITI TEAM."
+  },
+  {
+    "index": 40,
+    "id": "hababah",
+    "name": "Hababah",
+    "category": "food",
+    "tagline": "Restaurant & food app",
+    "featured": true,
+    "storeLinks": {
+      "appStore": "6754088393"
+    },
+    "iconAsset": "assets/images/projects/hababah_icon.png",
+    "description": "مطعم حبابة\nالمكان اللي يجمع الطعم الأصيل مع المتعة الحقيقية.\nمن أول لقمة تبدأ الحكاية… وطعم يخليك تبتسم بدون ما تحس.\nإذا ودّك بتجربة تجمع العائلة والأصحاب على سفرة عامرة، حبابة يقدّم لك تشكيلة بوفيهات غنية وأطباق متحضّرة بحب، غير البرجرات اللذيذة اللي تناسب كل الأذواق. وصفاتنا مختارة بعناية، وجودتنا ثابتة، لأننا نؤمن إن الأكل الحلو يُعاش… مو بس يؤكل\nحبابة دع الطعم يتكلم عن نفسه.",
+    "screenshots": [
+      "assets/images/projects/hababah_1.png",
+      "assets/images/projects/hababah_2.png",
+      "assets/images/projects/hababah_3.png",
+      "assets/images/projects/hababah_4.png",
+      "assets/images/projects/hababah_5.png",
+      "assets/images/projects/hababah_6.png"
+    ]
+  },
+  {
+    "index": 41,
+    "id": "montajat-vendor",
+    "name": "Montajat Vendor",
+    "category": "business",
+    "tagline": "Co-op store vendor app",
+    "featured": false,
+    "storeLinks": {
+      "appStore": "6738340109"
+    },
+    "iconAsset": "assets/images/projects/montajat-vendor_icon.png",
+    "description": "تطبيق \"منتجات فندر\" يخدم المحلات في الجمعيات التعاونية ويهدف إلى خدمة المواطنين والوافدين في مناطق الكويت وخاصتا أصحاب المتاجر في الجمعيات  . ويقوم  التطبيق  بتسويق منتجات أصحاب المحلات  والوصول إلى أكبر قاعدة عملاء ممكنة ،  ويساعد في تيسير وتسريع عملية الشراء والتوصيل بشكل مريح لجميع المستخدمين. مع مساعدتهم برفع منتجاتهم الخاصة"
+  },
+  {
+    "index": 42,
+    "id": "paletta",
+    "name": "Paletta",
+    "category": "ecommerce",
+    "tagline": "B2B wholesale sourcing",
+    "featured": true,
+    "storeLinks": {
+      "googlePlay": "com.zamzam.palettaapp",
+      "appStore": "6760196797"
+    },
+    "iconAsset": "assets/images/projects/paletta_icon.png",
+    "description": "Stop searching each item form different wholesaler or distributer, Paletta is here to source all your needs from one source.",
+    "screenshots": [
+      "assets/images/projects/paletta_1.jpg",
+      "assets/images/projects/paletta_2.jpg",
+      "assets/images/projects/paletta_3.jpg",
+      "assets/images/projects/paletta_4.jpg",
+      "assets/images/projects/paletta_5.jpg"
+    ]
   }
 ]

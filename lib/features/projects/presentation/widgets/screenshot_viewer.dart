@@ -1,13 +1,15 @@
+import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/app_typography.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:clever_portfolio/features/projects/domain/entities/app_project.dart';
+import 'package:clever_portfolio/features/projects/presentation/widgets/app_icon_tile.dart';
 import 'package:clever_portfolio/features/projects/presentation/widgets/category_color.dart';
 import 'package:clever_portfolio/features/projects/presentation/widgets/store_buttons.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Opens the full-screen, swipeable screenshot viewer for [project].
+/// Opens the project detail viewer for [project].
 Future<void> showScreenshotViewer(
   BuildContext context,
   AppProject project, {
@@ -21,8 +23,10 @@ Future<void> showScreenshotViewer(
   );
 }
 
-/// Full-screen viewer: swipeable screenshots (+ arrows) over the app name,
-/// category, tagline, store buttons, and the store description.
+/// Project detail viewer. On tablet/desktop the app data sits on the leading
+/// half and the screenshot gallery on the trailing half; on mobile the gallery
+/// stacks above the (height-capped) data. Tapping a screenshot opens a
+/// full-screen, pinch/scroll-zoomable view.
 class ScreenshotViewer extends StatefulWidget {
   /// Creates a [ScreenshotViewer].
   const ScreenshotViewer({
@@ -65,6 +69,9 @@ class _ScreenshotViewerState extends State<ScreenshotViewer> {
     );
   }
 
+  void _openZoom(int index) =>
+      showImageZoom(context, widget.project, initialIndex: index);
+
   bool _isRtl(String text) => RegExp(r'[؀-ۿ]').hasMatch(text);
 
   @override
@@ -72,6 +79,10 @@ class _ScreenshotViewerState extends State<ScreenshotViewer> {
     final project = widget.project;
     final shots = project.screenshots;
     final hue = project.category.hue(context);
+    final sideBySide = !context.isMobile;
+
+    final gallery = _gallery(context, project, shots, hue);
+    final details = _details(context, project, hue, fillHeight: sideBySide);
 
     return Dialog(
       insetPadding: EdgeInsets.zero,
@@ -100,80 +111,258 @@ class _ScreenshotViewerState extends State<ScreenshotViewer> {
                 ],
               ),
             ),
-            // Gallery.
+            // Body: side-by-side on wide screens, stacked on mobile.
             Expanded(
-              child: shots.isEmpty
-                  ? const SizedBox.shrink()
-                  : Stack(
+              child: sideBySide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        PageView.builder(
-                          controller: _pager,
-                          itemCount: shots.length,
-                          onPageChanged: (i) => setState(() => _page = i),
-                          itemBuilder: (context, i) => Padding(
-                            padding: EdgeInsets.all(context.spacing.md.w),
-                            child: Image.asset(shots[i], fit: BoxFit.contain),
-                          ),
-                        ),
-                        if (shots.length > 1) ...[
-                          _Arrow(
-                            start: true,
-                            visible: _page > 0,
-                            onTap: () => _go(-1),
-                          ),
-                          _Arrow(
-                            start: false,
-                            visible: _page < shots.length - 1,
-                            onTap: () => _go(1),
-                          ),
-                          PositionedDirectional(
-                            start: 0,
-                            end: 0,
-                            bottom: context.spacing.sm.h,
-                            child: _Dots(
-                              count: shots.length,
-                              active: _page,
-                              hue: hue,
-                            ),
-                          ),
-                        ],
+                        Expanded(child: details),
+                        Expanded(child: gallery),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        Expanded(child: gallery),
+                        details,
                       ],
                     ),
             ),
-            // Meta + description.
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 240.h),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(context.spacing.lg.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      project.category.trKey.tr(),
-                      style: AppTypography.captionMono.copyWith(color: hue),
-                    ),
-                    SizedBox(height: context.spacing.xs.h),
-                    Text(project.tagline, style: context.text.bodyLarge),
-                    SizedBox(height: context.spacing.md.h),
-                    StoreButtons(project: project),
-                    if (project.description != null) ...[
-                      SizedBox(height: context.spacing.md.h),
-                      Text(
-                        project.description!,
-                        textDirection: _isRtl(project.description!)
-                            ? TextDirection.rtl
-                            : TextDirection.ltr,
-                        style: context.text.bodyMedium?.copyWith(
-                          color: context.colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _gallery(
+    BuildContext context,
+    AppProject project,
+    List<String> shots,
+    Color hue,
+  ) {
+    if (shots.isEmpty) {
+      return ColoredBox(
+        color: context.colors.surfaceContainerHighest,
+        child: Center(child: AppIconTile(project: project, size: 120)),
+      );
+    }
+    return ColoredBox(
+      color: context.colors.surfaceContainerHighest,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          PageView.builder(
+            controller: _pager,
+            itemCount: shots.length,
+            onPageChanged: (i) => setState(() => _page = i),
+            itemBuilder: (context, i) => GestureDetector(
+              onTap: () => _openZoom(i),
+              child: Padding(
+                padding: EdgeInsets.all(context.spacing.md.w),
+                child: Image.asset(shots[i], fit: BoxFit.contain),
+              ),
+            ),
+          ),
+          // Full-screen / zoom affordance.
+          PositionedDirectional(
+            top: context.spacing.sm.h,
+            end: context.spacing.sm.w,
+            child: _RoundIcon(
+              icon: Icons.fullscreen,
+              tooltip: 'Zoom', // no-tr
+              onTap: () => _openZoom(_page),
+            ),
+          ),
+          if (shots.length > 1) ...[
+            _Arrow(start: true, visible: _page > 0, onTap: () => _go(-1)),
+            _Arrow(
+              start: false,
+              visible: _page < shots.length - 1,
+              onTap: () => _go(1),
+            ),
+            PositionedDirectional(
+              start: 0,
+              end: 0,
+              bottom: context.spacing.sm.h,
+              child: _Dots(count: shots.length, active: _page, hue: hue),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _details(
+    BuildContext context,
+    AppProject project,
+    Color hue, {
+    required bool fillHeight,
+  }) {
+    final content = SingleChildScrollView(
+      padding: EdgeInsets.all(context.spacing.lg.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            project.category.trKey.tr(),
+            style: AppTypography.captionMono.copyWith(color: hue),
+          ),
+          SizedBox(height: context.spacing.xs.h),
+          Text(project.tagline, style: context.text.bodyLarge),
+          SizedBox(height: context.spacing.md.h),
+          StoreButtons(project: project),
+          if (project.description != null) ...[
+            SizedBox(height: context.spacing.md.h),
+            Text(
+              project.description!,
+              textDirection: _isRtl(project.description!)
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              style: context.text.bodyMedium?.copyWith(
+                color: context.colors.onSurfaceVariant,
               ),
             ),
           ],
-        ),
+        ],
+      ),
+    );
+    // Side-by-side: fill the column height and scroll internally.
+    // Stacked (mobile): cap the height so the gallery keeps the top space.
+    if (fillHeight) return content;
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: 240.h),
+      child: content,
+    );
+  }
+}
+
+/// Opens a full-screen, pinch/scroll-zoomable viewer over [project]'s
+/// screenshots, starting at [initialIndex].
+Future<void> showImageZoom(
+  BuildContext context,
+  AppProject project, {
+  int initialIndex = 0,
+}) {
+  return showDialog<void>(
+    context: context,
+    barrierColor: context.colors.scrim.withValues(alpha: 0.95),
+    builder: (_) =>
+        _ImageZoomViewer(project: project, initialIndex: initialIndex),
+  );
+}
+
+class _ImageZoomViewer extends StatefulWidget {
+  const _ImageZoomViewer({required this.project, required this.initialIndex});
+
+  final AppProject project;
+  final int initialIndex;
+
+  @override
+  State<_ImageZoomViewer> createState() => _ImageZoomViewerState();
+}
+
+class _ImageZoomViewerState extends State<_ImageZoomViewer> {
+  late final PageController _pager = PageController(
+    initialPage: widget.initialIndex,
+  );
+  late int _page = widget.initialIndex;
+
+  @override
+  void dispose() {
+    _pager.dispose();
+    super.dispose();
+  }
+
+  void _go(int delta) {
+    final next = (_page + delta).clamp(
+      0,
+      widget.project.screenshots.length - 1,
+    );
+    _pager.animateToPage(
+      next,
+      duration: context.motion.button,
+      curve: context.motion.curveHover,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final shots = widget.project.screenshots;
+    final hue = widget.project.category.hue(context);
+
+    return Dialog.fullscreen(
+      backgroundColor: context.colors.scrim,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Page-swipe is disabled so it never fights the pan gesture once a
+          // screenshot is zoomed in; the arrows switch images instead.
+          PageView.builder(
+            controller: _pager,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: shots.length,
+            onPageChanged: (i) => setState(() => _page = i),
+            itemBuilder: (context, i) => InteractiveViewer(
+              minScale: 1,
+              maxScale: 5,
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(context.spacing.lg.w),
+                  child: Image.asset(shots[i], fit: BoxFit.contain),
+                ),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Align(
+              alignment: AlignmentDirectional.topEnd,
+              child: Padding(
+                padding: EdgeInsets.all(context.spacing.md.w),
+                child: _RoundIcon(
+                  icon: Icons.close,
+                  tooltip: 'Close', // no-tr
+                  onTap: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ),
+          ),
+          if (shots.length > 1) ...[
+            _Arrow(start: true, visible: _page > 0, onTap: () => _go(-1)),
+            _Arrow(
+              start: false,
+              visible: _page < shots.length - 1,
+              onTap: () => _go(1),
+            ),
+            PositionedDirectional(
+              start: 0,
+              end: 0,
+              bottom: context.spacing.lg.h,
+              child: _Dots(count: shots.length, active: _page, hue: hue),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// A circular icon button over a translucent surface chip.
+class _RoundIcon extends StatelessWidget {
+  const _RoundIcon({required this.icon, required this.onTap, this.tooltip});
+
+  final IconData icon;
+  final VoidCallback onTap;
+  final String? tooltip;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: context.colors.surface.withValues(alpha: 0.7),
+      shape: const CircleBorder(),
+      child: IconButton(
+        tooltip: tooltip,
+        icon: Icon(icon, color: context.colors.onSurface),
+        onPressed: onTap,
       ),
     );
   }
