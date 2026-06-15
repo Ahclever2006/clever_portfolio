@@ -125,7 +125,13 @@ class _FeaturedCardState extends State<_FeaturedCard> {
             onTap: () =>
                 showScreenshotViewer(context, project, initialPage: _page),
             child: AspectRatio(
-              aspectRatio: 0.66,
+              // Portrait phone screenshots are tall; a less extreme ratio on
+              // mobile keeps each full-width card from becoming a ~570px block.
+              aspectRatio: context.responsive(
+                mobile: 1.0,
+                tablet: 0.72,
+                desktop: 0.66,
+              ),
               child: ColoredBox(
                 color: context.colors.surfaceContainerHighest,
                 child: shots.isEmpty
@@ -141,6 +147,21 @@ class _FeaturedCardState extends State<_FeaturedCard> {
                               shots[i],
                               fit: BoxFit.cover,
                               alignment: Alignment.topCenter,
+                              // Fade in over the surface placeholder once
+                              // decoded (the PNGs are ~1MB), instead of flashing
+                              // a blank rectangle.
+                              frameBuilder: (context, child, frame, wasSync) {
+                                if (wasSync) return child;
+                                return AnimatedOpacity(
+                                  opacity: frame == null ? 0 : 1,
+                                  duration: context.motion.entrance,
+                                  curve: context.motion.curveEntrance,
+                                  child: child,
+                                );
+                              },
+                              errorBuilder: (context, error, stack) => Center(
+                                child: AppIconTile(project: project, size: 64),
+                              ),
                             ),
                           ),
                           if (shots.length > 1) ...[

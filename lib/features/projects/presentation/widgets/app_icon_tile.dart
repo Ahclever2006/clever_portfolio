@@ -17,7 +17,7 @@ class AppIconTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dim = size.w;
+    final dim = size.r;
     final radius = BorderRadius.circular(context.radii.card.r);
     final icon = project.iconAsset;
     if (icon != null) {

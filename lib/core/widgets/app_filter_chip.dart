@@ -38,7 +38,7 @@ class AppFilterChip extends StatelessWidget {
           duration: context.motion.button,
           padding: EdgeInsetsDirectional.symmetric(
             horizontal: context.spacing.md.w,
-            vertical: context.spacing.sm.w,
+            vertical: context.spacing.sm.h,
           ),
           decoration: BoxDecoration(
             color: selected

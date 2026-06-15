@@ -44,12 +44,16 @@ class BackToTopButton extends StatelessWidget {
           child: InkWell(
             onTap: onTap,
             customBorder: const CircleBorder(),
-            child: Padding(
-              padding: EdgeInsets.all(context.spacing.md.w),
-              child: Icon(
-                Icons.arrow_upward_rounded,
-                color: context.colors.onPrimary,
-                size: 20.sp,
+            child: ConstrainedBox(
+              // Guarantee a ≥48px tap target regardless of the scale factor.
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+              child: Padding(
+                padding: EdgeInsets.all(context.spacing.md.w),
+                child: Icon(
+                  Icons.arrow_upward_rounded,
+                  color: context.colors.onPrimary,
+                  size: 22.r,
+                ),
               ),
             ),
           ),

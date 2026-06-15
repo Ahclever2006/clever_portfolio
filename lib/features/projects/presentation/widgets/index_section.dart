@@ -105,7 +105,9 @@ class _Loaded extends StatelessWidget {
           ],
         ),
         SizedBox(height: context.spacing.md.h),
-        // Platform toggle + search + view toggle.
+        // Platform toggle + view toggle. The search joins this row on
+        // tablet/desktop and drops to its own full-width row on mobile — a Wrap
+        // can't lay out a full-width child without overflowing.
         Wrap(
           spacing: context.spacing.md.w,
           runSpacing: context.spacing.sm.h,
@@ -122,20 +124,18 @@ class _Loaded extends StatelessWidget {
                 selected: state.activePlatform == platform,
                 onTap: () => cubit.setPlatform(platform),
               ),
-            SizedBox(
-              width: 220.w,
-              child: TextField(
-                controller: search,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: AppStrings.workSearchHint.tr(),
-                  prefixIcon: const Icon(Icons.search),
-                ),
+            if (!context.isMobile)
+              SizedBox(
+                width: 220.w,
+                child: _SearchField(controller: search),
               ),
-            ),
             _ViewToggle(mode: state.viewMode, onToggle: cubit.toggleViewMode),
           ],
         ),
+        if (context.isMobile) ...[
+          SizedBox(height: context.spacing.sm.h),
+          _SearchField(controller: search),
+        ],
         SizedBox(height: context.spacing.lg.h),
         AnimatedSwitcher(
           duration: context.motion.button,
@@ -172,11 +172,32 @@ class _ViewToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final isGrid = mode == ProjectViewMode.grid;
     return IconButton(
+      iconSize: 20.sp,
       tooltip: isGrid
           ? AppStrings.workViewList.tr()
           : AppStrings.workViewGrid.tr(),
       icon: Icon(isGrid ? Icons.view_list_outlined : Icons.grid_view_outlined),
       onPressed: onToggle,
+    );
+  }
+}
+
+/// Search field for the index — full-width on mobile, fixed-width in the
+/// filter row on larger screens. Chrome (dense + content padding) comes from
+/// `inputDecorationTheme`.
+class _SearchField extends StatelessWidget {
+  const _SearchField({required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: AppStrings.workSearchHint.tr(),
+        prefixIcon: Icon(Icons.search, size: 20.sp),
+      ),
     );
   }
 }

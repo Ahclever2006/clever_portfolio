@@ -15,7 +15,7 @@ class AppSkillChip extends StatelessWidget {
     return Container(
       padding: EdgeInsetsDirectional.symmetric(
         horizontal: context.spacing.md.w,
-        vertical: context.spacing.sm.w,
+        vertical: context.spacing.sm.h,
       ),
       decoration: BoxDecoration(
         color: context.colors.surfaceContainerHighest.withValues(alpha: 0.6),

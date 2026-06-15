@@ -18,7 +18,7 @@ class AppPlatformChip extends StatelessWidget {
     return Container(
       padding: EdgeInsetsDirectional.symmetric(
         horizontal: context.spacing.sm.w,
-        vertical: context.spacing.xs.w,
+        vertical: context.spacing.xs.h,
       ),
       decoration: BoxDecoration(
         color: context.colors.surfaceContainerHighest,

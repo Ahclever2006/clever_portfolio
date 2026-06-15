@@ -1,3 +1,4 @@
+import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:clever_portfolio/core/widgets/back_to_top_button.dart';
 import 'package:clever_portfolio/core/widgets/motion_background.dart';
@@ -108,7 +109,9 @@ class _HomePageState extends State<HomePage> {
             controller: _scroll,
             child: Column(
               children: [
-                SizedBox(height: 72.h),
+                SizedBox(
+                  height: context.responsive(mobile: 64.0, desktop: 72.0),
+                ),
                 _anchor(
                   SectionId.hero,
                   HeroSection(onViewWork: () => _scrollTo(SectionId.work)),

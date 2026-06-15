@@ -37,7 +37,12 @@ class HeroSection extends StatelessWidget {
     final heroSize = 48 + (88 - 48) * t;
 
     return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 0.86.sh),
+      // On phones, size the hero to its content — the 0.86×viewport floor left a
+      // tall empty band above the vertically-centered content. Keep the full
+      // viewport hero on desktop.
+      constraints: BoxConstraints(
+        minHeight: context.responsive(mobile: 0.0, desktop: 0.86.sh),
+      ),
       child: Padding(
         padding: EdgeInsetsDirectional.symmetric(
           horizontal: hPad.w,

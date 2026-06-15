@@ -44,7 +44,7 @@ class AppButton extends StatelessWidget {
         : Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 18.sp),
+              Icon(icon, size: 18.r),
               SizedBox(width: context.spacing.sm.w),
               Text(label),
             ],

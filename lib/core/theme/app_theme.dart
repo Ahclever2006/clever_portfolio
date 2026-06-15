@@ -110,6 +110,8 @@ abstract final class AppTheme {
           foregroundColor: scheme.onPrimary,
           textStyle: AppTypography.label,
           padding: buttonPadding,
+          // Fixed-px tap-target floor so the box never dwarfs the .sp label.
+          minimumSize: const Size(0, 48),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radii.button),
           ),
@@ -121,6 +123,8 @@ abstract final class AppTheme {
           side: BorderSide(color: scheme.outlineVariant),
           textStyle: AppTypography.label,
           padding: buttonPadding,
+          // Fixed-px tap-target floor so the box never dwarfs the .sp label.
+          minimumSize: const Size(0, 48),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radii.button),
           ),
@@ -148,6 +152,11 @@ abstract final class AppTheme {
       inputDecorationTheme: InputDecorationThemeData(
         filled: true,
         fillColor: scheme.surface,
+        isDense: true,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radii.input),
           borderSide: BorderSide(color: scheme.outline),

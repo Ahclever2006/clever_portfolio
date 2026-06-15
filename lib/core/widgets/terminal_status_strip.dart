@@ -20,8 +20,8 @@ class TerminalStatusStrip extends StatelessWidget {
     const caretText = ' _';
 
     Widget dot = Container(
-      width: 8.w,
-      height: 8.w,
+      width: 8.r,
+      height: 8.r,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: context.colors.primary,

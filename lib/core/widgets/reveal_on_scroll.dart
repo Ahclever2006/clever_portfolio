@@ -32,8 +32,13 @@ class _RevealOnScrollState extends State<RevealOnScroll> {
     if (MediaQuery.of(context).disableAnimations) return widget.child;
     return VisibilityDetector(
       key: _detectorKey,
+      // Reveal as soon as ANY part enters the viewport. The previous `> 0.1`
+      // gate never fired for sections taller than ~10× the viewport (e.g. the
+      // 1-column featured stack on mobile), leaving them permanently at
+      // Opacity(0) — invisible but still laid out. `> 0` reveals tall sections
+      // deterministically while keeping the scroll-in entrance for the rest.
       onVisibilityChanged: (info) {
-        if (!_shown && mounted && info.visibleFraction > 0.1) {
+        if (!_shown && mounted && info.visibleFraction > 0) {
           setState(() => _shown = true);
         }
       },
@@ -50,7 +55,9 @@ class _RevealOnScrollState extends State<RevealOnScroll> {
                   duration: context.motion.entrance,
                   curve: context.motion.curveEntrance,
                 )
-          : Opacity(opacity: 0, child: widget.child),
+          // While hidden, also block hit-testing: Opacity(0) alone stays
+          // tappable, which let users tap "empty" space and open a hidden card.
+          : IgnorePointer(child: Opacity(opacity: 0, child: widget.child)),
     );
   }
 }

@@ -29,7 +29,7 @@ class ProjectListRow extends StatelessWidget {
         child: InkWell(
           onTap: primaryUrl == null ? null : () => AppLauncher.open(primaryUrl),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: context.spacing.md.w),
+            padding: EdgeInsets.symmetric(vertical: context.spacing.md.h),
             child: Row(
               children: [
                 Text(
@@ -40,8 +40,8 @@ class ProjectListRow extends StatelessWidget {
                 ),
                 SizedBox(width: context.spacing.md.w),
                 Container(
-                  width: 6.w,
-                  height: 6.w,
+                  width: 6.r,
+                  height: 6.r,
                   decoration: BoxDecoration(shape: BoxShape.circle, color: hue),
                 ),
                 SizedBox(width: context.spacing.md.w),
