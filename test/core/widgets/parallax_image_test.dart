@@ -101,17 +101,17 @@ void main() {
     await tester.pumpWidget(_app(_scrolled(controller)));
     await tester.pumpAndSettle();
 
-    double yAt(double offset) {
+    Future<double> yAt(double offset) async {
       controller.jumpTo(offset);
-      tester.pump();
+      await tester.pump();
       return _translateY(tester);
     }
 
     // As scroll offset grows the card rises through the viewport, so the crop
     // slides — translation moves monotonically in one direction.
-    final low = yAt(0); // card far below the viewport
-    final mid = yAt(1850); // card centred in the viewport
-    final high = yAt(2150); // card at the viewport top
+    final low = await yAt(0); // card far below the viewport
+    final mid = await yAt(1850); // card centred in the viewport
+    final high = await yAt(2150); // card at the viewport top
     expect(low, lessThan(mid));
     expect(mid, lessThan(high));
 
@@ -129,12 +129,16 @@ void main() {
     await tester.pumpAndSettle();
 
     final before = _translateY(tester);
-    await controller.animateTo(
+    // animateTo only advances as frames are pumped, so kick it off and let
+    // pumpAndSettle drive it to completion — awaiting the future first would
+    // deadlock (no frames pump while suspended), timing the test out.
+    final animation = controller.animateTo(
       2150,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
     await tester.pumpAndSettle();
+    await animation;
 
     expect(_translateY(tester), greaterThan(before));
   });
