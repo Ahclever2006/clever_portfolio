@@ -2,6 +2,7 @@ import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:clever_portfolio/core/widgets/back_to_top_button.dart';
 import 'package:clever_portfolio/core/widgets/motion_background.dart';
+import 'package:clever_portfolio/core/widgets/page_scroll.dart';
 import 'package:clever_portfolio/features/contact/presentation/widgets/contact_section.dart';
 import 'package:clever_portfolio/features/profile/presentation/widgets/about_section.dart';
 import 'package:clever_portfolio/features/profile/presentation/widgets/education_section.dart';
@@ -107,25 +108,28 @@ class _HomePageState extends State<HomePage> {
           ),
           SingleChildScrollView(
             controller: _scroll,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: context.responsive(mobile: 64.0, desktop: 72.0),
-                ),
-                _anchor(
-                  SectionId.hero,
-                  HeroSection(onViewWork: () => _scrollTo(SectionId.work)),
-                ),
-                _anchor(SectionId.stats, const StatsBand()),
-                _anchor(SectionId.about, const AboutSection()),
-                _anchor(SectionId.skills, const SkillsSection()),
-                _anchor(SectionId.work, const IndexSection()),
-                _anchor(SectionId.featured, const FeaturedSection()),
-                _anchor(SectionId.experience, const ExperienceSection()),
-                _anchor(SectionId.education, const EducationSection()),
-                _anchor(SectionId.contact, const ContactSection()),
-                const FooterSection(),
-              ],
+            child: PageScroll(
+              controller: _scroll,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: context.responsive(mobile: 64.0, desktop: 72.0),
+                  ),
+                  _anchor(
+                    SectionId.hero,
+                    HeroSection(onViewWork: () => _scrollTo(SectionId.work)),
+                  ),
+                  _anchor(SectionId.stats, const StatsBand()),
+                  _anchor(SectionId.about, const AboutSection()),
+                  _anchor(SectionId.skills, const SkillsSection()),
+                  _anchor(SectionId.work, const IndexSection()),
+                  _anchor(SectionId.featured, const FeaturedSection()),
+                  _anchor(SectionId.experience, const ExperienceSection()),
+                  _anchor(SectionId.education, const EducationSection()),
+                  _anchor(SectionId.contact, const ContactSection()),
+                  const FooterSection(),
+                ],
+              ),
             ),
           ),
           Positioned(

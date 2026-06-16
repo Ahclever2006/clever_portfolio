@@ -2,6 +2,7 @@ import 'package:clever_portfolio/core/constants/app_strings.dart';
 import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/app_typography.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
+import 'package:clever_portfolio/core/widgets/parallax_image.dart';
 import 'package:clever_portfolio/core/widgets/section_scaffold.dart';
 import 'package:clever_portfolio/features/projects/domain/entities/app_project.dart';
 import 'package:clever_portfolio/features/projects/presentation/cubit/projects_cubit.dart';
@@ -143,22 +144,8 @@ class _FeaturedCardState extends State<_FeaturedCard> {
                             controller: _pager,
                             itemCount: shots.length,
                             onPageChanged: (i) => setState(() => _page = i),
-                            itemBuilder: (context, i) => Image.asset(
-                              shots[i],
-                              fit: BoxFit.cover,
-                              alignment: Alignment.topCenter,
-                              // Fade in over the surface placeholder once
-                              // decoded (the PNGs are ~1MB), instead of flashing
-                              // a blank rectangle.
-                              frameBuilder: (context, child, frame, wasSync) {
-                                if (wasSync) return child;
-                                return AnimatedOpacity(
-                                  opacity: frame == null ? 0 : 1,
-                                  duration: context.motion.entrance,
-                                  curve: context.motion.curveEntrance,
-                                  child: child,
-                                );
-                              },
+                            itemBuilder: (context, i) => ParallaxImage(
+                              asset: shots[i],
                               errorBuilder: (context, error, stack) => Center(
                                 child: AppIconTile(project: project, size: 64),
                               ),
