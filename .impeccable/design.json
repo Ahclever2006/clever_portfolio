@@ -73,7 +73,7 @@
       { "name": "button",      "value": "120ms ease-out",                    "purpose": "Button pressed state — faster than hover for tactile feel." },
       { "name": "link",        "value": "200ms ease-out",                    "purpose": "Link underline / color transitions." },
       { "name": "hairline",    "value": "600ms ease-out",                    "purpose": "Hairline scaleX reveal (separator lines, underline reveals)." },
-      { "name": "counter",     "value": "1200ms ease-out",                   "purpose": "Count-up number animations (e.g. app count stat)." },
+      { "name": "counter",     "value": "600ms ease-out",                   "purpose": "Count-up number animations (e.g. app count stat)." },
       { "name": "theme-fade",  "value": "300ms ease-in-out",                 "purpose": "Dark/light theme cross-fade." },
       { "name": "stagger",     "value": "60ms",                              "purpose": "Per-item delay offset for staggered list entrances." }
     ],

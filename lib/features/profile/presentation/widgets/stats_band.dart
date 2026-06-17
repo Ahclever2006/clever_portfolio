@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Thin full-width band of headline stat metrics (plan.md §3.4). Each cell shows
-/// the metric value large in the primary accent over a mono caption label —
-/// 2-up on mobile, 4-up on desktop, hairline-bordered top and bottom.
+/// Thin full-width band of headline stat metrics (plan.md §3.4).
+/// Desktop/tablet: 4-up row with vertical hairlines, each cell staggered in.
+/// Mobile: 2×2 wrap.
 class StatsBand extends StatelessWidget {
   /// Creates a [StatsBand].
   const StatsBand({super.key});
@@ -20,11 +20,7 @@ class StatsBand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<ProfileCubit>().state;
-    if (state is! ProfileLoaded) return const SizedBox.shrink();
-    final stats = state.profile.stats;
-
-    final columns = context.responsive<int>(mobile: 2, desktop: 4);
-    final spacing = context.spacing.lg.w;
+    final stats = state is ProfileLoaded ? state.profile.stats : null;
 
     return RevealOnScroll(
       child: Container(
@@ -45,28 +41,75 @@ class StatsBand extends StatelessWidget {
                 vertical: context.spacing.xl.h,
                 horizontal: context.spacing.lg.w,
               ),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final cellWidth =
-                      (constraints.maxWidth - spacing * (columns - 1)) /
-                      columns;
-                  return Wrap(
-                    spacing: spacing,
-                    runSpacing: context.spacing.lg.h,
-                    children: [
-                      for (final stat in stats)
-                        SizedBox(
-                          width: cellWidth,
-                          child: _StatCell(stat: stat),
-                        ),
-                    ],
-                  );
-                },
-              ),
+              // Render invisible placeholder cells until data arrives so
+              // the band holds its layout space and doesn't cause a jump.
+              child: stats == null
+                  ? SizedBox(height: 80.h)
+                  : context.isMobile
+                  ? _MobileGrid(stats: stats)
+                  : _DesktopRow(stats: stats),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Desktop/tablet: single row, 1px vertical hairlines between cells.
+class _DesktopRow extends StatelessWidget {
+  const _DesktopRow({required this.stats});
+
+  final List<StatMetric> stats;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < stats.length; i++) ...[
+            if (i > 0)
+              VerticalDivider(
+                width: 1,
+                thickness: 1,
+                color: context.colors.outline,
+              ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.symmetric(
+                  horizontal: context.spacing.lg.w,
+                ),
+                child: _StatCell(stat: stats[i]),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Mobile: 2×2 wrap.
+class _MobileGrid extends StatelessWidget {
+  const _MobileGrid({required this.stats});
+
+  final List<StatMetric> stats;
+
+  @override
+  Widget build(BuildContext context) {
+    final halfWidth =
+        (1.sw - context.spacing.lg.w * 2 - context.spacing.lg.w) / 2;
+    return Wrap(
+      spacing: context.spacing.lg.w,
+      runSpacing: context.spacing.lg.h,
+      children: [
+        for (final stat in stats)
+          SizedBox(
+            width: halfWidth,
+            child: _StatCell(stat: stat),
+          ),
+      ],
     );
   }
 }

@@ -10,7 +10,7 @@ class MotionTokens extends ThemeExtension<MotionTokens> {
     this.button = const Duration(milliseconds: 120),
     this.link = const Duration(milliseconds: 200),
     this.hairline = const Duration(milliseconds: 600),
-    this.counter = const Duration(milliseconds: 1200),
+    this.counter = const Duration(milliseconds: 1800),
     this.themeFade = const Duration(milliseconds: 300),
     this.stagger = const Duration(milliseconds: 60),
     this.curveEntrance = Curves.easeOutCubic,
