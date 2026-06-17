@@ -39,6 +39,12 @@ class _HomePageState extends State<HomePage> {
 
   bool _showBackToTop = false;
 
+  // Scroll offset at which the scroll-spy last walked the section keys; the spy
+  // is the expensive part of _onScroll (a localToGlobal per section) so it is
+  // throttled to run only every [_spyStride] px instead of every sub-pixel tick.
+  double _lastSpyOffset = -1e9;
+  static const double _spyStride = 24;
+
   static const Duration _scrollDuration = Duration(milliseconds: 600);
   static const Curve _scrollCurve = Curves.easeOutCubic;
 
@@ -58,9 +64,13 @@ class _HomePageState extends State<HomePage> {
   void _onScroll() {
     if (!mounted) return;
     final offset = _scroll.offset;
+    // Cheap, per-tick: both setters dedupe their emits internally.
     context.read<NavigationCubit>().setElevated(value: offset > 24);
     final show = offset > 600;
     if (show != _showBackToTop) setState(() => _showBackToTop = show);
+    // Expensive (9 localToGlobal walks): throttle to every _spyStride px.
+    if ((offset - _lastSpyOffset).abs() < _spyStride) return;
+    _lastSpyOffset = offset;
     _updateActiveSection();
   }
 
@@ -103,8 +113,12 @@ class _HomePageState extends State<HomePage> {
       drawer: MobileNavDrawer(onNavTap: _scrollTo),
       body: Stack(
         children: [
+          // RepaintBoundary isolates the (animated) background into its own
+          // compositing layer so its repaints don't re-record the siblings.
           const Positioned.fill(
-            child: IgnorePointer(child: MotionBackground()),
+            child: RepaintBoundary(
+              child: IgnorePointer(child: MotionBackground()),
+            ),
           ),
           SingleChildScrollView(
             controller: _scroll,
@@ -136,15 +150,22 @@ class _HomePageState extends State<HomePage> {
             top: 0,
             left: 0,
             right: 0,
-            child: GlassNavBar(
-              onNavTap: _scrollTo,
-              onMenu: () => _scaffoldKey.currentState?.openDrawer(),
+            child: RepaintBoundary(
+              child: GlassNavBar(
+                onNavTap: _scrollTo,
+                onMenu: () => _scaffoldKey.currentState?.openDrawer(),
+              ),
             ),
           ),
           PositionedDirectional(
             end: context.spacing.lg.w,
             bottom: context.spacing.lg.h,
-            child: BackToTopButton(visible: _showBackToTop, onTap: _backToTop),
+            child: RepaintBoundary(
+              child: BackToTopButton(
+                visible: _showBackToTop,
+                onTap: _backToTop,
+              ),
+            ),
           ),
         ],
       ),

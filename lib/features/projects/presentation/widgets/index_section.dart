@@ -240,7 +240,8 @@ class _Grid extends StatelessWidget {
             for (final project in projects)
               SizedBox(
                 width: itemWidth,
-                child: ProjectCard(project: project),
+                // Isolate each card's hover animation from the 42-card grid.
+                child: RepaintBoundary(child: ProjectCard(project: project)),
               ),
           ],
         );

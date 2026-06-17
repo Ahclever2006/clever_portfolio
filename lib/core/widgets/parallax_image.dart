@@ -11,8 +11,13 @@ import 'package:flutter/material.dart';
 /// within that hidden band, so the visible crop appears to lag the scrolling
 /// card. `cover` fills the oversized box, so the band is always image — never
 /// blank — whatever the source aspect ratio, and the parallax travel is a fixed
-/// budget rather than whatever overflow a screenshot happens to have. Only a
-/// paint-time transform changes per frame; the image is never re-decoded.
+/// budget rather than whatever overflow a screenshot happens to have.
+///
+/// Cost discipline: the image + clip + overflow box are built **once** (laid out
+/// from the [LayoutBuilder]); only the `Transform.translate` offset changes per
+/// scroll frame. The asset is decoded at the card's pixel width (not its ~1MB
+/// source resolution) via [cacheWidth], and the whole widget is a
+/// [RepaintBoundary] so its per-frame transform doesn't dirty siblings.
 ///
 /// Honors reduced-motion and a missing [PageScroll] ancestor by rendering the
 /// crop centred and static.
@@ -36,6 +41,10 @@ class _ParallaxImageState extends State<ParallaxImage> {
   final GlobalKey _frameKey = GlobalKey();
   ScrollController? _controller;
 
+  // Cached viewport height — read from MediaQuery on dependency change instead
+  // of per scroll frame.
+  double _viewportHeight = 0;
+
   // Extra image height beyond the frame, per side, as a fraction of the frame
   // height — this is the parallax travel budget. Larger => stronger drift.
   static const double _overflow = 0.18;
@@ -55,26 +64,32 @@ class _ParallaxImageState extends State<ParallaxImage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _controller = PageScroll.maybeOf(context);
+    _viewportHeight = MediaQuery.sizeOf(context).height;
   }
 
   /// Signed position of the frame's centre within the viewport: `-1` at the
   /// top, `0` at the middle, `+1` at the bottom. Clamped beyond the edges.
   double _viewportFraction() {
     final box = _frameKey.currentContext?.findRenderObject();
-    if (box is! RenderBox || !box.attached) return 0;
+    // hasSize guard: the first AnimatedBuilder build runs inside the
+    // LayoutBuilder's layout callback, before the frame box is laid out —
+    // render centred then; scroll-driven rebuilds run post-layout with a size.
+    if (box is! RenderBox || !box.attached || !box.hasSize) return 0;
     final centreY = box.localToGlobal(box.size.center(Offset.zero)).dy;
-    final viewport = MediaQuery.sizeOf(context).height;
-    if (viewport <= 0) return 0;
-    return (centreY / viewport).clamp(0.0, 1.0) * 2 - 1;
+    if (_viewportHeight <= 0) return 0;
+    return (centreY / _viewportHeight).clamp(0.0, 1.0) * 2 - 1;
   }
 
-  Widget _image() {
+  Widget _image(int cacheWidth) {
     return Image.asset(
       widget.asset,
       fit: BoxFit.cover,
-      // Fade in over the placeholder once decoded (screenshots are ~1MB)
-      // instead of flashing a blank rectangle. Stays opaque across the
-      // per-frame scroll rebuilds since the image element is reused.
+      // Decode at the card's device-pixel width, not the ~1MB source res — a
+      // 1290px-wide shot in a ~400px card otherwise rasters a ~14MB bitmap.
+      cacheWidth: cacheWidth,
+      filterQuality: FilterQuality.medium,
+      // Fade in over the placeholder once decoded instead of flashing a blank
+      // rectangle. The element is reused across the per-frame transform.
       frameBuilder: (context, child, frame, wasSync) {
         if (wasSync) return child;
         return AnimatedOpacity(
@@ -88,40 +103,45 @@ class _ParallaxImageState extends State<ParallaxImage> {
     );
   }
 
-  /// [fraction] is the viewport position in `[-1, 1]`; `0` leaves the crop
-  /// centred (also the static, reduced-motion pose).
-  Widget _frame(double fraction) {
-    return SizedBox.expand(
-      key: _frameKey,
-      child: ClipRect(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final extra = constraints.maxHeight * _overflow;
-            return OverflowBox(
-              minWidth: constraints.maxWidth,
-              maxWidth: constraints.maxWidth,
-              minHeight: constraints.maxHeight + extra * 2,
-              maxHeight: constraints.maxHeight + extra * 2,
-              child: Transform.translate(
-                offset: Offset(0, -fraction * extra),
-                child: _image(),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final controller = _controller;
-    if (controller == null || MediaQuery.of(context).disableAnimations) {
-      return _frame(0);
-    }
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, _) => _frame(_viewportFraction()),
+    final animate =
+        controller != null && !MediaQuery.disableAnimationsOf(context);
+    return RepaintBoundary(
+      child: SizedBox.expand(
+        key: _frameKey,
+        child: ClipRect(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final extra = constraints.maxHeight * _overflow;
+              final dpr = MediaQuery.devicePixelRatioOf(context);
+              // Built once per layout — never rebuilt on the scroll ticks.
+              final band = OverflowBox(
+                minWidth: constraints.maxWidth,
+                maxWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight + extra * 2,
+                maxHeight: constraints.maxHeight + extra * 2,
+                child: _image((constraints.maxWidth * dpr).round()),
+              );
+              // Static (reduced-motion / no page scroll): centred crop. Keep an
+              // identity Transform so the rendered structure matches the
+              // animated path (one Transform per instance).
+              if (!animate) {
+                return Transform.translate(offset: Offset.zero, child: band);
+              }
+              return AnimatedBuilder(
+                animation: controller,
+                child: band,
+                builder: (context, child) => Transform.translate(
+                  offset: Offset(0, -_viewportFraction() * extra),
+                  child: child,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

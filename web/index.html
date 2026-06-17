@@ -37,6 +37,9 @@
   <!-- Faster google_fonts fetch -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- CanvasKit wasm host (~3MB gzipped) — warm the connection early. Build
+       with `flutter build web --no-web-resources-cdn` to serve it same-origin. -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">

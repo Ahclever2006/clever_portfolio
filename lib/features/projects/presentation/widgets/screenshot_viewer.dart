@@ -9,6 +9,13 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+/// Decode cap for the viewer screenshots: the screen's pixel width. Source shots
+/// (~1MB, up to ~1290px) decode at most to the device width instead of full res;
+/// larger sources are downscaled, smaller ones are untouched (no upscale).
+int _decodeWidth(BuildContext context) =>
+    (MediaQuery.sizeOf(context).width * MediaQuery.devicePixelRatioOf(context))
+        .round();
+
 /// Opens the project detail viewer for [project].
 Future<void> showScreenshotViewer(
   BuildContext context,
@@ -162,7 +169,11 @@ class _ScreenshotViewerState extends State<ScreenshotViewer> {
                 index: i,
                 child: Padding(
                   padding: EdgeInsets.all(context.spacing.md.w),
-                  child: Image.asset(shots[i], fit: BoxFit.contain),
+                  child: Image.asset(
+                    shots[i],
+                    fit: BoxFit.contain,
+                    cacheWidth: _decodeWidth(context),
+                  ),
                 ),
               ),
             ),
@@ -312,7 +323,11 @@ class _ImageZoomViewerState extends State<_ImageZoomViewer> {
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.all(context.spacing.lg.w),
-                  child: Image.asset(shots[i], fit: BoxFit.contain),
+                  child: Image.asset(
+                    shots[i],
+                    fit: BoxFit.contain,
+                    cacheWidth: _decodeWidth(context),
+                  ),
                 ),
               ),
             ),

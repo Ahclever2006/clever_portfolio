@@ -21,9 +21,19 @@ class AppIconTile extends StatelessWidget {
     final radius = BorderRadius.circular(context.radii.card.r);
     final icon = project.iconAsset;
     if (icon != null) {
+      // Decode at the tile's device-pixel size, not the source res — a 512/1024px
+      // icon in a ~52px tile otherwise holds a multi-MB bitmap in the cache.
+      final cache = (dim * MediaQuery.devicePixelRatioOf(context)).round();
       return ClipRRect(
         borderRadius: radius,
-        child: Image.asset(icon, width: dim, height: dim, fit: BoxFit.cover),
+        child: Image.asset(
+          icon,
+          width: dim,
+          height: dim,
+          fit: BoxFit.cover,
+          cacheWidth: cache,
+          cacheHeight: cache,
+        ),
       );
     }
     final hue = project.category.hue(context);

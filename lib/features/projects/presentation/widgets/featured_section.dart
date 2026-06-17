@@ -47,29 +47,38 @@ class _FeaturedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ProjectsCubit>().state;
-    if (state is! ProjectsLoaded) return const SizedBox.shrink();
+    // Featured depends only on `all`, which never changes after load — select it
+    // (stable identity) so filter/search/view emits don't rebuild the 17 cards.
+    return BlocSelector<ProjectsCubit, ProjectsState, List<AppProject>>(
+      selector: (state) =>
+          state is ProjectsLoaded ? state.all : const <AppProject>[],
+      builder: (context, all) {
+        if (all.isEmpty) return const SizedBox.shrink();
+        final featured = all.where((p) => p.featured).toList();
+        if (featured.isEmpty) return const SizedBox.shrink();
 
-    final featured = state.all.where((p) => p.featured).toList();
-    if (featured.isEmpty) return const SizedBox.shrink();
+        final columns = context.responsive(mobile: 1, tablet: 2, desktop: 4);
+        final gap = context.spacing.lg.w;
 
-    final columns = context.responsive(mobile: 1, tablet: 2, desktop: 4);
-    final gap = context.spacing.lg.w;
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final itemWidth =
-            (constraints.maxWidth - gap * (columns - 1)) / columns;
-        return Wrap(
-          spacing: gap,
-          runSpacing: context.spacing.lg.h,
-          children: [
-            for (final project in featured)
-              SizedBox(
-                width: itemWidth,
-                child: _FeaturedCard(project: project),
-              ),
-          ],
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final itemWidth =
+                (constraints.maxWidth - gap * (columns - 1)) / columns;
+            return Wrap(
+              spacing: gap,
+              runSpacing: context.spacing.lg.h,
+              children: [
+                for (final project in featured)
+                  SizedBox(
+                    width: itemWidth,
+                    // Isolate each card's gallery repaints from its siblings.
+                    child: RepaintBoundary(
+                      child: _FeaturedCard(project: project),
+                    ),
+                  ),
+              ],
+            );
+          },
         );
       },
     );
@@ -90,6 +99,11 @@ class _FeaturedCardState extends State<_FeaturedCard> {
   final PageController _pager = PageController();
   int _page = 0;
 
+  // Rendered gallery width (logical px), captured at layout — used to decode
+  // precached neighbours at the SAME cacheWidth ParallaxImage will request, so
+  // the prime lands on the right cache key instead of a wasted full-res entry.
+  double _galleryWidth = 0;
+
   @override
   void dispose() {
     _pager.dispose();
@@ -104,6 +118,19 @@ class _FeaturedCardState extends State<_FeaturedCard> {
       duration: context.motion.button,
       curve: context.motion.curveHover,
     );
+  }
+
+  /// Decode the pages on either side of [center] ahead of the swipe so the
+  /// first reveal doesn't decode a ~1MB shot on the swipe frame.
+  void _precacheAround(int center) {
+    if (_galleryWidth <= 0 || !mounted) return;
+    final shots = widget.project.screenshots;
+    final width = (_galleryWidth * MediaQuery.devicePixelRatioOf(context))
+        .round();
+    for (final i in [center - 1, center + 1]) {
+      if (i < 0 || i >= shots.length) continue;
+      precacheImage(ResizeImage(AssetImage(shots[i]), width: width), context);
+    }
   }
 
   @override
@@ -137,35 +164,54 @@ class _FeaturedCardState extends State<_FeaturedCard> {
                 color: context.colors.surfaceContainerHighest,
                 child: shots.isEmpty
                     ? Center(child: AppIconTile(project: project, size: 88))
-                    : Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          PageView.builder(
-                            controller: _pager,
-                            itemCount: shots.length,
-                            onPageChanged: (i) => setState(() => _page = i),
-                            itemBuilder: (context, i) => ParallaxImage(
-                              asset: shots[i],
-                              errorBuilder: (context, error, stack) => Center(
-                                child: AppIconTile(project: project, size: 64),
+                    : LayoutBuilder(
+                        builder: (context, constraints) {
+                          // Cache the gallery width and prime the initial
+                          // neighbours once it's known.
+                          if (_galleryWidth != constraints.maxWidth) {
+                            _galleryWidth = constraints.maxWidth;
+                            WidgetsBinding.instance.addPostFrameCallback(
+                              (_) => _precacheAround(_page),
+                            );
+                          }
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              PageView.builder(
+                                controller: _pager,
+                                itemCount: shots.length,
+                                onPageChanged: (i) {
+                                  setState(() => _page = i);
+                                  _precacheAround(i);
+                                },
+                                itemBuilder: (context, i) => ParallaxImage(
+                                  asset: shots[i],
+                                  errorBuilder: (context, error, stack) =>
+                                      Center(
+                                        child: AppIconTile(
+                                          project: project,
+                                          size: 64,
+                                        ),
+                                      ),
+                                ),
                               ),
-                            ),
-                          ),
-                          if (shots.length > 1) ...[
-                            _MiniArrow(start: true, onTap: () => _go(-1)),
-                            _MiniArrow(start: false, onTap: () => _go(1)),
-                            PositionedDirectional(
-                              start: 0,
-                              end: 0,
-                              bottom: context.spacing.sm.h,
-                              child: _Dots(
-                                count: shots.length,
-                                active: _page,
-                                hue: hue,
-                              ),
-                            ),
-                          ],
-                        ],
+                              if (shots.length > 1) ...[
+                                _MiniArrow(start: true, onTap: () => _go(-1)),
+                                _MiniArrow(start: false, onTap: () => _go(1)),
+                                PositionedDirectional(
+                                  start: 0,
+                                  end: 0,
+                                  bottom: context.spacing.sm.h,
+                                  child: _Dots(
+                                    count: shots.length,
+                                    active: _page,
+                                    hue: hue,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          );
+                        },
                       ),
               ),
             ),
