@@ -41,12 +41,12 @@ class HeroSection extends StatelessWidget {
       // tall empty band above the vertically-centered content. Keep the full
       // viewport hero on desktop.
       constraints: BoxConstraints(
-        minHeight: context.responsive(mobile: 0.0, desktop: 0.86.sh),
+        minHeight: context.responsive(mobile: 0.0, desktop: 0.72.sh),
       ),
       child: Padding(
         padding: EdgeInsetsDirectional.symmetric(
           horizontal: hPad.w,
-          vertical: context.spacing.xxl.h,
+          vertical: context.spacing.xl.h,
         ),
         child: Center(
           child: ConstrainedBox(
