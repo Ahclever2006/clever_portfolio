@@ -68,9 +68,21 @@ class GlassNavBar extends StatelessWidget {
                   onTap: onNavTap,
                 ),
                 _NavLink(
+                  label: AppStrings.navSkills.tr(),
+                  id: SectionId.skills,
+                  active: nav.activeSection == SectionId.skills,
+                  onTap: onNavTap,
+                ),
+                _NavLink(
                   label: AppStrings.navWork.tr(),
                   id: SectionId.work,
                   active: nav.activeSection == SectionId.work,
+                  onTap: onNavTap,
+                ),
+                _NavLink(
+                  label: AppStrings.navFeatured.tr(),
+                  id: SectionId.featured,
+                  active: nav.activeSection == SectionId.featured,
                   onTap: onNavTap,
                 ),
                 _NavLink(
@@ -120,7 +132,7 @@ class GlassNavBar extends StatelessWidget {
   }
 }
 
-class _NavLink extends StatelessWidget {
+class _NavLink extends StatefulWidget {
   const _NavLink({
     required this.label,
     required this.id,
@@ -134,19 +146,43 @@ class _NavLink extends StatelessWidget {
   final void Function(SectionId) onTap;
 
   @override
+  State<_NavLink> createState() => _NavLinkState();
+}
+
+class _NavLinkState extends State<_NavLink> {
+  bool _hovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsetsDirectional.symmetric(
-        horizontal: context.spacing.sm.w,
-      ),
-      child: TextButton(
-        onPressed: () => onTap(id),
-        child: Text(
-          label,
-          style: context.text.labelLarge?.copyWith(
-            color: active
-                ? context.colors.primary
-                : context.colors.onSurfaceVariant,
+    final lit = widget.active || _hovered;
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: () => widget.onTap(widget.id),
+        child: AnimatedContainer(
+          duration: context.motion.link,
+          padding: EdgeInsetsDirectional.symmetric(
+            horizontal: context.spacing.sm.w,
+            vertical: 4.h,
+          ),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: lit ? context.colors.primary : Colors.transparent,
+                width: 2.h,
+              ),
+            ),
+          ),
+          child: AnimatedDefaultTextStyle(
+            duration: context.motion.link,
+            style: (context.text.labelLarge ?? const TextStyle()).copyWith(
+              color: lit
+                  ? context.colors.primary
+                  : context.colors.onSurfaceVariant,
+            ),
+            child: Text(widget.label),
           ),
         ),
       ),

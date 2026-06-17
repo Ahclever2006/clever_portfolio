@@ -10,7 +10,9 @@ abstract final class AppStrings {
 
   // Nav
   static const String navAbout = 'nav.about';
+  static const String navSkills = 'nav.skills';
   static const String navWork = 'nav.work';
+  static const String navFeatured = 'nav.featured';
   static const String navExperience = 'nav.experience';
   static const String navContact = 'nav.contact';
   static const String navDownloadCv = 'nav.downloadCv';

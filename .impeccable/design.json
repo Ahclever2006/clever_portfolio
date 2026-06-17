@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-17T00:00:00Z",
+  "title": "Design System: clever_portfolio",
+  "extensions": {
+    "colorMeta": {
+      "d-primary": {
+        "role": "primary",
+        "displayName": "Electric Emerald",
+        "canonical": "oklch(91% 0.19 157)",
+        "tonalRamp": ["#012b19", "#024f2e", "#037244", "#04955a", "#0EB870", "#3DF5A3", "#6FFAB9", "#A8FDDA"]
+      },
+      "d-secondary": {
+        "role": "secondary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(72% 0.16 250)",
+        "tonalRamp": ["#0a1a40", "#0e2c6e", "#123f9c", "#1652ca", "#3a7af5", "#5AA2FF", "#87BFFF", "#BDDCFF"]
+      },
+      "d-bg": {
+        "role": "neutral",
+        "displayName": "Void Canvas",
+        "canonical": "oklch(8% 0.012 240)",
+        "tonalRamp": ["#050608", "#0A0C10", "#10141A", "#161B22", "#1B222B", "#222A33", "#303A45", "#8B97A5"]
+      },
+      "d-surface": {
+        "role": "neutral",
+        "displayName": "Indexed Surface",
+        "canonical": "oklch(11% 0.014 240)",
+        "tonalRamp": ["#050608", "#0A0C10", "#10141A", "#161B22", "#1B222B", "#222A33", "#303A45", "#8B97A5"]
+      },
+      "l-primary": {
+        "role": "primary",
+        "displayName": "Production Teal",
+        "canonical": "oklch(55% 0.15 163)",
+        "tonalRamp": ["#013320", "#025e39", "#038952", "#0E8F6E", "#26B88A", "#48D9A8", "#80EEC6", "#C0F8E3"]
+      },
+      "cat-ecommerce": { "role": "category", "displayName": "E-Commerce", "canonical": "oklch(91% 0.19 157)" },
+      "cat-games":     { "role": "category", "displayName": "Games",      "canonical": "oklch(74% 0.19 42)"  },
+      "cat-booking":   { "role": "category", "displayName": "Booking",    "canonical": "oklch(83% 0.14 204)" },
+      "cat-business":  { "role": "category", "displayName": "Business",   "canonical": "oklch(72% 0.16 250)" },
+      "cat-food":      { "role": "category", "displayName": "Food",       "canonical": "oklch(83% 0.17 84)"  },
+      "cat-services":  { "role": "category", "displayName": "Services",   "canonical": "oklch(72% 0.15 258)" },
+      "cat-medical":   { "role": "category", "displayName": "Medical",    "canonical": "oklch(80% 0.14 186)" },
+      "cat-education": { "role": "category", "displayName": "Education",  "canonical": "oklch(70% 0.19 302)" },
+      "cat-travel":    { "role": "category", "displayName": "Travel",     "canonical": "oklch(79% 0.15 212)" }
+    },
+    "typographyMeta": {
+      "display":        { "displayName": "Display Hero",    "purpose": "Ahmed's name + role in the hero section. Used once per page." },
+      "display-section":{ "displayName": "Display Section", "purpose": "Section headings: Work Index, Profile, Experience, Contact." },
+      "title":          { "displayName": "Title",           "purpose": "App card names, role titles, primary label inside content units." },
+      "eyebrow-mono":   { "displayName": "Eyebrow Mono",   "purpose": "Technical signals only: version numbers, tech names, formatted dates. Max once per section." },
+      "body":           { "displayName": "Body",            "purpose": "Primary prose. Max 65–75ch line length." },
+      "body-small":     { "displayName": "Body Small",      "purpose": "Card descriptions, bio snippets, supporting text." },
+      "label":          { "displayName": "Label",           "purpose": "UI controls: button text, chip text, nav items. Sentence-case only." },
+      "folio-mono":     { "displayName": "Folio Mono",     "purpose": "App index numbers 01–42 in the release index. The folio label." },
+      "caption-mono":   { "displayName": "Caption Mono",   "purpose": "Timestamps, version strings, store metadata." }
+    },
+    "shadows": [
+      {
+        "name": "accent-glow",
+        "value": "0 0 16px 0 rgba(61,245,163,0.25)",
+        "purpose": "Primary button hover + active filter pills + focused inputs. Never at rest. Reduced-motion: instant, no transition."
+      },
+      {
+        "name": "modal-lift",
+        "value": "0 8px 32px 0 rgba(0,0,0,0.48)",
+        "purpose": "Modals and drawers only. Separates overlay from tonal-layered page surface."
+      }
+    ],
+    "motion": [
+      { "name": "entrance",    "value": "480ms cubic-bezier(0.33,1,0.68,1)", "purpose": "Section/row entrance animation. Stagger: 60ms per item." },
+      { "name": "hover",       "value": "160ms ease-out",                    "purpose": "Color/border transitions on hover." },
+      { "name": "button",      "value": "120ms ease-out",                    "purpose": "Button pressed state — faster than hover for tactile feel." },
+      { "name": "link",        "value": "200ms ease-out",                    "purpose": "Link underline / color transitions." },
+      { "name": "hairline",    "value": "600ms ease-out",                    "purpose": "Hairline scaleX reveal (separator lines, underline reveals)." },
+      { "name": "counter",     "value": "1200ms ease-out",                   "purpose": "Count-up number animations (e.g. app count stat)." },
+      { "name": "theme-fade",  "value": "300ms ease-in-out",                 "purpose": "Dark/light theme cross-fade." },
+      { "name": "stagger",     "value": "60ms",                              "purpose": "Per-item delay offset for staggered list entrances." }
+    ],
+    "breakpoints": [
+      { "name": "mobile",  "value": "600px",  "description": "< 600px — single-column, gutterMobile (24px)" },
+      { "name": "tablet",  "value": "1024px", "description": "600–1024px — two-column layout permitted" },
+      { "name": "desktop", "value": "1440px", "description": "> 1024px — full layout, gutterDesktop (64px)" },
+      { "name": "wide",    "value": "1440px", "description": "> 1440px — max-content-width (1200px) centered" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one CTA that uses the emerald fill. Used for Download CV, Contact, Submit.",
+      "html": "<button class=\"ds-btn-primary\">Download CV</button>",
+      "css": ".ds-btn-primary { background: #3DF5A3; color: #04130C; padding: 14px 28px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; border: none; border-radius: 10px; cursor: pointer; transition: background 120ms ease-out, box-shadow 160ms ease-out; } .ds-btn-primary:hover { background: #56FFB4; box-shadow: 0 0 16px 0 rgba(61,245,163,0.25); } .ds-btn-primary:active { background: #2BD98C; box-shadow: none; } .ds-btn-primary:focus-visible { outline: 2px solid #3DF5A3; outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary CTA. Used alongside primary when two actions are needed.",
+      "html": "<button class=\"ds-btn-ghost\">View All Apps</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: #3DF5A3; padding: 14px 28px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; border: 1px solid #3DF5A3; border-radius: 10px; cursor: pointer; transition: background 160ms ease-out; } .ds-btn-ghost:hover { background: #0F2A20; } .ds-btn-ghost:focus-visible { outline: 2px solid #3DF5A3; outline-offset: 2px; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Category and platform filter pill in the app index toolbar.",
+      "html": "<button class=\"ds-chip-filter ds-chip-filter--active\">E-Commerce</button>",
+      "css": ".ds-chip-filter { background: #161B22; color: #C9D1D9; padding: 6px 14px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; border: 1px solid #222A33; border-radius: 8px; cursor: pointer; transition: background 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out; } .ds-chip-filter:hover { border-color: #303A45; } .ds-chip-filter--active { background: #0F2A20; color: #3DF5A3; border-color: #3DF5A3; } .ds-chip-filter--active:hover { background: #0F2A20; box-shadow: 0 0 12px 0 rgba(61,245,163,0.2); }"
+    },
+    {
+      "name": "Platform Chip",
+      "kind": "chip",
+      "refersTo": "chip-platform",
+      "description": "Display-only badge showing iOS / Android on an app index row.",
+      "html": "<span class=\"ds-chip-platform\">iOS</span>",
+      "css": ".ds-chip-platform { display: inline-block; background: #161B22; color: #8B97A5; padding: 4px 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 400; line-height: 1.4; border-radius: 999px; border: 1px solid #222A33; }"
+    },
+    {
+      "name": "App Index Card",
+      "kind": "card",
+      "refersTo": "card-app",
+      "description": "The primary content unit in the 42-app release index.",
+      "html": "<div class=\"ds-card-app\"><span class=\"ds-card-app__folio\">01</span><span class=\"ds-card-app__dot\" style=\"background:#3DF5A3\"></span><span class=\"ds-card-app__name\">App Name</span><span class=\"ds-chip-platform\">iOS</span></div>",
+      "css": ".ds-card-app { display: flex; align-items: center; gap: 12px; background: #10141A; border: 1px solid #222A33; border-radius: 16px; padding: 20px; transition: background 160ms ease-out, border-color 160ms ease-out; cursor: pointer; } .ds-card-app:hover { background: #161B22; border-color: #303A45; } .ds-card-app__folio { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.5px; color: #5A6470; min-width: 28px; } .ds-card-app__dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; } .ds-card-app__name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; line-height: 1.25; color: #E6EDF3; flex: 1; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Contact form field. Used in the contact section only.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Your name\">",
+      "css": ".ds-input { width: 100%; background: #10141A; color: #E6EDF3; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 400; line-height: 1.65; border: 1px solid #222A33; border-radius: 10px; outline: none; transition: border-color 200ms ease-out, box-shadow 200ms ease-out; } .ds-input::placeholder { color: #8B97A5; } .ds-input:focus { border-color: #3DF5A3; border-width: 1.5px; box-shadow: 0 0 12px 0 rgba(61,245,163,0.125); } .ds-input[aria-invalid='true'] { border-color: #FF6B6B; } .ds-input:disabled { opacity: 0.4; cursor: not-allowed; }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Top sticky nav. Transparent at top, surface tint + blur on scroll.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav__item\" href=\"#work\">Work</a><a class=\"ds-nav__item ds-nav__item--active\" href=\"#profile\">Profile</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 32px; padding: 0 64px; height: 64px; background: transparent; transition: background 300ms ease-in-out, backdrop-filter 300ms; } .ds-nav--scrolled { background: rgba(16,20,26,0.88); backdrop-filter: blur(12px); } .ds-nav__item { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; color: #C9D1D9; text-decoration: none; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: color 160ms ease-out, border-color 160ms ease-out; } .ds-nav__item:hover { color: #E6EDF3; border-bottom-color: #3DF5A3; } .ds-nav__item--active { color: #3DF5A3; border-bottom-color: #3DF5A3; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signal Log",
+    "overview": "This is a production terminal with a live index. The canvas is deep carbon (#0A0C10), nearly black but with a faint blue-teal tint that tells you a screen is on, not paper is blank. One electric emerald (#3DF5A3) pulses through it as the sole signal color — the kind of green that means process running, build passing, all 42 deployed. Everything else is structured neutral: layered surfaces in increasing lightness, monospaced folio numbers, and a restrained per-category hue system.\n\nThe layout reads like a versioned release index — dense, scannable, authoritative. Both dark and light themes are first-class. The dark default is deploy night. The light mode is morning review. Both express the same character.",
+    "keyCharacteristics": [
+      "Dark-first, both themes fully specified",
+      "One signal accent (electric emerald) used sparingly — its rarity is the point",
+      "Per-category hues on index numbers, filter pills, and tag text only — never as fills",
+      "JetBrains Mono as engineering signal, not decoration",
+      "Choreographed entrance motion, then state-change only",
+      "Reduced-motion: opacity crossfade for all reveals"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule",     "body": "The electric emerald appears on ≤10% of any given screen in full brightness. Seeing it means something is active, passing, or interactive. If it appears everywhere, it means nothing.", "section": "colors" },
+      { "name": "The No-Fill Rule",         "body": "Category hues never fill areas larger than 24px × 24px. They are wayfinding dots, not palette colors.", "section": "colors" },
+      { "name": "The Flat-By-Default Rule", "body": "Every surface is flat at rest. No resting shadows on cards, chips, inputs, or navigation. Shadows are state responses, not decorative.", "section": "elevation" },
+      { "name": "The One Glow Rule",        "body": "The emerald glow is used on exactly one class of surface at any moment. Two glowing elements simultaneously dilute the signal.", "section": "elevation" },
+      { "name": "The Mono Restraint Rule",  "body": "JetBrains Mono is used in three roles: folio numbers, eyebrow signals, and version/date metadata. Never for body text, headings, or button labels.", "section": "typography" },
+      { "name": "The Arabic Parity Rule",   "body": "All three families fall back to Cairo for Arabic glyphs. Both EN and AR locales render at identical hierarchy and weight.", "section": "typography" },
+      { "name": "The Chip Grammar Rule",    "body": "Chips are the only components that use the pill radius. Everything else stays at ≤16px.", "section": "components" }
+    ],
+    "dos": [
+      "Use Electric Emerald for exactly one interactive role per screen.",
+      "Express depth through tonal surface layers (#0A0C10 → #10141A → #161B22 → #1B222B).",
+      "Use JetBrains Mono exclusively for folio numbers, version/date metadata, and single-line eyebrow signals.",
+      "Gate all entrance animations behind prefers-reduced-motion.",
+      "Use start/end for all Flutter widget padding, margin, and alignment.",
+      "Render store buttons only when a store ID exists in apps.json."
+    ],
+    "donts": [
+      "Don't use border-left > 1px as a colored accent stripe on any card or list row.",
+      "Don't use gradient text (background-clip: text + gradient).",
+      "Don't use glassmorphism decoratively — blur reserved for sticky nav only.",
+      "Don't use the warm-neutral body background band (OKLCH L 0.84–0.97, C < 0.06, hue 40–100).",
+      "Don't create hero-metric layouts (large number, small label, supporting stats, gradient accent).",
+      "Don't put eyebrow labels above every section heading.",
+      "Don't use numbered section markers (01/02/03) outside the app release index.",
+      "Don't place per-category hues on any surface larger than 24px × 24px.",
+      "Don't hardcode any color, font size, or spacing value in a Flutter widget.",
+      "Don't use Colors.* in widgets (except Colors.transparent)."
+    ]
+  }
+}

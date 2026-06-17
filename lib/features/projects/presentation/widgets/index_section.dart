@@ -1,7 +1,9 @@
 import 'package:clever_portfolio/core/constants/app_strings.dart';
 import 'package:clever_portfolio/core/responsive/responsive.dart';
+import 'package:clever_portfolio/core/theme/app_typography.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:clever_portfolio/core/widgets/app_filter_chip.dart';
+import 'package:clever_portfolio/core/widgets/reveal_on_scroll.dart';
 import 'package:clever_portfolio/core/widgets/section_scaffold.dart';
 import 'package:clever_portfolio/features/projects/domain/entities/app_category.dart';
 import 'package:clever_portfolio/features/projects/domain/entities/app_platform.dart';
@@ -16,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Folio 05 — "The Index": the 37 apps as a filterable numbered list ⇄ grid.
+/// Folio 05 — "The Index": the 42 apps as a filterable numbered list ⇄ grid.
 class IndexSection extends StatefulWidget {
   /// Creates an [IndexSection].
   const IndexSection({super.key});
@@ -137,6 +139,23 @@ class _Loaded extends StatelessWidget {
           _SearchField(controller: search),
         ],
         SizedBox(height: context.spacing.lg.h),
+        // Result count — crossfades between filter states.
+        AnimatedSwitcher(
+          duration: context.motion.hover,
+          child: Align(
+            key: ValueKey(state.visible.length),
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              state.visible.length == state.all.length
+                  ? '${state.all.length} apps'
+                  : '${state.visible.length} of ${state.all.length}',
+              style: AppTypography.captionMono.copyWith(
+                color: context.colors.onSurfaceVariant,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: context.spacing.sm.h),
         AnimatedSwitcher(
           duration: context.motion.button,
           child: state.visible.isEmpty
@@ -209,11 +228,18 @@ class _List extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cap stagger at 6 items × 60ms so deep rows don't wait unreasonably.
+    final staggerMs = context.motion.stagger.inMilliseconds;
     return Column(
       children: [
         for (var i = 0; i < projects.length; i++) ...[
           if (i > 0) Divider(height: 1, color: context.colors.outline),
-          ProjectListRow(project: projects[i]),
+          RevealOnScroll(
+            delay: Duration(
+              milliseconds: (i * staggerMs).clamp(0, staggerMs * 6),
+            ),
+            child: RepaintBoundary(child: ProjectListRow(project: projects[i])),
+          ),
         ],
       ],
     );
@@ -229,6 +255,7 @@ class _Grid extends StatelessWidget {
   Widget build(BuildContext context) {
     final columns = context.responsive(mobile: 1, tablet: 2, desktop: 3);
     final gap = context.spacing.gridGap.w;
+    final staggerMs = context.motion.stagger.inMilliseconds;
     return LayoutBuilder(
       builder: (context, constraints) {
         final itemWidth =
@@ -237,11 +264,18 @@ class _Grid extends StatelessWidget {
           spacing: gap,
           runSpacing: gap,
           children: [
-            for (final project in projects)
+            for (var i = 0; i < projects.length; i++)
               SizedBox(
                 width: itemWidth,
-                // Isolate each card's hover animation from the 42-card grid.
-                child: RepaintBoundary(child: ProjectCard(project: project)),
+                child: RevealOnScroll(
+                  delay: Duration(
+                    milliseconds: (i * staggerMs).clamp(0, staggerMs * 6),
+                  ),
+                  // Isolate each card's hover animation from the 42-card grid.
+                  child: RepaintBoundary(
+                    child: ProjectCard(project: projects[i]),
+                  ),
+                ),
               ),
           ],
         );

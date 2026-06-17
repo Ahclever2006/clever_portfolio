@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 /// App bootstrap: binding, localization, Bloc observer, DI, clean web URLs,
 /// then `runApp` (plan.md §5.5).
@@ -12,6 +13,8 @@ Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   Bloc.observer = AppObserver();
+  // Fire visibility callbacks immediately instead of the 500ms default batch.
+  VisibilityDetectorController.instance.updateInterval = Duration.zero;
   await configureDependencies();
   usePathUrlStrategy();
   runApp(

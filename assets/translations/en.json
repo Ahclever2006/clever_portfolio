@@ -4,7 +4,9 @@
   },
   "nav": {
     "about": "About",
+    "skills": "Skills",
     "work": "Work",
+    "featured": "Featured",
     "experience": "Experience",
     "contact": "Contact",
     "downloadCv": "Download CV"
