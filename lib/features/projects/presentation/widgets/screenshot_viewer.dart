@@ -157,9 +157,13 @@ class _ScreenshotViewerState extends State<ScreenshotViewer> {
             onPageChanged: (i) => setState(() => _page = i),
             itemBuilder: (context, i) => GestureDetector(
               onTap: () => _openZoom(i),
-              child: Padding(
-                padding: EdgeInsets.all(context.spacing.md.w),
-                child: Image.asset(shots[i], fit: BoxFit.contain),
+              child: _ParallaxPage(
+                controller: _pager,
+                index: i,
+                child: Padding(
+                  padding: EdgeInsets.all(context.spacing.md.w),
+                  child: Image.asset(shots[i], fit: BoxFit.contain),
+                ),
               ),
             ),
           ),
@@ -342,6 +346,67 @@ class _ImageZoomViewerState extends State<_ImageZoomViewer> {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// Slides a [PageView] child horizontally against the swipe so the image lags
+/// the page travel, lending the gallery depth (horizontal scroll parallax,
+/// the swipe-axis sibling of [ParallaxImage]'s vertical drift).
+///
+/// The child drifts within its page cell, which is clipped to the cell — the
+/// gallery's [ColoredBox] background shows through any reveal, so a
+/// `BoxFit.contain` screenshot never exposes a blank edge whatever its aspect
+/// ratio. Only a paint-time transform changes per frame; the image is never
+/// re-decoded. Honors reduced-motion (renders static) and RTL (mirrors the
+/// drift so it still lags the swipe).
+class _ParallaxPage extends StatelessWidget {
+  const _ParallaxPage({
+    required this.controller,
+    required this.index,
+    required this.child,
+  });
+
+  /// The gallery's page controller, read each frame for its scroll offset.
+  final PageController controller;
+
+  /// This child's page index, the rest pose where the image sits centred.
+  final int index;
+
+  /// The screenshot (already padded) to drift.
+  final Widget child;
+
+  // Horizontal drift budget as a fraction of the page width, per unit of page
+  // offset — larger lets the image lag the swipe more.
+  static const double _travel = 0.6;
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.of(context).disableAnimations) return child;
+    final sign = Directionality.of(context) == TextDirection.rtl ? -1.0 : 1.0;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final budget = constraints.maxWidth * _travel;
+        return AnimatedBuilder(
+          animation: controller,
+          // Signed distance of this cell from the centred page, clamped to the
+          // neighbours so off-screen pages don't translate off their cell.
+          builder: (context, inner) {
+            var offset = 0.0;
+            if (controller.hasClients && controller.position.haveDimensions) {
+              final page = controller.page ?? index.toDouble();
+              offset = (page - index).clamp(-1.0, 1.0);
+            }
+            return ClipRect(
+              child: Transform.translate(
+                offset: Offset(offset * budget * sign, 0),
+                child: inner,
+              ),
+            );
+          },
+          child: child,
+        );
+      },
     );
   }
 }
