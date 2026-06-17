@@ -56,9 +56,15 @@
     "message": "الرسالة",
     "send": "إرسال الرسالة",
     "sending": "جارٍ الإرسال…",
-    "success": "شكرًا — تم إرسال رسالتك.",
+    "success": "تم إرسال رسالتك.",
+    "sentTitle": "MESSAGE_SENT",
     "errorFallback": "تعذّر الإرسال الآن. راسلني عبر البريد مباشرة.",
-    "emailMe": "راسلني"
+    "emailMe": "راسلني",
+    "downloadCv": "تحميل السيرة الذاتية",
+    "whatsapp": "واتساب",
+    "validateName": "يرجى إدخال اسمك",
+    "validateEmail": "يرجى إدخال بريد إلكتروني صحيح",
+    "validateMsg": "الرسالة يجب أن تكون 10 أحرف على الأقل"
   },
   "category": {
     "ecommerce": "تجارة إلكترونية",

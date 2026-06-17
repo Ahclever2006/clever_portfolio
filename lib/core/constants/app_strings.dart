@@ -66,8 +66,14 @@ abstract final class AppStrings {
   static const String contactSend = 'contact.send';
   static const String contactSending = 'contact.sending';
   static const String contactSuccess = 'contact.success';
+  static const String contactSentTitle = 'contact.sentTitle';
   static const String contactErrorFallback = 'contact.errorFallback';
   static const String contactEmailMe = 'contact.emailMe';
+  static const String contactDownloadCv = 'contact.downloadCv';
+  static const String contactWhatsapp = 'contact.whatsapp';
+  static const String contactValidateName = 'contact.validateName';
+  static const String contactValidateEmail = 'contact.validateEmail';
+  static const String contactValidateMsg = 'contact.validateMsg';
 
   // Footer
   static const String footerBuiltWith = 'footer.builtWith';

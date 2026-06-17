@@ -56,9 +56,15 @@
     "message": "Message",
     "send": "Send message",
     "sending": "Sending…",
-    "success": "Thanks — your message has been sent.",
+    "success": "Your message has been sent.",
+    "sentTitle": "MESSAGE_SENT",
     "errorFallback": "Couldn't send right now. Email me directly instead.",
-    "emailMe": "Email me"
+    "emailMe": "Email me",
+    "downloadCv": "Download CV",
+    "whatsapp": "WhatsApp",
+    "validateName": "Please enter your name",
+    "validateEmail": "Please enter a valid email",
+    "validateMsg": "Message must be at least 10 characters"
   },
   "category": {
     "ecommerce": "E-commerce",
