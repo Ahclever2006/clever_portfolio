@@ -17,8 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Featured section (folio 06): editorial spotlight row (first 2 apps, taller)
-/// followed by a 3-column grid for the rest. Per-card stagger + hover glow.
+/// Featured section (folio 06): uniform 1/2/3-column grid of equal-size cards.
+/// Per-card stagger + hover glow.
 class FeaturedSection extends StatelessWidget {
   /// Creates a [FeaturedSection].
   const FeaturedSection({super.key});
@@ -59,81 +59,7 @@ class _FeaturedBody extends StatelessWidget {
         final gap = context.spacing.lg.w;
         final staggerMs = context.motion.stagger.inMilliseconds;
 
-        // Desktop: first 2 apps get spotlight treatment (wider, taller gallery),
-        // the rest flow into a 3-column grid.
-        if (context.isDesktop && featured.length >= 2) {
-          final spotlight = featured.take(2).toList();
-          final rest = featured.skip(2).toList();
-
-          return Column(
-            children: [
-              // Spotlight row — two equal-width taller cards.
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final w = (constraints.maxWidth - gap) / 2;
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (var i = 0; i < spotlight.length; i++) ...[
-                        if (i > 0) SizedBox(width: gap),
-                        SizedBox(
-                          width: w,
-                          child: RevealOnScroll(
-                            delay: Duration(
-                              milliseconds: (i * staggerMs).clamp(
-                                0,
-                                staggerMs * 6,
-                              ),
-                            ),
-                            child: RepaintBoundary(
-                              child: _FeaturedCard(
-                                project: spotlight[i],
-                                spotlightAspectRatio: 0.85,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  );
-                },
-              ),
-              if (rest.isNotEmpty) ...[
-                SizedBox(height: gap),
-                // 3-column grid for the remaining apps.
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    const cols = 3;
-                    final w = (constraints.maxWidth - gap * (cols - 1)) / cols;
-                    return Wrap(
-                      spacing: gap,
-                      runSpacing: gap,
-                      children: [
-                        for (var i = 0; i < rest.length; i++)
-                          SizedBox(
-                            width: w,
-                            child: RevealOnScroll(
-                              delay: Duration(
-                                milliseconds: ((i + 2) * staggerMs).clamp(
-                                  0,
-                                  staggerMs * 6,
-                                ),
-                              ),
-                              child: RepaintBoundary(
-                                child: _FeaturedCard(project: rest[i]),
-                              ),
-                            ),
-                          ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ],
-          );
-        }
-
-        // Tablet / mobile: uniform 2-col / 1-col grid.
+        // Uniform grid: equal-size cards, 1 / 2 / 3 columns by breakpoint.
         final columns = context.responsive(mobile: 1, tablet: 2, desktop: 3);
         return LayoutBuilder(
           builder: (context, constraints) {
@@ -164,14 +90,10 @@ class _FeaturedBody extends StatelessWidget {
 }
 
 /// A featured card: swipeable screenshot gallery + metadata.
-/// [spotlightAspectRatio] overrides the gallery aspect ratio for spotlight cards.
 class _FeaturedCard extends StatefulWidget {
-  const _FeaturedCard({required this.project, this.spotlightAspectRatio});
+  const _FeaturedCard({required this.project});
 
   final AppProject project;
-
-  /// When set, overrides the responsive aspect ratio (spotlight treatment).
-  final double? spotlightAspectRatio;
 
   @override
   State<_FeaturedCard> createState() => _FeaturedCardState();
@@ -216,9 +138,11 @@ class _FeaturedCardState extends State<_FeaturedCard> {
     final hue = project.category.hue(context);
     final shots = project.screenshots;
 
-    final galleryRatio =
-        widget.spotlightAspectRatio ??
-        context.responsive<double>(mobile: 1.0, tablet: 0.72, desktop: 0.66);
+    final galleryRatio = context.responsive<double>(
+      mobile: 1.0,
+      tablet: 0.72,
+      desktop: 0.66,
+    );
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
