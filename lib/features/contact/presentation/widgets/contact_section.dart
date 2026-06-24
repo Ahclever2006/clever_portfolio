@@ -1,3 +1,4 @@
+import 'package:clever_portfolio/core/analytics/analytics.dart';
 import 'package:clever_portfolio/core/constants/app_strings.dart';
 import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/app_typography.dart';
@@ -176,7 +177,10 @@ class _DirectLine extends StatelessWidget {
             AppButton.ghost(
               label: AppStrings.contactDownloadCv.tr(),
               icon: Icons.download_outlined,
-              onPressed: () => AppLauncher.open('docs/Ahmed_Maher_cv.pdf'),
+              onPressed: () {
+                Analytics.cvDownload('contact');
+                AppLauncher.open('docs/Ahmed_Maher_cv.pdf');
+              },
             ),
             AppButton.ghost(
               label: AppStrings.contactWhatsapp.tr(),

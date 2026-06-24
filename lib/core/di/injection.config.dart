@@ -9,6 +9,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:clever_portfolio/core/analytics/analytics_service.dart'
+    as _i218;
 import 'package:clever_portfolio/core/di/register_module.dart' as _i150;
 import 'package:clever_portfolio/core/network/dio_client.dart' as _i923;
 import 'package:clever_portfolio/core/router/app_router.dart' as _i345;
@@ -74,10 +76,13 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i538.FilterProjects>(() => const _i538.FilterProjects());
-    gh.factory<_i345.NavigationCubit>(() => _i345.NavigationCubit());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i218.AnalyticsService>(() => registerModule.analytics);
     gh.lazySingleton<_i281.AssetBundle>(() => registerModule.assetBundle);
     gh.lazySingleton<_i345.AppRouter>(() => _i345.AppRouter());
+    gh.factory<_i345.NavigationCubit>(
+      () => _i345.NavigationCubit(gh<_i218.AnalyticsService>()),
+    );
     gh.lazySingleton<_i923.DioClient>(() => _i923.DioClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i178.ContactRepository>(
       () => _i81.ContactRepositoryImpl(gh<_i923.DioClient>()),
@@ -104,7 +109,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i300.SendMessage(gh<_i178.ContactRepository>()),
     );
     gh.factory<_i476.ContactCubit>(
-      () => _i476.ContactCubit(gh<_i300.SendMessage>()),
+      () => _i476.ContactCubit(
+        gh<_i300.SendMessage>(),
+        gh<_i218.AnalyticsService>(),
+      ),
     );
     gh.factory<_i255.GetFeaturedProjects>(
       () => _i255.GetFeaturedProjects(gh<_i196.ProjectsRepository>()),

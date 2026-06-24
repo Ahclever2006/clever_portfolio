@@ -70,10 +70,31 @@ class FooterSection extends StatelessWidget {
                 ],
                 SizedBox(height: context.spacing.lg.h),
                 Text(
-                  AppStrings.footerRights.tr(namedArgs: {'year': year}),
+                  AppStrings.footerAnalytics.tr(),
                   style: AppTypography.captionMono.copyWith(
                     color: context.colors.onSurfaceVariant,
                   ),
+                ),
+                SizedBox(height: context.spacing.sm.h),
+                Row(
+                  children: [
+                    Text(
+                      AppStrings.footerRights.tr(namedArgs: {'year': year}),
+                      style: AppTypography.captionMono.copyWith(
+                        color: context.colors.onSurfaceVariant,
+                      ),
+                    ),
+                    SizedBox(width: context.spacing.md.w),
+                    InkWell(
+                      onTap: () => AppLauncher.open('privacy.html'),
+                      child: Text(
+                        AppStrings.footerPrivacy.tr(),
+                        style: AppTypography.captionMono.copyWith(
+                          color: context.colors.primary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

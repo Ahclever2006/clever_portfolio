@@ -1,4 +1,5 @@
 import 'package:clever_portfolio/core/abstract/base_cubit.dart';
+import 'package:clever_portfolio/core/analytics/analytics_service.dart';
 import 'package:clever_portfolio/shared/navigation/cubit/navigation_state.dart';
 import 'package:clever_portfolio/shared/navigation/section_id.dart';
 import 'package:injectable/injectable.dart';
@@ -8,12 +9,18 @@ import 'package:injectable/injectable.dart';
 @injectable
 class NavigationCubit extends BaseCubit<NavigationState> {
   /// Creates the cubit.
-  NavigationCubit() : super(const NavigationState());
+  NavigationCubit(this._analytics) : super(const NavigationState());
+
+  final AnalyticsService _analytics;
+
+  /// Sections already reported to analytics (fire `section_view` once each).
+  final Set<SectionId> _tracked = <SectionId>{};
 
   /// Marks [id] as the active section.
   void setActive(SectionId id) {
     if (state.activeSection != id) {
       emit(state.copyWith(activeSection: id));
+      if (_tracked.add(id)) _analytics.sectionView(id.name);
     }
   }
 

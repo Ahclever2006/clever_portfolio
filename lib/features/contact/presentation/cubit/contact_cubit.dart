@@ -1,4 +1,5 @@
 import 'package:clever_portfolio/core/abstract/base_cubit.dart';
+import 'package:clever_portfolio/core/analytics/analytics_service.dart';
 import 'package:clever_portfolio/features/contact/domain/entities/contact_message.dart';
 import 'package:clever_portfolio/features/contact/domain/usecases/send_message.dart';
 import 'package:clever_portfolio/features/contact/presentation/cubit/contact_state.dart';
@@ -8,18 +9,20 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ContactCubit extends BaseCubit<ContactState> {
   /// Creates the cubit.
-  ContactCubit(this._sendMessage) : super(const ContactState.idle());
+  ContactCubit(this._sendMessage, this._analytics)
+    : super(const ContactState.idle());
 
   final SendMessage _sendMessage;
+  final AnalyticsService _analytics;
 
   /// Validates + submits [message].
   Future<void> submit(ContactMessage message) async {
     emit(const ContactState.submitting());
     final result = await _sendMessage(message);
-    result.fold(
-      (failure) => emit(ContactState.failure(failure)),
-      (_) => emit(const ContactState.success()),
-    );
+    result.fold((failure) => emit(ContactState.failure(failure)), (_) {
+      emit(const ContactState.success());
+      _analytics.contactSubmit();
+    });
   }
 
   /// Resets to idle (e.g. after showing an error).

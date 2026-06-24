@@ -1,3 +1,4 @@
+import 'package:clever_portfolio/core/analytics/analytics.dart';
 import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/app_typography.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
@@ -27,7 +28,15 @@ class ProjectListRow extends StatelessWidget {
       builder: (context, hovered) => Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: primaryUrl == null ? null : () => AppLauncher.open(primaryUrl),
+          onTap: primaryUrl == null
+              ? null
+              : () {
+                  Analytics.storeOpen(
+                    appName: project.name,
+                    store: project.iosUrl != null ? 'app_store' : 'google_play',
+                  );
+                  AppLauncher.open(primaryUrl);
+                },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: context.spacing.md.h),
             child: Row(

@@ -80,7 +80,9 @@
   "footer": {
     "builtWith": "مبني بـ Flutter Web · Clean Architecture",
     "backToTop": "إلى الأعلى",
-    "rights": "© {year} أحمد ماهر"
+    "rights": "© {year} أحمد ماهر",
+    "privacy": "الخصوصية",
+    "analytics": "يستخدم هذا الموقع Google Analytics و Microsoft Clarity لفهم الاستخدام."
   },
   "common": {
     "scaffolding": "جارٍ الإعداد"

@@ -79,6 +79,8 @@ abstract final class AppStrings {
   static const String footerBuiltWith = 'footer.builtWith';
   static const String footerBackToTop = 'footer.backToTop';
   static const String footerRights = 'footer.rights';
+  static const String footerPrivacy = 'footer.privacy';
+  static const String footerAnalytics = 'footer.analytics';
 
   // Common
   static const String commonScaffolding = 'common.scaffolding';

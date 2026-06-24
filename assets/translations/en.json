@@ -80,7 +80,9 @@
   "footer": {
     "builtWith": "Built with Flutter Web · Clean Architecture",
     "backToTop": "Back to top",
-    "rights": "© {year} Ahmed Maher"
+    "rights": "© {year} Ahmed Maher",
+    "privacy": "Privacy",
+    "analytics": "This site uses Google Analytics and Microsoft Clarity to understand usage."
   },
   "common": {
     "scaffolding": "Scaffolding in progress"

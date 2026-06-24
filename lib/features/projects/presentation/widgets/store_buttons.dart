@@ -1,3 +1,4 @@
+import 'package:clever_portfolio/core/analytics/analytics.dart';
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:clever_portfolio/core/utils/app_launcher.dart';
 import 'package:clever_portfolio/features/projects/domain/entities/app_project.dart';
@@ -25,13 +26,19 @@ class StoreButtons extends StatelessWidget {
           _StoreChip(
             icon: FontAwesomeIcons.appStoreIos,
             label: 'App Store', // no-tr (brand name)
-            onTap: () => AppLauncher.open(ios),
+            onTap: () {
+              Analytics.storeOpen(appName: project.name, store: 'app_store');
+              AppLauncher.open(ios);
+            },
           ),
         if (android != null)
           _StoreChip(
             icon: FontAwesomeIcons.googlePlay,
             label: 'Google Play', // no-tr (brand name)
-            onTap: () => AppLauncher.open(android),
+            onTap: () {
+              Analytics.storeOpen(appName: project.name, store: 'google_play');
+              AppLauncher.open(android);
+            },
           ),
       ],
     );

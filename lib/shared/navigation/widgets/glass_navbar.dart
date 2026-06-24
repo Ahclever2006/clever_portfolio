@@ -1,3 +1,4 @@
+import 'package:clever_portfolio/core/analytics/analytics.dart';
 import 'package:clever_portfolio/core/constants/app_assets.dart';
 import 'package:clever_portfolio/core/constants/app_strings.dart';
 import 'package:clever_portfolio/core/responsive/responsive.dart';
@@ -116,7 +117,10 @@ class GlassNavBar extends StatelessWidget {
                 SizedBox(width: context.spacing.sm.w),
                 AppButton.ghost(
                   label: AppStrings.navDownloadCv.tr(),
-                  onPressed: () => AppLauncher.open(AppAssets.cvDownloadUrl),
+                  onPressed: () {
+                    Analytics.cvDownload('navbar');
+                    AppLauncher.open(AppAssets.cvDownloadUrl);
+                  },
                 ),
               ] else
                 IconButton(
