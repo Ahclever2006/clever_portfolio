@@ -1,4 +1,5 @@
 import 'package:clever_portfolio/core/analytics/analytics.dart';
+import 'package:clever_portfolio/core/constants/app_assets.dart';
 import 'package:clever_portfolio/core/constants/app_strings.dart';
 import 'package:clever_portfolio/core/responsive/responsive.dart';
 import 'package:clever_portfolio/core/theme/app_typography.dart';
@@ -132,6 +133,15 @@ class _ContactSectionState extends State<ContactSection> {
 
 // ── Direct line panel ─────────────────────────────────────────────────────────
 
+/// Brand icon for a [SocialLink] label, falling back to a generic link glyph so
+/// a new entry in `profile.json` still renders without a code change.
+IconData _socialIcon(String label) => switch (label.toLowerCase()) {
+  'github' => FontAwesomeIcons.github,
+  'linkedin' => FontAwesomeIcons.linkedinIn,
+  'x' || 'twitter' => FontAwesomeIcons.xTwitter,
+  _ => Icons.link_outlined,
+};
+
 class _DirectLine extends StatelessWidget {
   const _DirectLine({required this.profileEmail});
 
@@ -179,7 +189,7 @@ class _DirectLine extends StatelessWidget {
               icon: Icons.download_outlined,
               onPressed: () {
                 Analytics.cvDownload('contact');
-                AppLauncher.open('docs/Ahmed_Maher_cv.pdf');
+                AppLauncher.open(AppAssets.cvDownloadUrl);
               },
             ),
             AppButton.ghost(
@@ -187,6 +197,12 @@ class _DirectLine extends StatelessWidget {
               icon: FontAwesomeIcons.whatsapp,
               onPressed: () => AppLauncher.whatsApp(profile.phone),
             ),
+            for (final SocialLink social in profile.socials)
+              AppButton.ghost(
+                label: social.label,
+                icon: _socialIcon(social.label),
+                onPressed: () => AppLauncher.open(social.url),
+              ),
           ],
         ),
       ],

@@ -1,3 +1,5 @@
+import 'package:clever_portfolio/core/constants/app_assets.dart';
+
 /// Cross-cutting analytics abstraction (GA4 / gtag.js on web, no-op elsewhere).
 ///
 /// The concrete implementation is selected at compile time by
@@ -69,7 +71,7 @@ extension AnalyticsEvents on AnalyticsService {
     AnalyticsEvent.cvDownload,
     params: {
       AnalyticsParam.source: source,
-      AnalyticsParam.fileName: 'Ahmed_Maher_cv.pdf',
+      AnalyticsParam.fileName: AppAssets.cvFileName,
     },
   );
 
