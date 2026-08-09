@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
@@ -15,9 +16,13 @@ import 'package:flutter/material.dart';
 ///   old idle cost).
 /// * Repaints are **quantised to ~12fps** via [_tick]: a 24s drift needs no
 ///   more, so the painter is told to repaint a few times a second instead of
-///   every vsync.
-/// * The controller is **paused** when the tab is backgrounded and is never
-///   started under reduced-motion.
+///   every vsync. The clock is a plain [Timer.periodic] rather than an
+///   `AnimationController` — a controller ticks at vsync and therefore asks the
+///   engine for a frame 60×/sec even though 48 of those produce an identical
+///   [_tick] and repaint nothing. This widget sits `Positioned.fill` behind the
+///   entire page, so that tax was paid on a completely idle, untouched tab.
+/// * The clock is **paused** when the tab is backgrounded and is never started
+///   under reduced-motion.
 /// Wrap this in a `RepaintBoundary` at the call site so its repaints don't
 /// re-record sibling layers.
 class MotionBackground extends StatefulWidget {
@@ -29,20 +34,22 @@ class MotionBackground extends StatefulWidget {
 }
 
 class _MotionBackgroundState extends State<MotionBackground>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 24),
-  )..addListener(_onControllerTick);
-
-  // Quantised drift clock the painter repaints from: the controller still ticks
-  // at vsync, but [_tick] only changes ~[_fps]× per second, so the (relatively)
-  // expensive aurora paint runs a few times a second rather than 60.
+    with WidgetsBindingObserver {
+  // Quantised drift clock the painter repaints from. Ticking it from a Timer
+  // rather than an AnimationController means the engine is asked for ~12 frames
+  // a second instead of 60 — the other 48 recomputed the same bucket and
+  // painted nothing.
   static const int _fps = 12;
+
+  /// One full drift cycle, in [_tick]s — 24s at [_fps].
+  static const int _period = 24 * _fps;
+
   final ValueNotifier<int> _tick = ValueNotifier<int>(0);
+  Timer? _timer;
 
   bool _motionAllowed = true;
-  bool _running = false;
+
+  bool get _running => _timer != null;
 
   @override
   void initState() {
@@ -65,33 +72,31 @@ class _MotionBackgroundState extends State<MotionBackground>
     if (state == AppLifecycleState.resumed) {
       _syncRunning();
     } else {
-      _controller.stop();
-      _running = false;
+      _stop();
     }
   }
 
   void _syncRunning() {
     if (_motionAllowed && !_running) {
-      _controller.repeat();
-      _running = true;
+      _timer = Timer.periodic(
+        const Duration(milliseconds: 1000 ~/ _fps),
+        (_) => _tick.value = (_tick.value + 1) % _period,
+      );
     } else if (!_motionAllowed && _running) {
-      _controller
-        ..stop()
-        ..value = 0;
-      _running = false;
+      _stop();
       _tick.value = 0;
     }
   }
 
-  void _onControllerTick() {
-    final bucket = (_controller.value * 24 * _fps).floor();
-    if (bucket != _tick.value) _tick.value = bucket;
+  void _stop() {
+    _timer?.cancel();
+    _timer = null;
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _controller.dispose();
+    _stop();
     _tick.dispose();
     super.dispose();
   }

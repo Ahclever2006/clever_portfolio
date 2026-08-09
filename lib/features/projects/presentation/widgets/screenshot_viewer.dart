@@ -9,9 +9,13 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Decode cap for the viewer screenshots: the screen's pixel width. Source shots
-/// (~1MB, up to ~1290px) decode at most to the device width instead of full res;
-/// larger sources are downscaled, smaller ones are untouched (no upscale).
+/// Decode cap for the viewer screenshots: the screen's pixel width.
+///
+/// Since the WebP pass (`scripts/convert_screenshots_to_webp.sh`) no source is
+/// wider than 1080px — most are 600 — so on any normal display this cap is
+/// above the source and `ResizeImage(allowUpscaling: false)` clamps the decode
+/// to the source width anyway. It still earns its place as a guard for small
+/// viewports and for any future asset that lands wider than the display.
 int _decodeWidth(BuildContext context) =>
     (MediaQuery.sizeOf(context).width * MediaQuery.devicePixelRatioOf(context))
         .round();

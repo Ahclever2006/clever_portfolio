@@ -159,30 +159,65 @@ Design-token gate: 0 errors, 0 warnings.
       LinkedIn and WhatsApp. License text bundled as
       `assets/fonts/LICENSE-fontawesome.txt`.
 
+- [x] **Stop requesting 60 frames a second to paint 12** — `motion_background.dart`
+      The drift clock was an `AnimationController`, which ticks at vsync and so
+      asks the engine for a frame 60×/sec — but `_tick` is quantised to 12 fps,
+      so 48 of those recomputed the same bucket and painted nothing. Because
+      this widget sits `Positioned.fill` behind the entire page, that tax was
+      paid on a completely idle, untouched tab.
+
+      Replaced with a `Timer.periodic` at 12 fps. Reduced-motion and
+      background-tab pausing behave as before; the painter's `t` math is
+      unchanged (`_tick` cycles `0…_period-1` where `_period = 24 * _fps`), so
+      the visuals are identical.
+
+      **Note on the original finding:** the audit proposed gating this on
+      visibility. That does not apply — `home_page.dart:118-120` places it
+      `Positioned.fill` behind everything, so it is *always* visible. The waste
+      was the ticker rate, not the viewport.
+
+      Verified by screenshotting a text-free corner where only the aurora paints
+      at four points across the drift cycle — four distinct frames, so the
+      animation still runs.
+
+- [x] **`_decodeWidth` — obsolete, comment corrected** — `screenshot_viewer.dart`
+      No longer worth changing: the WebP pass capped every source at 1080px
+      (most are 600), so `ResizeImage(allowUpscaling: false)` already clamps the
+      decode to source width on any normal display. The over-decode the audit
+      described (edu-market_4/5/6 at 2064×2752) cannot happen — those sources no
+      longer exist. Only the stale doc comment ("up to ~1290px") was fixed.
+
 ---
 
 ## Not done — remaining wins, highest value first
 
-- [ ] **Serve CanvasKit same-origin** — add `--no-web-resources-cdn` to
-      `.github/workflows/deploy.yml:47`. `canvaskit.wasm` (5.69 MB, ~2.87 MB gz)
-      loads cross-origin from gstatic at a revision-hashed URL, so it cannot be
-      preloaded — and it, not `main.dart.js`, is what gates the first frame.
+- [ ] **Serve CanvasKit same-origin — DO NOT apply without measuring first.**
+      The audit recommended adding `--no-web-resources-cdn` to
+      `.github/workflows/deploy.yml:47`, on the grounds that `canvaskit.wasm`
+      (5,686,836 B) loads cross-origin from gstatic at a revision-hashed URL, so
+      it cannot be preloaded — and it, not `main.dart.js`, gates the first frame.
+
+      **The catch:** gstatic serves it compressed (~2.87 MB). GitHub Pages is
+      widely reported not to compress `application/wasm`, which would mean
+      shipping 5.69 MB raw — a ~2.8 MB *regression*, wiping out most of the
+      image win. I tried to settle this empirically against Pages-hosted wasm
+      files and could not (the large samples I tried 404'd; the one that
+      resolved was 83 bytes, below any compression threshold). So this stays
+      unapplied on purpose.
+
+      To decide it: apply the flag on a branch, deploy, then run
+      `curl -sI -H 'Accept-Encoding: gzip, br' \`
+      `https://<user>.github.io/clever_portfolio/canvaskit/canvaskit.wasm \`
+      `| grep -i 'content-encoding\|content-length'`.
+      A `content-encoding` header means keep it; none means revert. Note that
+      `web/index.html:68` already `preconnect`s to `www.gstatic.com`, so the
+      cross-origin handshake cost is largely mitigated today.
 
 - [ ] **Chase the last two Noto fallbacks** (130 KB — Roboto 62 KB,
       Noto Sans Symbols 68 KB). No landing-reachable app character is uncovered
       by the bundled faces, so these appear to be engine-level fallback-chain
       initialisation rather than app text. Confirming would need CanvasKit
       font-fallback tracing; low value next to the Font Awesome item above.
-
-- [ ] **Gate `MotionBackground`'s ticker on visibility** — `motion_background.dart:75`
-      calls `_controller.repeat()` and only stops on an app-lifecycle change,
-      which effectively never fires on web. The painter is quantised to 12 fps,
-      but the Ticker is not, so the page requests a vsync frame at 60 Hz forever
-      on an idle, untouched tab.
-
-- [ ] **Fix `_decodeWidth`** — `screenshot_viewer.dart:15` uses screen width × DPR
-      (3024 on a retina Mac), which `ResizeImage(allowUpscaling: false)` clamps
-      to source width. Mostly moot now that no source exceeds 1080px.
 
 - [ ] **`CustomScrollView` + slivers** — correct long-term shape for
       `home_page.dart:123-147`, but **not a drop-in**: `_scrollTo` uses
