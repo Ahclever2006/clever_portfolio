@@ -35,9 +35,6 @@ dependencies:
   # Routing — single '/' route + smooth-scroll anchors; clean web URLs.
   go_router: ^16.2.4
 
-  # Typography — Space Grotesk / Inter / JetBrains Mono (+ Arabic face) via google_fonts.
-  google_fonts: ^6.3.2
-
   # Localization — en.json + ar.json, RTL first-class.
   easy_localization: ^3.0.8
 
@@ -93,3 +90,30 @@ flutter:
     - assets/images/
     - assets/images/projects/
     # - assets/icons/   # store-badge SVGs (added in M4)
+
+  # Typography — bundled rather than fetched via google_fonts at runtime. Each
+  # GoogleFonts.* call downloaded its face from gstatic AFTER main.dart.js had
+  # executed, and every completion posted `fontsChanged`, invalidating the text
+  # layout cache across a ~13,000px scroll view. These are the Google Fonts
+  # latin subsets (~66 KB vs ~303 KB for the full faces google_fonts served).
+  # Licenses: assets/fonts/OFL-*.txt (SIL Open Font License 1.1).
+  #
+  # Only the weights the type scale actually uses are shipped. Adding a new
+  # weight to AppTypography means adding the matching .ttf here.
+  fonts:
+    - family: SpaceGrotesk
+      fonts:
+        - asset: assets/fonts/SpaceGrotesk-600.ttf
+          weight: 600
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-400.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-500.ttf
+          weight: 500
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-400.ttf
+          weight: 400
+        - asset: assets/fonts/JetBrainsMono-500.ttf
+          weight: 500

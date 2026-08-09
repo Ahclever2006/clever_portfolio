@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 /// Builds the Material [TextTheme] from [AppTypography] so default Material
 /// widgets inherit the type scale (plan.md §3.2).
 ///
-/// Arabic note: the chosen Arabic face is **Cairo**; M4 swaps in
-/// `GoogleFonts.cairoTextTheme` when the active locale is `ar`.
+/// Arabic note: Arabic glyphs currently resolve through the engine's Noto
+/// fallback. See [AppTypography] for how to bundle Cairo instead.
 abstract final class AppTextTheme {
   const AppTextTheme._();
 

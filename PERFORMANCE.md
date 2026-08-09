@@ -16,7 +16,9 @@ source audit (59 findings raised, 19 survived adversarial verification).
 | Largest single image | 3,594 KB | **193 KB** | −94.6% |
 | Screenshot corpus on disk | 46.05 MB | **6.58 MB** | −85.7% |
 | `build/web/assets/assets` | 47 MB | **8.0 MB** | −83% |
-| Total transfer (gzip-normalised) | ~17.1 MB | **~3.7 MB** | **−78%** |
+| Text faces fetched from gstatic | ~1.0 MB | **0 KB** (316 KB bundled) | −100% remote |
+| Noto fallback fetched from gstatic | 442 KB | **68 KB** | −85% |
+| Total transfer (gzip-normalised) | ~17.1 MB | **~3.3 MB** | **−81%** |
 | First contentful paint | 3.85 s | 2.06 s | — |
 
 Console errors: 0. Failed requests: 0. `flutter analyze`: clean. Tests: 30/30 pass.
@@ -73,14 +75,46 @@ Design-token gate: 0 errors, 0 warnings.
       live detectors: **~70 → 1** (`terminal_status_strip`, which needs it).
 
 - [x] **Drop the Cairo runtime font fetch** — `app_typography.dart`
-      `_arabic` called `GoogleFonts.cairo()`, fetching ~91 KB from gstatic on
-      every page load for glyphs no English string can use — while `bootstrap.dart`
-      hard-pins `startLocale` to `en`. Now behind
-      `static const bool arabicFallbackEnabled = false`, returning `null`
-      (`copyWith(fontFamilyFallback: null)` is a no-op). **Flip that one const to
-      `true` in the same commit that removes `startLocale`** to restore the AR
-      fallback — Arabic support is preserved, not deleted. Confirmed: font
-      requests 14 → 13.
+      `_arabic` called `GoogleFonts.cairo()`, fetching ~91 KB from gstatic at
+      theme-build time on every page load. Superseded by the font bundling
+      below, which removed `google_fonts` entirely.
+
+      **Correction to the original rationale.** This was first justified as
+      "glyphs no English string can use". That was wrong: seven `apps.json`
+      entries (`sphoto`, `falta`, `montajat`, `gigapp`, `4x4kw`, `hababah`,
+      `montajat-vendor`) have Arabic `description` text that renders even in the
+      `en` locale, and `screenshot_viewer.dart:82` has a live RTL detector for
+      exactly that. The change still stands on a different footing: those
+      descriptions appear **only inside the screenshot-viewer modal**, never on
+      the landing page, so Cairo was being fetched eagerly for click-gated text.
+      Arabic now resolves through the engine's Noto fallback, on demand.
+
+- [x] **Bundle the text faces instead of fetching them at runtime** —
+      `assets/fonts/`, `pubspec.yaml`, `app_typography.dart`
+      Every style was a `GoogleFonts.*` call, so Space Grotesk w600, Inter
+      w400/w500 and JetBrains Mono w400/w500 all downloaded from gstatic *after*
+      `main.dart.js` executed — and each face completion posts `fontsChanged`,
+      invalidating text layout across a ~13,000px scroll view.
+
+      Now five TTFs (**316 KB total**, the Google Fonts latin subsets — vs the
+      ~1.0 MB of full faces `google_fonts` was serving) ship under
+      `assets/fonts/`, declared in `pubspec.yaml` with explicit weights.
+      `AppTypography` uses plain `TextStyle(fontFamily: …)` and the
+      `google_fonts` dependency is **removed**. Licenses bundled alongside as
+      `assets/fonts/OFL-*.txt` (SIL OFL 1.1).
+
+      Glyph coverage was verified programmatically against every character
+      reachable on the landing page (translations, `profile.json`, app
+      names/taglines/categories, and all Dart string literals): **93 characters,
+      all covered.**
+
+- [x] **Kill a 374 KB font fetch caused by two characters** — `contact_section.dart`
+      The contact details used `▸` (U+25B8, Geometric Shapes) as a row prefix.
+      No bundled face covers that block, so those two characters alone made
+      CanvasKit pull **Noto Sans Symbols2 (374 KB)** from gstatic on every
+      landing. Swapped for `›` (U+203A), which all five bundled faces cover.
+      Visually near-identical and closer to the terminal aesthetic. Verified
+      gone from the network log.
 
 - [x] **Preload the app bundle** — `web/index.html`
       Added `<link rel="preload" as="script" href="main.dart.js">`.
@@ -105,24 +139,26 @@ Design-token gate: 0 errors, 0 warnings.
 
 ## Not done — remaining wins, highest value first
 
-- [ ] **Bundle the fonts instead of fetching them at runtime** (~450–550 KB, kills
-      the FOUT). Every style in `app_typography.dart` is a `GoogleFonts.*` call,
-      so Space Grotesk + Inter ×2 + JetBrains Mono ×2 all download from gstatic
-      *after* `main.dart.js` executes. Each face completion posts `fontsChanged`,
-      invalidating text layout across a 13,000px scroll view. Fonts are still
-      13 requests / 1.4 MB. Fix: download the 5 TTFs to `assets/fonts/`, declare
-      them under `flutter: fonts:`, drop `google_fonts`.
+- [ ] **Strip unused Font Awesome families** — now the **largest** remaining font
+      cost at **487 KB**, and it blocks the first frame (the engine awaits
+      `loadAssetFonts(FontManifest)` before painting). Brands tree-shakes to
+      2,684 B, but Regular (86 KB) and **Solid (401 KB)** ship untouched — the
+      icon shaker never rewrote them. All 8 usages in the codebase are Brands
+      glyphs (`contact_section.dart:139-141,197`, `store_buttons.dart:27,36`,
+      `glass_navbar.dart:113`, `footer_section.dart:67`). Cheapest fix is a
+      `dependency_overrides` local fork declaring only the Brands family — zero
+      call-site churn.
 
 - [ ] **Serve CanvasKit same-origin** — add `--no-web-resources-cdn` to
       `.github/workflows/deploy.yml:47`. `canvaskit.wasm` (5.69 MB, ~2.87 MB gz)
       loads cross-origin from gstatic at a revision-hashed URL, so it cannot be
       preloaded — and it, not `main.dart.js`, is what gates the first frame.
 
-- [ ] **Strip unused Font Awesome families** (~220 KB gz off the pre-first-frame
-      blocking path). Brands is tree-shaken to 2,684 B, but Regular (87 KB) and
-      **Solid (401 KB)** ship untouched — still the 2nd-largest resource in the
-      measured run. All 8 usages in the codebase are Brands glyphs. Cheapest fix
-      is a `dependency_overrides` local fork declaring only Brands.
+- [ ] **Chase the last two Noto fallbacks** (130 KB — Roboto 62 KB,
+      Noto Sans Symbols 68 KB). No landing-reachable app character is uncovered
+      by the bundled faces, so these appear to be engine-level fallback-chain
+      initialisation rather than app text. Confirming would need CanvasKit
+      font-fallback tracing; low value next to the Font Awesome item above.
 
 - [ ] **Gate `MotionBackground`'s ticker on visibility** — `motion_background.dart:75`
       calls `_controller.repeat()` and only stops on an app-lifecycle change,

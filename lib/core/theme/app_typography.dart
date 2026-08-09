@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Named text styles — the type scale from plan.md §3.2.
 ///
@@ -8,83 +7,97 @@ import 'package:google_fonts/google_fonts.dart';
 /// use `.sp` (flutter_screenutil) for responsive scaling.
 ///
 /// Fonts: Space Grotesk (display) · Inter (body) · JetBrains Mono (engineer
-/// signal). **Arabic** glyphs fall back to **Cairo**, so the AR locale renders
-/// correctly while Latin keeps its primary typefaces.
+/// signal). All three are **bundled** under `assets/fonts/` and declared in
+/// `pubspec.yaml` — they are no longer fetched from gstatic at runtime, which
+/// removed ~500 KB from the post-boot path and the font-swap reflow with it.
+///
+/// **Arabic:** seven `apps.json` descriptions are Arabic and render even in the
+/// `en` locale (see `screenshot_viewer.dart`'s RTL detector), but only inside
+/// the screenshot-viewer modal — never on the landing page. Rather than ship an
+/// Arabic face every visitor pays for, those glyphs resolve through the engine's
+/// own Noto fallback, on demand. To give Arabic an intentional typeface (or when
+/// re-enabling the `ar` locale — see `bootstrap.dart` → `startLocale`), add a
+/// Cairo `.ttf` to `assets/fonts/`, declare it in `pubspec.yaml`, and pass
+/// `fontFamilyFallback: const ['Cairo']` on the styles below.
 abstract final class AppTypography {
   const AppTypography._();
 
-  /// Whether the Arabic (Cairo) fallback face is loaded.
-  ///
-  /// `false` while the app is pinned to the `en` locale (`bootstrap.dart` →
-  /// `startLocale`). Every `GoogleFonts.*` call fetches its face from gstatic at
-  /// runtime, so calling `GoogleFonts.cairo()` cost a ~91 KB download on every
-  /// page load for glyphs no English string can use. Flip this to `true` in the
-  /// same commit that removes `startLocale` to bring the AR fallback back.
-  static const bool arabicFallbackEnabled = false;
+  /// Display family — Space Grotesk (w600 is the only bundled weight).
+  static const String _display = 'SpaceGrotesk';
 
-  /// Arabic fallback family (loaded via google_fonts), or `null` when disabled —
-  /// `copyWith(fontFamilyFallback: null)` leaves the style's fallback untouched.
-  static List<String>? get _arabic =>
-      arabicFallbackEnabled ? <String>[GoogleFonts.cairo().fontFamily!] : null;
+  /// Body family — Inter (w400 + w500 bundled).
+  static const String _body = 'Inter';
+
+  /// Engineer-signal family — JetBrains Mono (w400 + w500 bundled).
+  static const String _mono = 'JetBrainsMono';
 
   /// Hero headline. Base desktop size; the hero applies a fluid clamp(48→88).
-  static TextStyle get displayHero => GoogleFonts.spaceGrotesk(
+  static TextStyle get displayHero => TextStyle(
+    fontFamily: _display,
     fontSize: 64.sp,
     fontWeight: FontWeight.w600,
     height: 1.02,
     letterSpacing: -1.5,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get displaySection => GoogleFonts.spaceGrotesk(
+  static TextStyle get displaySection => TextStyle(
+    fontFamily: _display,
     fontSize: 36.sp,
     fontWeight: FontWeight.w600,
     height: 1.1,
     letterSpacing: -0.5,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get title => GoogleFonts.spaceGrotesk(
+  static TextStyle get title => TextStyle(
+    fontFamily: _display,
     fontSize: 22.sp,
     fontWeight: FontWeight.w600,
     height: 1.25,
     letterSpacing: -0.2,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get eyebrowMono => GoogleFonts.jetBrainsMono(
+  static TextStyle get eyebrowMono => TextStyle(
+    fontFamily: _mono,
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
     height: 1.3,
     letterSpacing: 0.5,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get body => GoogleFonts.inter(
+  static TextStyle get body => TextStyle(
+    fontFamily: _body,
     fontSize: 17.sp,
     fontWeight: FontWeight.w400,
     height: 1.65,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get bodySmall => GoogleFonts.inter(
+  static TextStyle get bodySmall => TextStyle(
+    fontFamily: _body,
     fontSize: 15.sp,
     fontWeight: FontWeight.w400,
     height: 1.55,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get label => GoogleFonts.inter(
+  static TextStyle get label => TextStyle(
+    fontFamily: _body,
     fontSize: 13.sp,
     fontWeight: FontWeight.w500,
     height: 1.3,
     letterSpacing: 0.3,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get folioMono => GoogleFonts.jetBrainsMono(
+  static TextStyle get folioMono => TextStyle(
+    fontFamily: _mono,
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
     height: 1.2,
     letterSpacing: 0.5,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 
-  static TextStyle get captionMono => GoogleFonts.jetBrainsMono(
+  static TextStyle get captionMono => TextStyle(
+    fontFamily: _mono,
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
     height: 1.4,
-  ).copyWith(fontFamilyFallback: _arabic);
+  );
 }

@@ -161,10 +161,13 @@ class _DirectLine extends StatelessWidget {
         SizedBox(height: context.spacing.md.h),
         Divider(color: context.colors.outline, thickness: 1, height: 1),
         SizedBox(height: context.spacing.md.h),
-        // Contact details: phone + location with ▸ prefix
-        _DetailRow(prefix: '▸', text: profile.phone),
+        // Contact details: phone + location with a chevron prefix.
+        // U+203A, not U+25B8 — the latter lives in Geometric Shapes, which none
+        // of the bundled faces cover, so these two characters alone pulled a
+        // 374 KB Noto Sans Symbols2 fallback from gstatic on every landing.
+        _DetailRow(prefix: '›', text: profile.phone),
         SizedBox(height: context.spacing.xs.h),
-        _DetailRow(prefix: '▸', text: profile.location),
+        _DetailRow(prefix: '›', text: profile.location),
         if (profile.languages.isNotEmpty) ...[
           SizedBox(height: context.spacing.sm.h),
           for (final Language lang in profile.languages)
