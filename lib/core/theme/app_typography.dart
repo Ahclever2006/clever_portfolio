@@ -13,8 +13,19 @@ import 'package:google_fonts/google_fonts.dart';
 abstract final class AppTypography {
   const AppTypography._();
 
-  /// Arabic fallback family (loaded via google_fonts).
-  static final List<String> _arabic = <String>[GoogleFonts.cairo().fontFamily!];
+  /// Whether the Arabic (Cairo) fallback face is loaded.
+  ///
+  /// `false` while the app is pinned to the `en` locale (`bootstrap.dart` →
+  /// `startLocale`). Every `GoogleFonts.*` call fetches its face from gstatic at
+  /// runtime, so calling `GoogleFonts.cairo()` cost a ~91 KB download on every
+  /// page load for glyphs no English string can use. Flip this to `true` in the
+  /// same commit that removes `startLocale` to bring the AR fallback back.
+  static const bool arabicFallbackEnabled = false;
+
+  /// Arabic fallback family (loaded via google_fonts), or `null` when disabled —
+  /// `copyWith(fontFamilyFallback: null)` leaves the style's fallback untouched.
+  static List<String>? get _arabic =>
+      arabicFallbackEnabled ? <String>[GoogleFonts.cairo().fontFamily!] : null;
 
   /// Hero headline. Base desktop size; the hero applies a fluid clamp(48→88).
   static TextStyle get displayHero => GoogleFonts.spaceGrotesk(

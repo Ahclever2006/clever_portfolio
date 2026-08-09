@@ -60,6 +60,13 @@
   <meta name="twitter:description" content="42 cross-platform apps shipped to the App Store and Google Play.">
   <meta name="twitter:image" content="og-cover.png">
 
+  <!-- flutter_bootstrap.js must download, parse AND await a full service-worker
+       install-to-activate cycle before it injects the main.dart.js script tag,
+       so the preload scanner never sees the app bundle on its own. Relative
+       href resolves against <base href>, so this is correct for both the
+       /clever_portfolio/ project-page deploy and a CNAME root deploy. -->
+  <link rel="preload" as="script" href="main.dart.js">
+
   <!-- Faster google_fonts fetch -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

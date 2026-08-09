@@ -1,0 +1,161 @@
+# Performance — lag investigation & fixes
+
+Triggered by: *"I see some lag on the web site."*
+
+Diagnosed with a real headless-Chrome load of the deployed site plus a 66-agent
+source audit (59 findings raised, 19 survived adversarial verification).
+
+---
+
+## Measured result
+
+| metric | before | after | change |
+|---|---:|---:|---:|
+| **Image requests on landing** | 78 | **61** | −17 |
+| **Image bytes on landing** | 14,895 KB | **1,241 KB** | **−91.7%** |
+| Largest single image | 3,594 KB | **193 KB** | −94.6% |
+| Screenshot corpus on disk | 46.05 MB | **6.58 MB** | −85.7% |
+| `build/web/assets/assets` | 47 MB | **8.0 MB** | −83% |
+| Total transfer (gzip-normalised) | ~17.1 MB | **~3.7 MB** | **−78%** |
+| First contentful paint | 3.85 s | 2.06 s | — |
+
+Console errors: 0. Failed requests: 0. `flutter analyze`: clean. Tests: 30/30 pass.
+Design-token gate: 0 errors, 0 warnings.
+
+> **Measurement caveat.** "Before" was measured against the live GitHub Pages
+> deploy (gzip on); "after" against a local `python3 -m http.server` build (no
+> gzip), which reports `main.dart.js` at its raw 3,185 KB instead of the 941 KB
+> GitHub Pages actually sends. The total row normalises for that. The image rows
+> are apples-to-apples — WebP/PNG/JPG bytes are already compressed and gzip does
+> not touch them either way.
+
+---
+
+## Root causes
+
+1. **Unresized screenshots, eagerly fetched.** `home_page.dart:123` is a
+   non-lazy `SingleChildScrollView` + `Column`, and `reveal_on_scroll.dart`
+   rendered hidden children as `Opacity(0, child)` — which skips *painting* but
+   still builds, lays out and resolves images. So all 17 featured cards mounted
+   on frame 1 and pulled full-resolution phone captures for content 5–8
+   viewports below the fold.
+2. **`RevealOnScroll` swapped widget *type* on reveal**, so `canUpdate` failed
+   and Flutter destroyed and re-inflated the whole subtree mid-scroll — ~42
+   `ProjectCard`s at the Work boundary, 17 `PageController`s at Featured.
+
+---
+
+## Completed
+
+- [x] **Kill the eager gallery prefetch** — `featured_section.dart`
+      Removed the `addPostFrameCallback((_) => _precacheAround(_page))` in the
+      gallery `LayoutBuilder`. It fired once per featured card, and all 17 lay
+      out on the first frame, so it downloaded page 1 of *every* gallery (~9 MB,
+      more than the page-0 images actually on screen) before anyone swiped.
+      Page 1 is now fetched from `onPageChanged`, guarded by a `Set<int>
+      _precached` so a resize cannot re-arm it. **−17 image requests.**
+
+- [x] **Stop `RevealOnScroll` re-inflating its subtree** — `reveal_on_scroll.dart`
+      Rewrote around a `SingleTickerProviderStateMixin` + `AnimationController`.
+      The child is built **once** and passed through `AnimatedBuilder`'s `child:`
+      slot; the fade/translate is applied by the builder, and hit-testing is
+      gated with `IgnorePointer(ignoring: !_shown)` — a *parameter* change, not a
+      structural one. Replaces the old
+      `_shown ? child.animate(…) : IgnorePointer(Opacity(0, child))` type swap.
+      Entrance visuals (16px rise + fade, `context.motion` duration/curve, stagger
+      `delay`) are unchanged. Dropped the now-unused `flutter_animate` import.
+
+- [x] **Detach the visibility detector once it has fired** — `reveal_on_scroll.dart`
+      `onVisibilityChanged: _shown ? null : (…)`. Passing `null` makes
+      `VisibilityDetector` `forget()` the key and cancel its composition
+      callback. ~70 of these stay mounted for the life of the page and each one
+      still listening walks its ancestor transforms every frame. Steady-state
+      live detectors: **~70 → 1** (`terminal_status_strip`, which needs it).
+
+- [x] **Drop the Cairo runtime font fetch** — `app_typography.dart`
+      `_arabic` called `GoogleFonts.cairo()`, fetching ~91 KB from gstatic on
+      every page load for glyphs no English string can use — while `bootstrap.dart`
+      hard-pins `startLocale` to `en`. Now behind
+      `static const bool arabicFallbackEnabled = false`, returning `null`
+      (`copyWith(fontFamilyFallback: null)` is a no-op). **Flip that one const to
+      `true` in the same commit that removes `startLocale`** to restore the AR
+      fallback — Arabic support is preserved, not deleted. Confirmed: font
+      requests 14 → 13.
+
+- [x] **Preload the app bundle** — `web/index.html`
+      Added `<link rel="preload" as="script" href="main.dart.js">`.
+      `flutter_bootstrap.js` must download, parse *and* await a full
+      service-worker install-to-activate cycle before it injects the script tag,
+      so the preload scanner never saw the bundle. Relative `href` resolves
+      against `<base href>`, so it is correct for both the `/clever_portfolio/`
+      project-page deploy and a CNAME root deploy.
+
+- [x] **Re-encode the screenshot corpus to WebP** — `scripts/convert_screenshots_to_webp.sh`
+      192 of 196 screenshots converted at `-q 80`, downscaled to max 1080px wide
+      (never upscaled — 136 sources were already 600×1067). Sources were raw
+      phone captures up to 2064×2752 / 3.7 MB, displayed at ~384 logical px
+      (~768 device px at DPR 2). `apps.json` screenshot paths rewritten to
+      `.webp`; **app icons deliberately untouched** (42 files, 0.61 MB, already
+      correctly sized). Originals removed — they remain recoverable from git
+      history, and carrying both sets would defeat the purpose.
+      **46.05 MB → 6.58 MB (−85.7%).**
+      Re-runnable and idempotent; `DRY_RUN=1`, `QUALITY=`, `MAX_WIDTH=` supported.
+
+---
+
+## Not done — remaining wins, highest value first
+
+- [ ] **Bundle the fonts instead of fetching them at runtime** (~450–550 KB, kills
+      the FOUT). Every style in `app_typography.dart` is a `GoogleFonts.*` call,
+      so Space Grotesk + Inter ×2 + JetBrains Mono ×2 all download from gstatic
+      *after* `main.dart.js` executes. Each face completion posts `fontsChanged`,
+      invalidating text layout across a 13,000px scroll view. Fonts are still
+      13 requests / 1.4 MB. Fix: download the 5 TTFs to `assets/fonts/`, declare
+      them under `flutter: fonts:`, drop `google_fonts`.
+
+- [ ] **Serve CanvasKit same-origin** — add `--no-web-resources-cdn` to
+      `.github/workflows/deploy.yml:47`. `canvaskit.wasm` (5.69 MB, ~2.87 MB gz)
+      loads cross-origin from gstatic at a revision-hashed URL, so it cannot be
+      preloaded — and it, not `main.dart.js`, is what gates the first frame.
+
+- [ ] **Strip unused Font Awesome families** (~220 KB gz off the pre-first-frame
+      blocking path). Brands is tree-shaken to 2,684 B, but Regular (87 KB) and
+      **Solid (401 KB)** ship untouched — still the 2nd-largest resource in the
+      measured run. All 8 usages in the codebase are Brands glyphs. Cheapest fix
+      is a `dependency_overrides` local fork declaring only Brands.
+
+- [ ] **Gate `MotionBackground`'s ticker on visibility** — `motion_background.dart:75`
+      calls `_controller.repeat()` and only stops on an app-lifecycle change,
+      which effectively never fires on web. The painter is quantised to 12 fps,
+      but the Ticker is not, so the page requests a vsync frame at 60 Hz forever
+      on an idle, untouched tab.
+
+- [ ] **Fix `_decodeWidth`** — `screenshot_viewer.dart:15` uses screen width × DPR
+      (3024 on a retina Mac), which `ResizeImage(allowUpscaling: false)` clamps
+      to source width. Mostly moot now that no source exceeds 1080px.
+
+- [ ] **`CustomScrollView` + slivers** — correct long-term shape for
+      `home_page.dart:123-147`, but **not a drop-in**: `_scrollTo` uses
+      `Scrollable.ensureVisible` and `_updateActiveSection` walks
+      `_keys[id].currentContext.localToGlobal`. Lazy slivers unmount off-screen
+      sections past the cache extent and would silently break every nav anchor
+      and the scroll-spy. Worth little now that the bytes are gone.
+
+---
+
+## Verified already correct — do not re-optimise
+
+- `cacheWidth` / `cacheHeight` decode hygiene in `parallax_image.dart` and
+  `app_icon_tile.dart`. Correct — it caps the raster bitmap. It just never
+  touched wire bytes, which is why it did not prevent this.
+- `PageView.builder` in `featured_section.dart` is **already lazy**
+  (`allowImplicitScrolling` unset ⇒ `cacheExtent` 0, only page 0 mounts). It was
+  never loading all 96 featured screenshots.
+- App icons — 42 files, 0.61 MB total, correctly sized.
+- `RepaintBoundary` placement in `index_section.dart`, `featured_section.dart`,
+  `parallax_image.dart`, and around `MotionBackground`.
+- `TickerMode` gating in `terminal_status_strip.dart`.
+- `_showBackToTop` `setState` in `home_page.dart:70` — fires only on the 600px
+  threshold crossing, and 8 of 9 section children are `const`.
+- gzip on JS/wasm — already compressed, nothing to reclaim.
+- `preconnect` hints for `fonts.gstatic.com` — DNS/TLS already warm.

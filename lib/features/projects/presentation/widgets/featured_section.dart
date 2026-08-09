@@ -101,6 +101,9 @@ class _FeaturedCard extends StatefulWidget {
 
 class _FeaturedCardState extends State<_FeaturedCard> {
   final PageController _pager = PageController();
+
+  /// Gallery pages already handed to [precacheImage] — prefetching is paid once.
+  final Set<int> _precached = <int>{};
   int _page = 0;
   bool _hovered = false;
   double _galleryWidth = 0;
@@ -128,6 +131,8 @@ class _FeaturedCardState extends State<_FeaturedCard> {
         .round();
     for (final i in [center - 1, center + 1]) {
       if (i < 0 || i >= shots.length) continue;
+      // Guard against a resize re-arming a prefetch we already paid for.
+      if (!_precached.add(i)) continue;
       precacheImage(ResizeImage(AssetImage(shots[i]), width: width), context);
     }
   }
@@ -184,12 +189,14 @@ class _FeaturedCardState extends State<_FeaturedCard> {
                       ? Center(child: AppIconTile(project: project, size: 88))
                       : LayoutBuilder(
                           builder: (context, constraints) {
-                            if (_galleryWidth != constraints.maxWidth) {
-                              _galleryWidth = constraints.maxWidth;
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => _precacheAround(_page),
-                              );
-                            }
+                            // Record the width for on-demand prefetching only.
+                            // The old post-frame `_precacheAround(_page)` here
+                            // fired once per featured card — and all 17 lay out
+                            // on the first frame — so it pulled page 1 of every
+                            // gallery (~9 MB, more than the page-0 images
+                            // actually on screen) before anyone swiped. Page 1
+                            // is now fetched from `onPageChanged` instead.
+                            _galleryWidth = constraints.maxWidth;
                             return Stack(
                               fit: StackFit.expand,
                               children: [
