@@ -26,7 +26,7 @@
     { "label": "Backend & APIs", "skills": ["RESTful APIs", "GraphQL", "Firebase", "WebSockets", "Google Maps", "Crashlytics"] },
     { "label": "Realtime & Features", "skills": ["Live Tracking", "Live Chat", "Push Notifications", "Payments"] },
     { "label": "Tooling & Design", "skills": ["Git", "CI/CD", "Shorebird (Code Push OTA)", "Linear", "Trello", "Figma"] },
-    { "label": "Release & Delivery", "skills": ["Google Play Console", "App Store Connect", "Build Flavors", "Release Management", "Agile"] },
+    { "label": "Release & Delivery", "skills": ["GitHub Actions", "Azure Pipelines", "Fastlane", "Google Play Console", "App Store Connect", "Build Flavors", "Release Management", "Agile"] },
     { "label": "Craft", "skills": ["Responsive UI", "Animations", "Localization / RTL"] }
   ],
   "experience": [
@@ -38,6 +38,7 @@
       "bullets": [
         "Lead the Flutter team across concurrent client apps, owning architecture decisions, code review standards and the release calendar.",
         "Deliver large-scale e-commerce and gaming apps end to end — first build through store review, launch and post-release maintenance on both Google Play and the App Store.",
+        "Build and maintain CI/CD pipelines with GitHub Actions, Azure Pipelines and Fastlane — automating build, test, code signing and deployment to TestFlight and Google Play.",
         "Standardised the team on a shared BLoC and clean-architecture baseline, so features move between developers without a rewrite.",
         "Mentor junior and mid-level developers through code review and pairing, and run the team Git branching and Trello workflow."
       ]
