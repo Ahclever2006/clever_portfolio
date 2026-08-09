@@ -19,7 +19,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:clever_portfolio/core/constants/app_icons.dart';
 
 /// Contact section (folio 09): direct-line panel left + transmission form right.
 /// Desktop: 40/60 asymmetric split. Mobile: stacked.
@@ -136,9 +136,9 @@ class _ContactSectionState extends State<ContactSection> {
 /// Brand icon for a [SocialLink] label, falling back to a generic link glyph so
 /// a new entry in `profile.json` still renders without a code change.
 IconData _socialIcon(String label) => switch (label.toLowerCase()) {
-  'github' => FontAwesomeIcons.github,
-  'linkedin' => FontAwesomeIcons.linkedinIn,
-  'x' || 'twitter' => FontAwesomeIcons.xTwitter,
+  'github' => AppIcons.github,
+  'linkedin' => AppIcons.linkedinIn,
+  'x' || 'twitter' => AppIcons.xTwitter,
   _ => Icons.link_outlined,
 };
 
@@ -197,7 +197,7 @@ class _DirectLine extends StatelessWidget {
             ),
             AppButton.ghost(
               label: AppStrings.contactWhatsapp.tr(),
-              icon: FontAwesomeIcons.whatsapp,
+              icon: AppIcons.whatsapp,
               onPressed: () => AppLauncher.whatsApp(profile.phone),
             ),
             for (final SocialLink social in profile.socials)

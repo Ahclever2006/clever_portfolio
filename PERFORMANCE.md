@@ -18,8 +18,9 @@ source audit (59 findings raised, 19 survived adversarial verification).
 | `build/web/assets/assets` | 47 MB | **8.0 MB** | −83% |
 | Text faces fetched from gstatic | ~1.0 MB | **0 KB** (316 KB bundled) | −100% remote |
 | Noto fallback fetched from gstatic | 442 KB | **68 KB** | −85% |
-| Total transfer (gzip-normalised) | ~17.1 MB | **~3.3 MB** | **−81%** |
-| First contentful paint | 3.85 s | 2.06 s | — |
+| **All font traffic** | 1,213 KB / 14 req | **418 KB / 10 req** | **−65%** |
+| Total transfer (gzip-normalised) | ~17.1 MB | **~2.7 MB** | **−84%** |
+| First contentful paint | 3.85 s | 1.97 s | −49% |
 
 Console errors: 0. Failed requests: 0. `flutter analyze`: clean. Tests: 30/30 pass.
 Design-token gate: 0 errors, 0 warnings.
@@ -135,19 +136,32 @@ Design-token gate: 0 errors, 0 warnings.
       **46.05 MB → 6.58 MB (−85.7%).**
       Re-runnable and idempotent; `DRY_RUN=1`, `QUALITY=`, `MAX_WIDTH=` supported.
 
+- [x] **Drop 487 KB of unused Font Awesome families** — `app_icons.dart`,
+      `pubspec.yaml`, 4 call sites
+      `font_awesome_flutter` declares three families in its own `pubspec.yaml`,
+      and Flutter's icon tree-shaker only rewrites a family it finds referenced
+      icons for — so Free-Regular (86 KB) and **Free-Solid (401 KB)** shipped
+      whole while all 8 call sites used Brands. That weight sat on the
+      pre-first-frame path, since the engine awaits `loadAssetFonts` before it is
+      allowed to paint.
+
+      The package is now **removed**. Only `Font-Awesome-7-Brands-Regular-400.otf`
+      is bundled, declared as family `FontAwesomeBrands`, with the six glyphs
+      actually used defined as `const IconData` in
+      `lib/core/constants/app_icons.dart` (codepoints copied verbatim from
+      `font_awesome_flutter` 10.12.0). Being `const` with a literal `fontFamily`,
+      they still tree-shake — **199,352 B → 2,684 B**.
+
+      Verified by parsing the built font's `cmap`: all six codepoints
+      (`github` 0xf09b, `linkedinIn` 0xf0e1, `xTwitter` 0xe61b, `whatsapp`
+      0xf232, `appStoreIos` 0xf370, `googlePlay` 0xf3ab) survive the shake —
+      7 glyphs total, the six plus `.notdef`. Confirmed visually for GitHub,
+      LinkedIn and WhatsApp. License text bundled as
+      `assets/fonts/LICENSE-fontawesome.txt`.
+
 ---
 
 ## Not done — remaining wins, highest value first
-
-- [ ] **Strip unused Font Awesome families** — now the **largest** remaining font
-      cost at **487 KB**, and it blocks the first frame (the engine awaits
-      `loadAssetFonts(FontManifest)` before painting). Brands tree-shakes to
-      2,684 B, but Regular (86 KB) and **Solid (401 KB)** ship untouched — the
-      icon shaker never rewrote them. All 8 usages in the codebase are Brands
-      glyphs (`contact_section.dart:139-141,197`, `store_buttons.dart:27,36`,
-      `glass_navbar.dart:113`, `footer_section.dart:67`). Cheapest fix is a
-      `dependency_overrides` local fork declaring only the Brands family — zero
-      call-site churn.
 
 - [ ] **Serve CanvasKit same-origin** — add `--no-web-resources-cdn` to
       `.github/workflows/deploy.yml:47`. `canvaskit.wasm` (5.69 MB, ~2.87 MB gz)

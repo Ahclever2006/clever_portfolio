@@ -44,9 +44,6 @@ dependencies:
   # Vector assets (store badges, icons).
   flutter_svg: ^2.2.0
 
-  # Brand / store / social glyphs.
-  font_awesome_flutter: ^10.10.0
-
   # Motion — entrance/scroll animations (reduced-motion gated).
   flutter_animate: ^4.5.2
   visibility_detector: ^0.4.0+2
@@ -117,3 +114,13 @@ flutter:
           weight: 400
         - asset: assets/fonts/JetBrainsMono-500.ttf
           weight: 500
+    # Brand glyphs (GitHub / LinkedIn / X / WhatsApp / App Store / Google Play).
+    # Replaces the font_awesome_flutter package, which also declared Free-Regular
+    # (86 KB) and Free-Solid (401 KB) — neither of which this app referenced, and
+    # the icon tree-shaker leaves an unreferenced family untouched, so both
+    # shipped whole on the pre-first-frame path. Codepoints in
+    # lib/core/constants/app_icons.dart. License: assets/fonts/LICENSE-fontawesome.txt
+    - family: FontAwesomeBrands
+      fonts:
+        - asset: assets/fonts/Font-Awesome-7-Brands-Regular-400.otf
+          weight: 400

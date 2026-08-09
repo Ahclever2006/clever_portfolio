@@ -4,7 +4,7 @@ import 'package:clever_portfolio/core/utils/app_launcher.dart';
 import 'package:clever_portfolio/features/projects/domain/entities/app_project.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:clever_portfolio/core/constants/app_icons.dart';
 
 /// Renders store buttons ONLY for the platforms an app actually ships on.
 class StoreButtons extends StatelessWidget {
@@ -24,7 +24,7 @@ class StoreButtons extends StatelessWidget {
       children: [
         if (ios != null)
           _StoreChip(
-            icon: FontAwesomeIcons.appStoreIos,
+            icon: AppIcons.appStoreIos,
             label: 'App Store', // no-tr (brand name)
             onTap: () {
               Analytics.storeOpen(appName: project.name, store: 'app_store');
@@ -33,7 +33,7 @@ class StoreButtons extends StatelessWidget {
           ),
         if (android != null)
           _StoreChip(
-            icon: FontAwesomeIcons.googlePlay,
+            icon: AppIcons.googlePlay,
             label: 'Google Play', // no-tr (brand name)
             onTap: () {
               Analytics.storeOpen(appName: project.name, store: 'google_play');

@@ -16,7 +16,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:clever_portfolio/core/constants/app_icons.dart';
 
 /// Folio 00 — the fixed glass navbar (the one glassmorphism surface).
 class GlassNavBar extends StatelessWidget {
@@ -110,7 +110,7 @@ class GlassNavBar extends StatelessWidget {
               if (phone != null)
                 IconButton(
                   tooltip: 'WhatsApp', // no-tr
-                  icon: const Icon(FontAwesomeIcons.whatsapp),
+                  icon: const Icon(AppIcons.whatsapp),
                   onPressed: () => AppLauncher.whatsApp(phone),
                 ),
               if (context.isDesktop) ...[

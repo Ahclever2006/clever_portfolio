@@ -10,7 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:clever_portfolio/core/constants/app_icons.dart';
 
 /// Folio 10 — footer / colophon.
 class FooterSection extends StatelessWidget {
@@ -64,7 +64,7 @@ class FooterSection extends StatelessWidget {
                   SizedBox(height: context.spacing.md.h),
                   AppButton.ghost(
                     label: 'WhatsApp', // no-tr
-                    icon: FontAwesomeIcons.whatsapp,
+                    icon: AppIcons.whatsapp,
                     onPressed: () => AppLauncher.whatsApp(phone),
                   ),
                 ],
