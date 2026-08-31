@@ -1,10 +1,10 @@
 {
   "name": "Ahmed Maher",
-  "title": "Flutter Team Lead",
-  "location": "6th October City, Giza — Egypt",
-  "email": "Ahclever2006@gmail.com",
+  "title": "Senior Flutter Engineer · Team Lead",
+  "location": "Egypt — open to remote (GMT+2)",
+  "email": "ahclever2006@gmail.com",
   "phone": "+201155728617",
-  "summary": "Flutter engineer with 6+ years building cross-platform mobile products and 3 years leading a delivery team. 42 apps published to Google Play and the App Store across e-commerce, booking, trivia and business. Works end to end — architecture, state management, API and Firebase integration, store release and post-launch maintenance — with a bias toward clean architecture and code the next developer can maintain. Prior 15-year career as an oilfield data engineer across eight countries.",
+  "summary": "Senior Flutter engineer with 6+ years shipping cross-platform products and 3 years leading a delivery team. Currently technical lead on a three-app realtime transport platform — background GPS tracking, offline-first sync and WebSocket live maps — alongside a bilingual marketplace live on both stores. 42 apps published to Google Play and the App Store. Works end to end: architecture, state management, API integration, CI/CD and store release, with a bias toward clean architecture and code the next developer can maintain.",
   "languages": [
     { "name": "Arabic", "level": "Native" },
     { "name": "English", "level": "Fluent" }
@@ -20,27 +20,105 @@
     { "value": "8", "label": "Countries Worked" }
   ],
   "skillGroups": [
-    { "label": "Languages", "skills": ["Flutter", "Dart"] },
-    { "label": "State Management", "skills": ["BLoC / Cubit", "Provider", "Freezed"] },
-    { "label": "Architecture & Quality", "skills": ["Clean Architecture", "SOLID", "OOP", "Offline-first", "TDD", "Unit Testing", "Widget Testing", "Code Review"] },
-    { "label": "Backend & APIs", "skills": ["RESTful APIs", "GraphQL", "Firebase", "WebSockets", "Google Maps", "Crashlytics"] },
-    { "label": "Realtime & Features", "skills": ["Live Tracking", "Live Chat", "Push Notifications", "Payments"] },
-    { "label": "Tooling & Design", "skills": ["Git", "CI/CD", "Shorebird (Code Push OTA)", "Linear", "Trello", "Figma"] },
-    { "label": "Release & Delivery", "skills": ["GitHub Actions", "Azure Pipelines", "Fastlane", "Google Play Console", "App Store Connect", "Build Flavors", "Release Management", "Agile"] },
-    { "label": "Craft", "skills": ["Responsive UI", "Animations", "Localization / RTL"] }
+    {
+      "label": "Flutter & Dart",
+      "skills": [
+        "BLoC / Cubit",
+        "Riverpod",
+        "Provider",
+        "Freezed",
+        "Injectable / GetIt",
+        "GoRouter",
+        "fpdart",
+        "Custom Animations",
+        "Responsive Layouts",
+        "Localization / RTL"
+      ]
+    },
+    {
+      "label": "Architecture & Quality",
+      "skills": [
+        "Clean Architecture",
+        "SOLID",
+        "TDD",
+        "Unit Testing",
+        "Widget Testing",
+        "Modularization",
+        "Code Review"
+      ]
+    },
+    {
+      "label": "Backend & Realtime",
+      "skills": [
+        "REST",
+        "GraphQL",
+        "WebSockets",
+        "Firebase Auth",
+        "Firestore",
+        "Cloud Messaging",
+        "Crashlytics",
+        "Analytics",
+        "Payment Gateways"
+      ]
+    },
+    {
+      "label": "Location & Offline",
+      "skills": [
+        "Background Geolocation",
+        "Mapbox",
+        "Google Maps",
+        "flutter_map + FMTC",
+        "Offline Tile Caching",
+        "Offline-first Sync",
+        "Outbox Pattern"
+      ]
+    },
+    {
+      "label": "On-device ML",
+      "skills": ["TensorFlow Lite", "FaceNet"]
+    },
+    {
+      "label": "Release & Delivery",
+      "skills": [
+        "GitHub Actions",
+        "Azure Pipelines",
+        "Fastlane",
+        "Shorebird (Code Push OTA)",
+        "Build Flavors",
+        "Google Play Console",
+        "App Store Connect",
+        "Sentry",
+        "Git",
+        "Agile"
+      ]
+    }
   ],
   "experience": [
+    {
+      "role": "Senior Flutter Engineer",
+      "company": "Raise Right",
+      "location": "Remote — Cairo, Egypt",
+      "period": "Feb 2026 – Present",
+      "bullets": [
+        "Technical lead on a three-app school transport platform (Driver, Supervisor, Parent) built from scratch on Clean Architecture with BLoC/Cubit, freezed unions, injectable DI and go_router.",
+        "Shipped background GPS tracking with batched HTTP uploads and an offline outbox, streaming live driver position to parent and supervisor maps over a WebSocket connection.",
+        "Built offline-first mapping with flutter_map and FMTC tile caching over server-precomputed route geometry, removing runtime routing API calls and their per-request cost.",
+        "Integrated Shorebird code-push across three build flavors on a live production app (~500 active users, both stores), cutting hotfix turnaround from a store review cycle to minutes.",
+        "Delivered features for a bilingual (Arabic/English, RTL) education marketplace on GraphQL, including deep-linked payment flows and a wallet and cashback journey.",
+        "Prototyped on-device face verification with a FaceNet TFLite model for identity checks without a network round trip."
+      ]
+    },
     {
       "role": "Flutter Team Lead",
       "company": "Baramjk",
       "location": "Remote — Kuwait",
-      "period": "Mar 2023 – Present",
+      "period": "Mar 2023 – Feb 2026",
       "bullets": [
-        "Lead the Flutter team across concurrent client apps, owning architecture decisions, code review standards and the release calendar.",
-        "Deliver large-scale e-commerce and gaming apps end to end — first build through store review, launch and post-release maintenance on both Google Play and the App Store.",
-        "Build and maintain CI/CD pipelines with GitHub Actions, Azure Pipelines and Fastlane — automating build, test, code signing and deployment to TestFlight and Google Play.",
+        "Led the Flutter team across concurrent client apps, owning architecture decisions, code review standards and the release calendar.",
+        "Delivered large-scale e-commerce and gaming apps end to end — first build through store review, launch and post-release maintenance on Google Play and the App Store.",
+        "Built and maintained CI/CD pipelines with GitHub Actions, Azure Pipelines and Fastlane, automating build, test, code signing and deployment to TestFlight and Google Play.",
         "Standardised the team on a shared BLoC and clean-architecture baseline, so features move between developers without a rewrite.",
-        "Mentor junior and mid-level developers through code review and pairing, and run the team Git branching and Trello workflow."
+        "Mentored junior and mid-level developers through code review and pairing, and ran the team Git branching and delivery workflow."
       ]
     },
     {
@@ -49,18 +127,18 @@
       "location": "Giza — Egypt",
       "period": "Jan 2020 – Mar 2023",
       "bullets": [
-        "Built and maintained retail and logistics apps for Android and iOS, including the Stock Client ordering app and Stock Delivery driver app.",
+        "Built and maintained retail and logistics apps for Android and iOS, including the Stock Client ordering app and the Stock Delivery driver app.",
         "Improved app responsiveness through API pagination, image caching and reduced widget rebuilds.",
         "Integrated REST APIs and Firebase — authentication, push notifications and crash reporting — across production apps."
       ]
     },
     {
-      "role": "Data Engineer",
-      "company": "Oil & Gas — Halliburton, Oilserv, DHI",
+      "role": "Data Engineer, Oil & Gas",
+      "company": "Halliburton · Oilserv · DHI",
       "location": "Egypt · Qatar · KSA · Spain · Ghana · Kuwait · Iraq · Malaysia",
-      "period": "Jun 2008 – 2019",
+      "period": "2008 – 2019",
       "bullets": [
-        "Designed, managed and analysed large oilfield datasets for drilling and production operations on multinational projects across Egypt, Qatar, Saudi Arabia, Spain, Ghana, Kuwait, Iraq and Malaysia."
+        "Managed and analysed large-scale drilling and production datasets on multinational projects across eight countries."
       ]
     }
   ],

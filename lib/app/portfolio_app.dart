@@ -34,7 +34,7 @@ class PortfolioApp extends StatelessWidget {
           return BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
               return MaterialApp.router(
-                title: 'Ahmed Maher — Flutter Team Lead', // no-tr
+                title: 'Ahmed Maher — Senior Flutter Engineer', // no-tr
                 debugShowCheckedModeBanner: false,
                 scrollBehavior: const AppScrollBehavior(),
                 theme: AppTheme.light,
