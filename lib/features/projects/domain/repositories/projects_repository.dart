@@ -3,7 +3,7 @@ import 'package:clever_portfolio/features/projects/domain/entities/app_project.d
 
 /// Source of portfolio apps (plan.md §5.3).
 abstract class ProjectsRepository {
-  /// All 37 apps.
+  /// All 44 apps.
   ResultFuture<List<AppProject>> getProjects();
 
   /// Only the featured highlights.

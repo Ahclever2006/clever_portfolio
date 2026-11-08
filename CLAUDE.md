@@ -5,10 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project
 
 **clever_portfolio** — Ahmed Maher's personal **Flutter Web portfolio** (single-page, dark-first).
-It showcases **37 published apps** (App Store / Google Play) plus the CV of a Flutter Team Lead.
+It showcases **44 published apps** (App Store / Google Play) plus the CV of a Flutter Team Lead.
 
 **`plan.md` (repo root) is the single source of truth for the build** — design system, Clean
-Architecture layout, data models, the full 37-app content inventory, theming, SEO, deployment, and
+Architecture layout, data models, the full 44-app content inventory, theming, SEO, deployment, and
 a phased roadmap (M0–M7). Read it before implementing anything; this file is the quick reference.
 
 Source content lives in two PDFs at the repo root — `Ahmed_Maher_cv.pdf` and
@@ -75,8 +75,8 @@ Core decisions:
 ## Design System (non-negotiable)
 
 **Aesthetic:** *"Production Terminal — Indexed Edition"* — dark-first (light fully supported), one
-electric-emerald signal accent, a JetBrains-Mono "engineer-signal" system, and the 37 apps framed
-as a numbered, filterable release index (`01–37`). Full spec (palettes, type scale, components,
+electric-emerald signal accent, a JetBrains-Mono "engineer-signal" system, and the 44 apps framed
+as a numbered, filterable release index (`01–44`). Full spec (palettes, type scale, components,
 motion) in `plan.md` §3 & §7.
 
 Tokens live in `ThemeData` + `ThemeExtension`s — widgets read **only** `Theme.of(context)`:
@@ -98,7 +98,7 @@ Hard rules — mirrored in `.claude/settings.json` `instructions` and enforced b
 
 ## Content & data
 
-- All 37 apps are described in `assets/data/apps.json` storing **raw store ids only**;
+- All 44 apps are described in `assets/data/apps.json` storing **raw store ids only**;
   `core/utils/store_link_builder.dart` reconstructs the App Store / Google Play URLs, and
   cards/rows render a store button **only when that link exists**. CV/profile/skills/experience
   live in `assets/data/profile.json`. Never inline portfolio content in widgets.

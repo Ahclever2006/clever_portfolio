@@ -1,5 +1,5 @@
 /// App category taxonomy — matches the `CategoryColors` hues + filter chips
-/// (plan.md §6.2). All 37 apps bucket into exactly these nine.
+/// (plan.md §6.2). All 44 apps bucket into exactly these nine.
 enum AppCategory {
   /// E-commerce / retail.
   ecommerce,

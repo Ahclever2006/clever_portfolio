@@ -102,12 +102,12 @@ class SocialLink extends Equatable {
   List<Object?> get props => [label, url];
 }
 
-/// A headline count-up metric (e.g. 37 Published Apps).
+/// A headline count-up metric (e.g. 44 Published Apps).
 class StatMetric extends Equatable {
   /// Creates a [StatMetric].
   const StatMetric({required this.value, required this.label});
 
-  /// The number/label (e.g. "37", "5+").
+  /// The number/label (e.g. "44", "5+").
   final String value;
 
   /// What it counts.

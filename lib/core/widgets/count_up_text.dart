@@ -1,7 +1,7 @@
 import 'package:clever_portfolio/core/theme/theme_extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Animates a numeric metric from 0 → its value (e.g. "37", "5+"), preserving a
+/// Animates a numeric metric from 0 → its value (e.g. "44", "5+"), preserving a
 /// non-numeric suffix. Honors reduced-motion (shows the final value).
 class CountUpText extends StatelessWidget {
   /// Creates a [CountUpText] for [value] in [style].

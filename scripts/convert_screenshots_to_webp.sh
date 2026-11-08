@@ -9,7 +9,7 @@
 # display-appropriate width cuts the corpus by ~80% with no visible difference.
 #
 # Scope: ONLY the files listed under `screenshots` in assets/data/apps.json.
-# App icons (`iconAsset`) are already correctly sized (42 files, 0.61 MB total)
+# App icons (`iconAsset`) are already correctly sized (44 files)
 # and are deliberately left alone.
 #
 # The conversion is in-place and destructive by design — the originals stay

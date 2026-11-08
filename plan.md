@@ -2,16 +2,16 @@
 
 ## Overview
 
-This is the single source of truth for building **Ahmed Maher's Flutter Web portfolio** — a dark-first, engineering-grade single-page site that frames his **42 shipped apps as a versioned, filterable release index**. The aesthetic is "Production Terminal — Indexed Edition": IDE precision meets editorial catalog calm, anchored by one electric-emerald signal accent and restrained per-category hues. The build runs on the existing `clever_portfolio` Flutter project (Flutter 3.41.4 / Dart 3.11.1, web platform enabled, currently a default counter app) and strictly follows Clean Architecture, a generic `UseCase<Output, Params>` contract, `flutter_bloc` Cubits, `dartz` `Either<Failure, T>` everywhere, Dio for the one real network surface, a responsive sizing helper, and a fully token-driven dual-theme system with **zero hardcoded colors or text sizes in widgets**.
+This is the single source of truth for building **Ahmed Maher's Flutter Web portfolio** — a dark-first, engineering-grade single-page site that frames his **44 shipped apps as a versioned, filterable release index**. The aesthetic is "Production Terminal — Indexed Edition": IDE precision meets editorial catalog calm, anchored by one electric-emerald signal accent and restrained per-category hues. The build runs on the existing `clever_portfolio` Flutter project (Flutter 3.41.4 / Dart 3.11.1, web platform enabled, currently a default counter app) and strictly follows Clean Architecture, a generic `UseCase<Output, Params>` contract, `flutter_bloc` Cubits, `dartz` `Either<Failure, T>` everywhere, Dio for the one real network surface, a responsive sizing helper, and a fully token-driven dual-theme system with **zero hardcoded colors or text sizes in widgets**.
 
 ### Goals & Success Criteria
 
-- **Showcase breadth credibly** — the 42 apps are the hero visual, presented as a numbered index (01–42) with a default dense list and a card-grid toggle, filterable by category and platform.
+- **Showcase breadth credibly** — the 44 apps are the hero visual, presented as a numbered index (01–44) with a default dense list and a card-grid toggle, filterable by category and platform.
 - **Engineering signal** — the codebase itself is a portfolio artifact: textbook Clean Architecture, sealed states, generic use cases, full token system, tests.
 - **Both themes first-class** — dark-first default, light fully supported, animated cross-fade.
 - **Build-ready incrementally** — phased roadmap (M0–M7) so the site is runnable after every milestone.
 - **Web-grade delivery** — accessible (AA contrast, keyboard nav, reduced-motion), SEO-tagged (static `<head>` + JSON-LD), and deployed via GitHub Pages CI.
-- **Success = ** all global rules satisfied, all 42 apps rendering with correct conditional store links, Lighthouse A11y/SEO ≥ 95, green CI deploy.
+- **Success = ** all global rules satisfied, all 44 apps rendering with correct conditional store links, Lighthouse A11y/SEO ≥ 95, green CI deploy.
 
 ---
 
@@ -65,7 +65,7 @@ This is the single source of truth for building **Ahmed Maher's Flutter Web port
 
 ## 3. Design System
 
-**Name:** *Production Terminal — Indexed Edition.* A dark-first, engineering-grade portfolio that frames 42 shipped apps as a versioned, filterable release index — IDE precision meets editorial catalog calm, with one electric-emerald signal accent and restrained per-category hues.
+**Name:** *Production Terminal — Indexed Edition.* A dark-first, engineering-grade portfolio that frames 44 shipped apps as a versioned, filterable release index — IDE precision meets editorial catalog calm, with one electric-emerald signal accent and restrained per-category hues.
 
 ### 3.1 Palettes
 
@@ -120,7 +120,7 @@ Every value below lives in `ColorScheme` + `ThemeExtension`s (`CategoryColors`) 
 **Fonts** (via `google_fonts`; weight subset: Space Grotesk 500/600/700, Inter 400/500/600, JetBrains Mono 400/500):
 - **Display — Space Grotesk** (geometric technical display): hero, section titles, app names.
 - **Body — Inter** (readable web body): narrative, descriptions, labels.
-- **Mono — JetBrains Mono** (engineer-signal): eyebrows, category tags, folio/index numbers 01-37 / section folios 00-10, store IDs, dates, versions, terminal status line.
+- **Mono — JetBrains Mono** (engineer-signal): eyebrows, category tags, folio/index numbers 01-44 / section folios 00-10, store IDs, dates, versions, terminal status line.
 
 > Playfair-style serif was rejected — mono + geometric-sans is more credible for a Flutter lead.
 
@@ -133,7 +133,7 @@ Every value below lives in `ColorScheme` + `ThemeExtension`s (`CategoryColors`) 
 | body | Inter | 17 | 400 | 1.65 | — | max 62ch |
 | bodySmall | Inter | 15 | 400 | 1.55 | — | |
 | label | Inter | 13 | 500 | 1.3 | 0.3 | |
-| folioMono | JetBrains Mono | 12 | 500 | 1.2 | 0.5 | index 01-37 / folios 00-10, folio color |
+| folioMono | JetBrains Mono | 12 | 500 | 1.2 | 0.5 | index 01-44 / folios 00-10, folio color |
 | captionMono | JetBrains Mono | 12 | 400 | 1.4 | — | store ids, dates, versions, muted |
 
 > Display steps modular ~1.5; text steps ~1.2. Sizes are base desktop values; the sizeHelper applies fluid `clamp()` between mobile and 1024px.
@@ -153,7 +153,7 @@ Exposed via an **`AppSpacing` class + ThemeExtension** — never inline literals
 - **Secondary ghost button** — transparent, 1px `outlineStrong`, text `onSurface`, radius 10; hover border+text → `primary` (120ms). Used for *Download CV / Resume*, *View Work* alt.
 - **Text link** — color `onSurface`, underline in `primary`; underline **wipe-in left-to-right 200ms** on hover.
 - **Project card** — surface `#10141A`/`#FFFFFF`, 1px `outline` border, radius 16, padding 20; 3px category-hue **left accent line** hidden by default, animates in from top on hover/focus; top row = app name (title) + right-aligned mono category tag; mid = one-line role descriptor; bottom = mono platform pills + conditional store icon buttons (rendered **only** when the link exists). Hover: lift 4px (`AnimatedContainer` 160ms easeOut) + soft shadow / faint emerald glow (dark) + outline → `outlineStrong` + accent line draws in + store labels fade in. Focus: visible emerald ring, keyboard-activatable.
-- **List row** (grafted from Quiet Index — the **default** Work view): mono index 01-37 flush left (folio color + category-hue dot), app name in Space Grotesk title, category as mono tag, platform availability as right-aligned mono text; single 1px hairline separator. Hover: index+name recolor toward category hue, name nudges 6px right (easeOut), inline `open →` store affordance fades in.
+- **List row** (grafted from Quiet Index — the **default** Work view): mono index 01-44 flush left (folio color + category-hue dot), app name in Space Grotesk title, category as mono tag, platform availability as right-aligned mono text; single 1px hairline separator. Hover: index+name recolor toward category hue, name nudges 6px right (easeOut), inline `open →` store affordance fades in.
 - **Skill chip** — glass pill (radius 999), `surfaceVariant` translucent, 1px outline, label 13.
 - **Filter pill** — pill radius 999; inactive = `surfaceVariant` bg + muted text + 1px outline; active = category-hue text + `accentSoft` bg + hue border (emerald for "All"). Used in the sticky category bar + iOS/Android toggle.
 - **Platform pill** — small mono pill radius 8, JetBrains Mono 12, muted (iOS / Android badges).
@@ -177,14 +177,14 @@ Premium and restrained, never bouncy. All durations/curves live in a **`MotionTo
 
 - Single electric-emerald signal accent (`#3DF5A3` dark / `#0E8F6E` light), used surgically — status dots, hover accent lines, focus rings, active filter — never as large fills.
 - A monospace **engineer-signal system**: eyebrows, category tags, folio/index numbers, store IDs, dates and versions all in JetBrains Mono, like code comments annotating the design.
-- The 42 apps presented as a literal numbered **INDEX (01-42)** — a default dense ruled list with a toggle to a card grid. The breadth of work *is* the hero visual.
+- The 44 apps presented as a literal numbered **INDEX (01-44)** — a default dense ruled list with a toggle to a card grid. The breadth of work *is* the hero visual.
 - Restrained **per-category hue system** — a tiny category-colored accent line/dot/tag per app so the catalog reads as varied at a glance (AA-safe solid colors, not gradients).
 - Persistent mono **folio numbers (00-10)** anchored in a sticky left-margin column as editorial running heads.
 - Live **terminal "build status" strip** in the hero with blinking caret + pulsing emerald dot.
 - Hairline 1px borders + faint emerald glow on dark instead of heavy shadows — **elevation by light, not by drop shadow**.
 - Glassmorphism reserved exclusively for the floating nav so it stays special.
 - **Store-aware** project cards/rows that conditionally render App Store / Google Play links based on which links exist in the data.
-- Animated **count-up metrics** (37 / 5+ / 15 / 8) reinforcing the "ships to production" thesis.
+- Animated **count-up metrics** (44 / 5+ / 15 / 8) reinforcing the "ships to production" thesis.
 - A real Flutter-Web **colophon** in the footer crediting the typefaces and the Clean Architecture build.
 
 ---
@@ -196,11 +196,11 @@ Single long-scroll page composed of 11 sections (folios `00`–`10`). Each is a 
 | Folio | Section | Layout spec | Data consumed |
 |---|---|---|---|
 | `00` | **Nav** (fixed glass) | Full-width glass bar (blur + `glassTint`). Mono wordmark `ahmed.maher` left; center anchors (About · Work · Experience · Contact); right `ThemeCubit` toggle + **language toggle (EN ⇄ ع, `context.setLocale`)** + ghost **Download CV**. Hairline bottom border gains emerald glow once scrolled past hero. | Static nav model, `cvAssetPath`, current `ThemeMode` + `Locale`. |
-| `01` | **Hero** | Full-viewport (`100vh`) dark canvas. Mono eyebrow `// flutter team lead — 6th october city, eg`; `displayHero` headline; Inter summary (≤62ch); primary **View Work** + ghost **Download Resume**; terminal status strip with blinking caret + pulsing emerald dot: `> apps_shipped: 42 | platforms: ios + android | status: live`. Faint dot-grid + single top-left radial emerald glow, no particles. | `Profile`, `apps.length` (37), `cvAssetPath`. |
-| `02` | **Stats band** | 4-up hairline-celled metrics (1 col mobile / 2 tablet / 4 desktop). Mono counters count up on scroll-in. | `Stats`: **42 Published Apps, 5+ Years Flutter, 15 Yrs Data Engineering, 8 Countries**. |
+| `01` | **Hero** | Full-viewport (`100vh`) dark canvas. Mono eyebrow `// flutter team lead — 6th october city, eg`; `displayHero` headline; Inter summary (≤62ch); primary **View Work** + ghost **Download Resume**; terminal status strip with blinking caret + pulsing emerald dot: `> apps_shipped: 44 | platforms: ios + android | status: live`. Faint dot-grid + single top-left radial emerald glow, no particles. | `Profile`, `apps.length` (44), `cvAssetPath`. |
+| `02` | **Stats band** | 4-up hairline-celled metrics (1 col mobile / 2 tablet / 4 desktop). Mono counters count up on scroll-in. | `Stats`: **44 Published Apps, 5+ Years Flutter, 15 Yrs Data Engineering, 8 Countries**. |
 | `03` | **About** | Two-column: left sticky folio + Flutter-lead narrative with the 15-yr Oil & Gas career-switch **pull quote**; right `career.log` monospace timeline. One column on mobile. | `Profile.summary`, condensed `Experience` for the log. |
 | `04` | **Skills matrix** | Grouped glass capability chips on a precise grid; group label = `eyebrowMono`. | `SkillGroup[]`: Languages, State Mgmt, Backend/APIs, Architecture & Quality, Tooling. |
-| `05` | **The Index (Work)** — **centerpiece** | Sticky category filter bar (All, E-commerce, Games, Booking, Business, Services, Food, Medical, Education, Travel) + iOS/Android toggle + search field. **Default: dense numbered LIST** `01-42`; toggle to masonry **card grid**. Both bound to one `ProjectsCubit` filtered list. | `List<AppProject>` (42), `ProjectFilter`, `CategoryColors`. |
+| `05` | **The Index (Work)** — **centerpiece** | Sticky category filter bar (All, E-commerce, Games, Booking, Business, Services, Food, Medical, Education, Travel) + iOS/Android toggle + search field. **Default: dense numbered LIST** `01-44`; toggle to masonry **card grid**. Both bound to one `ProjectsCubit` filtered list. | `List<AppProject>` (44), `ProjectFilter`, `CategoryColors`. |
 | `06` | **Featured spotlight** | 2-3 flagship apps in larger split cards (image/placeholder + meta), category + platform badges + dual store buttons. | Featured subset (see §6). |
 | `07` | **Experience** | Stacked role cards; company/location/date-range as mono chips; bullet outcomes. | `Experience[]`: Baramjk, Spark Systems, Oil & Gas. |
 | `08` | **Education** | Compact single line. | B.Sc. Chemistry & Geology, Cairo University, 2001-2006. |
@@ -289,7 +289,7 @@ lib/
 │       └── terminal_status_strip.dart     # blinking caret + pulsing emerald dot
 │
 ├── features/
-│   ├── projects/                          # "The Index" — CENTERPIECE (37 apps)
+│   ├── projects/                          # "The Index" — CENTERPIECE (44 apps)
 │   │   ├── domain/
 │   │   │   ├── entities/{app_project.dart, app_category.dart, app_platform.dart, store_link.dart}
 │   │   │   ├── repositories/projects_repository.dart
@@ -795,13 +795,13 @@ class EducationItem {
 
 class StatMetric {
   const StatMetric({required this.value, required this.label, this.suffix = ''});
-  final int value; final String label, suffix; // 42 / 5+ / 15 / 8
+  final int value; final String label, suffix; // 44 / 5+ / 15 / 8
 }
 ```
 
 > **`accentColor` is `int?` (ARGB)** so the entity stays free of `dart:ui`/Flutter. Presentation maps it to a `Color` blended against `Theme.of(context).colorScheme` — per the no-hardcoded-colors rule, per-card accents are *data*, not literals in widgets, and both themes stay consistent. In practice each card's accent comes from `CategoryColors.forCategory(category)` so explicit `accentColor` overrides are rarely needed.
 
-### 6.2 Category taxonomy (all 42 bucketed, sums to 42)
+### 6.2 Category taxonomy (all 44 bucketed, sums to 44)
 
 Admin companions fold into **Business & Admin**; their consumer-facing counterparts sit under **Services**. Every app is in exactly one bucket.
 
@@ -915,7 +915,7 @@ Edu Market (Education, both), Sphoto (Booking, both), Falta Game (Games, both), 
 
 **Education:** B.Sc. in Chemistry & Geology — Cairo University — 2001–2006 — Grade: Good.
 
-**CV → section mapping:** Profile drives Hero (01) + Contact (09). Stats (02) are derived: `42 Published Apps` (apps.length), `5+ Years Flutter` (summary), `15 Yrs Data Engineering` (Oil & Gas tenure), `8 Countries` (Data Engineer locations). Summary + Oil & Gas hook → About (03) pull quote + `career.log`. Skills → Skills matrix (04). The 42 apps → The Index (05) + Featured (06). Experience → (07). Education → (08).
+**CV → section mapping:** Profile drives Hero (01) + Contact (09). Stats (02) are derived: `44 Published Apps` (apps.length), `5+ Years Flutter` (summary), `15 Yrs Data Engineering` (Oil & Gas tenure), `8 Countries` (Data Engineer locations). Summary + Oil & Gas hook → About (03) pull quote + `career.log`. Skills → Skills matrix (04). The 44 apps → The Index (05) + Featured (06). Experience → (07). Education → (08).
 
 ---
 
@@ -944,7 +944,7 @@ The audience is bilingual (Arabic native / English fluent; Egypt + Gulf), so **E
 - **Source files:** `assets/translations/en.json` + `ar.json`. A CI key-parity check (+ a unit test, §13) fails if the two files' key sets diverge.
 - **No inline keys:** every key is a `static const` on `AppStrings` (`core/constants/app_strings.dart`) and used as `AppStrings.heroTitle.tr()` — never a bare `'hero.title'.tr()` literal. New sections add their keys to `AppStrings` first.
 - **Wiring:** `EasyLocalization` wraps the app in `bootstrap()` (§5.5); `MaterialApp.router` consumes `context.localizationDelegates / supportedLocales / locale`. The **navbar language toggle** (`EN ⇄ ع`) calls `context.setLocale(...)`, which `easy_localization` persists automatically (`saveLocale`).
-- **RTL is a first-class concern, not an afterthought.** The design leans on directional layout (left accent line, flush-left index `01–37`, sticky left-margin folio column, list-row 6px rightward nudge). All of these use **`start`/`end`** primitives (`EdgeInsetsDirectional`, `AlignmentDirectional`, `PositionedDirectional`) so Flutter mirrors them automatically under `Directionality(textDirection: rtl)`. Mono folio/index numerals stay Latin-digit LTR but anchor to the correct side.
+- **RTL is a first-class concern, not an afterthought.** The design leans on directional layout (left accent line, flush-left index `01–44`, sticky left-margin folio column, list-row 6px rightward nudge). All of these use **`start`/`end`** primitives (`EdgeInsetsDirectional`, `AlignmentDirectional`, `PositionedDirectional`) so Flutter mirrors them automatically under `Directionality(textDirection: rtl)`. Mono folio/index numerals stay Latin-digit LTR but anchor to the correct side.
 - **Arabic type:** JetBrains Mono + Inter cover Latin; Arabic glyphs fall back to a bundled Arabic face (e.g. `GoogleFonts.cairo` / `notoKufiArabic`) selected per-locale in `app_text_theme.dart`.
 - **Content:** UI chrome (nav, buttons, eyebrows, stat labels, contact form) is translated. App names and store IDs stay verbatim; per-app taglines carry `en`/`ar` variants in `apps.json`.
 
@@ -989,7 +989,7 @@ assets/
     Ahmed_Maher_cv.pdf            # copied from repo root
     Ahmed_Maher_Portfolio.pdf     # copied from repo root
   data/
-    apps.json                     # 42 apps -> AppProject (local data source); raw store ids only
+    apps.json                     # 44 apps -> AppProject (local data source); raw store ids only
     profile.json                  # Profile / skills / experience / education / stats / contact
   translations/
     en.json                       # easy_localization source (UI chrome + per-app taglines)
@@ -1068,8 +1068,8 @@ flutter:
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Ahmed Maher — Flutter Team Lead | 42 Published Apps</title>
-  <meta name="description" content="Ahmed Maher, Flutter Team Lead based in 6th October City, Egypt. 42 cross-platform apps shipped to the App Store and Google Play across e-commerce, booking, games and business. 5+ years Flutter, 15 years data engineering.">
+  <title>Ahmed Maher — Flutter Team Lead | 44 Published Apps</title>
+  <meta name="description" content="Ahmed Maher, Flutter Team Lead based in 6th October City, Egypt. 44 cross-platform apps shipped to the App Store and Google Play across e-commerce, booking, games and business. 5+ years Flutter, 15 years data engineering.">
   <meta name="author" content="Ahmed Maher">
   <meta name="keywords" content="Ahmed Maher, Flutter, Flutter Team Lead, Dart, mobile developer, cross-platform, App Store, Google Play, portfolio, Egypt">
   <link rel="canonical" href="https://ahmedmaher.dev/">
@@ -1079,8 +1079,8 @@ flutter:
 
   <!-- Open Graph -->
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="Ahmed Maher — Flutter Team Lead | 42 Published Apps">
-  <meta property="og:description" content="42 cross-platform apps shipped to App Store & Google Play. Flutter Team Lead, 5+ years Flutter, 15 years data engineering.">
+  <meta property="og:title" content="Ahmed Maher — Flutter Team Lead | 44 Published Apps">
+  <meta property="og:description" content="44 cross-platform apps shipped to App Store & Google Play. Flutter Team Lead, 5+ years Flutter, 15 years data engineering.">
   <meta property="og:url" content="https://ahmedmaher.dev/">
   <meta property="og:image" content="https://ahmedmaher.dev/og-cover.png">
   <meta property="og:image:width" content="1200">
@@ -1091,8 +1091,8 @@ flutter:
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ahmed Maher — Flutter Team Lead | 42 Published Apps">
-  <meta name="twitter:description" content="42 cross-platform apps shipped to App Store & Google Play. Flutter Team Lead.">
+  <meta name="twitter:title" content="Ahmed Maher — Flutter Team Lead | 44 Published Apps">
+  <meta name="twitter:description" content="44 cross-platform apps shipped to App Store & Google Play. Flutter Team Lead.">
   <meta name="twitter:image" content="https://ahmedmaher.dev/og-cover.png">
 
   <!-- iOS / PWA -->
@@ -1140,7 +1140,7 @@ flutter:
   "display": "standalone",
   "background_color": "#0A0C10",
   "theme_color": "#0A0C10",
-  "description": "Flutter Team Lead — 42 cross-platform apps shipped to App Store and Google Play.",
+  "description": "Flutter Team Lead — 44 cross-platform apps shipped to App Store and Google Play.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
@@ -1297,11 +1297,11 @@ Run with `flutter test` (also gated in CI above).
 - `get_projects_test.dart` — mock `ProjectsRepository` (mocktail); `GetProjects(NoParams())` unwraps `Either` correctly (success → `Right<List<AppProject>>` of 37; failure → `Left<Failure>`).
 
 **Unit — model + repository with mocked data source returning `Either`** (`test/features/.../data/`):
-- `projects_repository_impl_test.dart` — mock `ProjectsLocalDataSource`: on success → parsed models → `Right` with 42 entries; on thrown `AssetException` → `Left(AssetFailure)`.
+- `projects_repository_impl_test.dart` — mock `ProjectsLocalDataSource`: on success → parsed models → `Right` with 44 entries; on thrown `AssetException` → `Left(AssetFailure)`.
 - `app_project_model_test.dart` — pure `fromJson`: platform inference and conditional store-link parsing (`googlePlay`/`appStore` → nullable URLs via `store_link_builder`).
 
 **Cubit tests** (`bloc_test`):
-- `projects_cubit_test.dart` — load emits `Loading → Loaded(42)`; `setCategory(games)` narrows `visible`; platform toggle filters; search narrows; `toggleViewMode` flips list↔grid.
+- `projects_cubit_test.dart` — load emits `Loading → Loaded(44)`; `setCategory(games)` narrows `visible`; platform toggle filters; search narrows; `toggleViewMode` flips list↔grid.
 - `contact_cubit_test.dart` — validation `Left(ValidationFailure)` path; submit success/failure.
 
 **Localization**:
@@ -1309,7 +1309,7 @@ Run with `flutter test` (also gated in CI above).
 
 **Widget tests** (`test/presentation/`):
 - `hero_section_test.dart` — title/summary render; primary "View Work" + ghost "Download Resume" present and tappable.
-- `index_section_test.dart` — 42 rows by default (list); category pill (e.g. *Games*) reduces visible rows; platform toggle filters; search narrows; List↔Grid toggle swaps view. Pump with a fake `ProjectsCubit` seeded from fixtures.
+- `index_section_test.dart` — 44 rows by default (list); category pill (e.g. *Games*) reduces visible rows; platform toggle filters; search narrows; List↔Grid toggle swaps view. Pump with a fake `ProjectsCubit` seeded from fixtures.
 - `nav_bar_test.dart` — desktop shows anchors; below 600 shows hamburger + opens drawer; theme toggle dispatches `ThemeCubit.toggle()`.
 - `project_card_test.dart` — store buttons render **only** when the link exists (iOS-only app shows App Store button, no Play button).
 

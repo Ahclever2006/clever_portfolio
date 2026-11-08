@@ -83,7 +83,7 @@ class _RevealOnScrollState extends State<RevealOnScroll>
         // never changes widget *type*. The previous
         // `_shown ? child.animate(…) : IgnorePointer(Opacity(0, child))` swap
         // failed `canUpdate` and re-inflated the entire subtree mid-scroll —
-        // ~42 project cards on the Work boundary, 17 PageControllers on
+        // ~44 project cards on the Work boundary, 17 PageControllers on
         // Featured — costing several dropped frames at each section entrance.
         //
         // While hidden this also blocks hit-testing: a bare Opacity(0) stays

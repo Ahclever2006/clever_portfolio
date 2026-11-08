@@ -2,7 +2,7 @@
 abstract final class AppAssets {
   const AppAssets._();
 
-  /// 42-app data (local data source).
+  /// 44-app data (local data source).
   static const String appsJson = 'assets/data/apps.json';
 
   /// Profile / skills / experience / education / contact data.

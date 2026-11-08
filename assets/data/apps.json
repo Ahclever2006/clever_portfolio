@@ -822,5 +822,47 @@
       "assets/images/projects/paletta_4.webp",
       "assets/images/projects/paletta_5.webp"
     ]
+  },
+  {
+    "index": 43,
+    "id": "rooli",
+    "name": "Rooli",
+    "category": "business",
+    "tagline": "School transport driver & supervisor app",
+    "featured": true,
+    "storeLinks": {
+      "googlePlay": "com.raiseright.rollitransportation"
+    },
+    "iconAsset": "assets/images/projects/rooli_icon.png",
+    "description": "Rooli is the daily companion for school transportation teams. Built for bus drivers and trip supervisors, it keeps every trip on route, every student accounted for, and everyone in sync.\n\nFOR DRIVERS\n• See your assigned trips and start one with a tap\n• Follow a road-based route on a live map, with every stop in order\n• Hand off to Google Maps for turn-by-turn directions to each stop\n• Get automatic arrival detection at each stop\n• See which students are boarding as it happens\n• Share your live location during the trip, even when the app is in the background, so the operations team can follow along\n\nFOR SUPERVISORS\n• Open a clear roster for every stop\n• Confirm students on board or mark them absent with a reason\n• Capture a photo as proof of check-in\n• Verify a student's identity with optional on-device face matching\n• Review completed trips in your history\n\nBUILT FOR THE REAL WORLD\n• Works on weak connections. Actions are saved on your phone and sync when you're back online.\n• Arabic and English, with full right-to-left support\n• Light and dark themes\n• Push notifications for trip updates\n\nRooli is a business app. Your school or transport operator sets up your account and assigns your trips.",
+    "screenshots": [
+      "assets/images/projects/rooli_1.webp",
+      "assets/images/projects/rooli_2.webp",
+      "assets/images/projects/rooli_3.webp",
+      "assets/images/projects/rooli_4.webp",
+      "assets/images/projects/rooli_5.webp"
+    ]
+  },
+  {
+    "index": 44,
+    "id": "bkott",
+    "name": "Bkott",
+    "category": "ecommerce",
+    "tagline": "Products, services & jobs marketplace",
+    "featured": true,
+    "storeLinks": {
+      "googlePlay": "com.bkott.app",
+      "appStore": "6812398677"
+    },
+    "iconAsset": "assets/images/projects/bkott_icon.png",
+    "description": "Bkott brings products, services, talent and jobs together in one place. Browse, compare, and talk to the seller or company directly from the app.\n\nPRODUCTS\nBrowse listings from individual sellers and registered companies across detailed categories built to help you find what you need quickly. Add to your cart, place your order, and follow its status.\n\nSERVICES\nRequest a service from a provider or a company, and ask about details and pricing before you commit.\n\nTALENT\nBrowse the talent bank to reach freelancers and skilled professionals across different fields. And if you are looking for work, publish your CV and portfolio while staying in control of who can see them.\n\nJOBS\nBrowse open roles, apply from the app, and track your applications in one place.\n\nFOR SELLERS AND COMPANIES\n• Create your business profile and publish products or services\n• Receive orders and talk to your customers in chat\n• Track orders and your wallet from a single dashboard\n• Post jobs and review applicants\n\nARABIC FIRST\nBkott is built in Arabic and right-to-left on every screen, with English supported throughout.",
+    "screenshots": [
+      "assets/images/projects/bkott_1.webp",
+      "assets/images/projects/bkott_2.webp",
+      "assets/images/projects/bkott_3.webp",
+      "assets/images/projects/bkott_4.webp",
+      "assets/images/projects/bkott_5.webp",
+      "assets/images/projects/bkott_6.webp"
+    ]
   }
 ]

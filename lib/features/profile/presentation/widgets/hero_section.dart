@@ -137,7 +137,7 @@ class HeroSection extends StatelessWidget {
                       delay: _d4,
                       child: const TerminalStatusStrip(
                         text:
-                            'apps_shipped: 42 | platforms: ios + android | status: live', // no-tr
+                            'apps_shipped: 44 | platforms: ios + android | status: live', // no-tr
                       ),
                     ),
                   ],

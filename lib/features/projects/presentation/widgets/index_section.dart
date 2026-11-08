@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Folio 05 — "The Index": the 42 apps as a filterable numbered list ⇄ grid.
+/// Folio 05 — "The Index": the 44 apps as a filterable numbered list ⇄ grid.
 class IndexSection extends StatefulWidget {
   /// Creates an [IndexSection].
   const IndexSection({super.key});
@@ -271,7 +271,7 @@ class _Grid extends StatelessWidget {
                   delay: Duration(
                     milliseconds: (i * staggerMs).clamp(0, staggerMs * 6),
                   ),
-                  // Isolate each card's hover animation from the 42-card grid.
+                  // Isolate each card's hover animation from the 44-card grid.
                   child: RepaintBoundary(
                     child: ProjectCard(project: projects[i]),
                   ),

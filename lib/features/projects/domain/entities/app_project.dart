@@ -22,7 +22,7 @@ class AppProject extends Equatable {
     this.featured = false,
   });
 
-  /// 1-based position in the catalog (1–37).
+  /// 1-based position in the catalog (1–44).
   final int index;
 
   /// Stable slug id.
