@@ -6,6 +6,7 @@ import 'package:clever_portfolio/core/widgets/section_scaffold.dart';
 import 'package:clever_portfolio/features/profile/domain/entities/profile.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_state.dart';
+import 'package:clever_portfolio/features/projects/presentation/cubit/published_app_count.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,8 +44,12 @@ class _AboutBody extends StatelessWidget {
     final state = context.watch<ProfileCubit>().state;
     if (state is! ProfileLoaded) return const SizedBox.shrink();
     final profile = state.profile;
+    final appCount = context.watchPublishedAppCount()?.toString() ?? '…';
 
-    final summary = _Summary(summary: profile.summary);
+    final summary = _Summary(
+      summary: profile.summary.withAppCount(appCount),
+      appCount: appCount,
+    );
     final log = _CareerLog(experience: profile.experience);
 
     if (context.isDesktop) {
@@ -70,9 +75,10 @@ class _AboutBody extends StatelessWidget {
 }
 
 class _Summary extends StatelessWidget {
-  const _Summary({required this.summary});
+  const _Summary({required this.summary, required this.appCount});
 
   final String summary;
+  final String appCount;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +97,7 @@ class _Summary extends StatelessWidget {
           ),
           child: Text(
             // no-tr
-            '15 years in oilfields. Now 44 apps in the stores.',
+            '15 years in oilfields. Now $appCount apps in the stores.',
             style: context.text.titleMedium,
           ),
         ),

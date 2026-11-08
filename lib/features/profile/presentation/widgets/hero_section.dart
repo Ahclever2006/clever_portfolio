@@ -11,6 +11,7 @@ import 'package:clever_portfolio/core/widgets/reveal_on_scroll.dart';
 import 'package:clever_portfolio/core/widgets/terminal_status_strip.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_state.dart';
+import 'package:clever_portfolio/features/projects/presentation/cubit/published_app_count.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,8 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<ProfileCubit>().state;
     final name = state is ProfileLoaded ? state.profile.name : 'Ahmed Maher';
+    // Live catalog size; the pre-load frame is hidden by RevealOnScroll.
+    final appCount = context.watchPublishedAppCount()?.toString() ?? '…';
     final hPad = context.responsive(
       mobile: context.spacing.gutterMobile,
       desktop: context.spacing.gutterDesktop,
@@ -99,7 +102,9 @@ class HeroSection extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: 640.w),
                         child: Text(
-                          AppStrings.heroTagline.tr(),
+                          AppStrings.heroTagline.tr(
+                            namedArgs: {appCountArg: appCount},
+                          ),
                           style: context.text.bodyLarge?.copyWith(
                             color: context.colors.onSurfaceVariant,
                           ),
@@ -135,9 +140,9 @@ class HeroSection extends StatelessWidget {
                     // Terminal status strip — last, as the "build complete" signal
                     RevealOnScroll(
                       delay: _d4,
-                      child: const TerminalStatusStrip(
+                      child: TerminalStatusStrip(
                         text:
-                            'apps_shipped: 44 | platforms: ios + android | status: live', // no-tr
+                            'apps_shipped: $appCount | platforms: ios + android | status: live', // no-tr
                       ),
                     ),
                   ],

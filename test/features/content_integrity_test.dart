@@ -3,8 +3,11 @@
 // The catalog grows over time, so the count is derived from the data rather
 // than hard-coded; the invariant under test is contiguity + a sane floor.
 
+import 'dart:convert';
+
 import 'package:clever_portfolio/features/profile/data/datasources/profile_local_data_source.dart';
 import 'package:clever_portfolio/features/projects/data/datasources/projects_local_data_source.dart';
+import 'package:clever_portfolio/features/projects/presentation/cubit/published_app_count.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -47,5 +50,28 @@ void main() {
     expect(profile.skillGroups, isNotEmpty);
     expect(profile.stats, isNotEmpty);
     expect(profile.languages, isNotEmpty);
+  });
+
+  // The app count lives only in apps.json; content references it through the
+  // `{appCount}` placeholder so adding an app never means a hunt for literals.
+  test('app count is derived from apps.json, not hard-coded', () async {
+    const token = '{$appCountArg}';
+    final profile = (await ProfileLocalDataSourceImpl(
+      rootBundle,
+    ).getProfile()).toEntity();
+    expect(profile.stats.map((s) => s.value), contains(token));
+    expect(profile.summary, contains(token));
+
+    for (final locale in ['en', 'ar']) {
+      final json =
+          jsonDecode(
+                await rootBundle.loadString('assets/translations/$locale.json'),
+              )
+              as Map<String, dynamic>;
+      final hero = json['hero'] as Map<String, dynamic>;
+      expect(hero['tagline'], contains(token), reason: '$locale tagline');
+    }
+
+    expect('Now $token apps'.withAppCount('44'), 'Now 44 apps');
   });
 }

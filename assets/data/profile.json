@@ -4,7 +4,7 @@
   "location": "Egypt — open to remote (GMT+2)",
   "email": "ahclever2006@gmail.com",
   "phone": "+201155728617",
-  "summary": "Senior Flutter engineer with 6+ years shipping cross-platform products and 3 years leading a delivery team. Currently technical lead on a three-app realtime transport platform — background GPS tracking, offline-first sync and WebSocket live maps — alongside a bilingual marketplace live on both stores. 44 apps published to Google Play and the App Store. Works end to end: architecture, state management, API integration, CI/CD and store release, with a bias toward clean architecture and code the next developer can maintain.",
+  "summary": "Senior Flutter engineer with 6+ years shipping cross-platform products and 3 years leading a delivery team. Currently technical lead on a three-app realtime transport platform — background GPS tracking, offline-first sync and WebSocket live maps — alongside a bilingual marketplace live on both stores. {appCount} apps published to Google Play and the App Store. Works end to end: architecture, state management, API integration, CI/CD and store release, with a bias toward clean architecture and code the next developer can maintain.",
   "languages": [
     { "name": "Arabic", "level": "Native" },
     { "name": "English", "level": "Fluent" }
@@ -14,7 +14,7 @@
     { "label": "LinkedIn", "url": "https://linkedin.com/in/ahmed-maher-9973b286" }
   ],
   "stats": [
-    { "value": "44", "label": "Published Apps" },
+    { "value": "{appCount}", "label": "Published Apps" },
     { "value": "6+", "label": "Years Flutter" },
     { "value": "15", "label": "Years Data Engineering" },
     { "value": "8", "label": "Countries Worked" }

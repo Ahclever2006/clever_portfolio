@@ -6,6 +6,7 @@ import 'package:clever_portfolio/core/widgets/reveal_on_scroll.dart';
 import 'package:clever_portfolio/features/profile/domain/entities/profile.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:clever_portfolio/features/profile/presentation/cubit/profile_state.dart';
+import 'package:clever_portfolio/features/projects/presentation/cubit/published_app_count.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +21,18 @@ class StatsBand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<ProfileCubit>().state;
-    final stats = state is ProfileLoaded ? state.profile.stats : null;
+    final appCount = context.watchPublishedAppCount();
+    // Ready once both profile.json and apps.json are in; `{appCount}` in a
+    // stat value resolves to the live catalog size.
+    final stats = state is ProfileLoaded && appCount != null
+        ? [
+            for (final s in state.profile.stats)
+              StatMetric(
+                value: s.value.withAppCount('$appCount'),
+                label: s.label,
+              ),
+          ]
+        : null;
 
     return RevealOnScroll(
       child: Container(

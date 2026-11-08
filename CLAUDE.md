@@ -102,6 +102,13 @@ Hard rules — mirrored in `.claude/settings.json` `instructions` and enforced b
   `core/utils/store_link_builder.dart` reconstructs the App Store / Google Play URLs, and
   cards/rows render a store button **only when that link exists**. CV/profile/skills/experience
   live in `assets/data/profile.json`. Never inline portfolio content in widgets.
+- **Never hardcode the app count in-app.** It is derived from `apps.json` via
+  `context.watchPublishedAppCount()` (`features/projects/presentation/cubit/published_app_count.dart`).
+  Content writes it as the `{appCount}` placeholder — `profile.json` (resolved with
+  `.withAppCount(...)`) and `en`/`ar` translations (resolved with `.tr(namedArgs: {appCountArg: ...})`);
+  `content_integrity_test.dart` guards this. Adding an app = append to `apps.json` (next `index`)
+  + media. Only static files still carry a literal count: `web/index.html` meta tags,
+  `web/manifest.json`, the CV PDF, and docs.
 - PDFs are bundled under `assets/docs/` and also copied to `web/docs/` so the "Download CV" button
   triggers a real browser download (web-served files are relative URLs, not `assets:` entries).
 
