@@ -102,7 +102,7 @@
           },
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && grep -q 'part.*\\.freezed\\.dart\\|part.*\\.g\\.dart' \"$file\" 2>/dev/null; then echo '⚙️  Has code-gen parts — run: dart run build_runner build --delete-conflicting-outputs'; fi; }"
+            "command": "jq -r '.tool_input.file_path // empty' | { read file; if [ -n \"$file\" ] && grep -q 'part.*\\.freezed\\.dart\\|part.*\\.g\\.dart' \"$file\" 2>/dev/null; then echo '⚙️  Has code-gen parts — run: dart run build_runner build'; fi; }"
           },
           {
             "type": "command",

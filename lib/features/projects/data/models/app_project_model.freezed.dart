@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'app_project_model.dart';
@@ -9,6 +9,7 @@ part of 'app_project_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $StoreLinksModelCopyWith<StoreLinksModel> get copyWith => _$StoreLinksModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StoreLinksModel&&(identical(other.googlePlay, googlePlay) || other.googlePlay == googlePlay)&&(identical(other.appStore, appStore) || other.appStore == appStore));
+  final _this = this as StoreLinksModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StoreLinksModel&&(identical(other.googlePlay, _this.googlePlay) || other.googlePlay == _this.googlePlay)&&(identical(other.appStore, _this.appStore) || other.appStore == _this.appStore));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,googlePlay,appStore);
+int get hashCode {
+  final _this = this as StoreLinksModel;
+  return Object.hash(runtimeType,_this.googlePlay,_this.appStore);
+}
 
 @override
 String toString() {
-  return 'StoreLinksModel(googlePlay: $googlePlay, appStore: $appStore)';
+  final _this = this as StoreLinksModel;
+  return 'StoreLinksModel(googlePlay: ${_this.googlePlay}, appStore: ${_this.appStore})';
 }
 
 
@@ -66,7 +72,7 @@ class _$StoreLinksModelCopyWithImpl<$Res>
 /// Create a copy of StoreLinksModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? googlePlay = freezed,Object? appStore = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(StoreLinksModel(
 googlePlay: freezed == googlePlay ? _self.googlePlay : googlePlay // ignore: cast_nullable_to_non_nullable
 as String?,appStore: freezed == appStore ? _self.appStore : appStore // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -223,16 +229,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StoreLinksModel&&(identical(other.googlePlay, googlePlay) || other.googlePlay == googlePlay)&&(identical(other.appStore, appStore) || other.appStore == appStore));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _StoreLinksModel&&(identical(other.googlePlay, googlePlay) || other.googlePlay == googlePlay)&&(identical(other.appStore, appStore) || other.appStore == appStore));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,googlePlay,appStore);
+int get hashCode {
+    return Object.hash(runtimeType,googlePlay,appStore);
+}
 
 @override
 String toString() {
-  return 'StoreLinksModel(googlePlay: $googlePlay, appStore: $appStore)';
+    return 'StoreLinksModel(googlePlay: $googlePlay, appStore: $appStore)';
 }
 
 
@@ -288,16 +296,21 @@ $AppProjectModelCopyWith<AppProjectModel> get copyWith => _$AppProjectModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppProjectModel&&(identical(other.index, index) || other.index == index)&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.tagline, tagline) || other.tagline == tagline)&&(identical(other.featured, featured) || other.featured == featured)&&(identical(other.storeLinks, storeLinks) || other.storeLinks == storeLinks)&&(identical(other.iconAsset, iconAsset) || other.iconAsset == iconAsset)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.screenshots, screenshots));
+  final _this = this as AppProjectModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppProjectModel&&(identical(other.index, _this.index) || other.index == _this.index)&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.tagline, _this.tagline) || other.tagline == _this.tagline)&&(identical(other.featured, _this.featured) || other.featured == _this.featured)&&(identical(other.storeLinks, _this.storeLinks) || other.storeLinks == _this.storeLinks)&&(identical(other.iconAsset, _this.iconAsset) || other.iconAsset == _this.iconAsset)&&(identical(other.description, _this.description) || other.description == _this.description)&&const DeepCollectionEquality().equals(other.screenshots, _this.screenshots));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,index,id,name,category,tagline,featured,storeLinks,iconAsset,description,const DeepCollectionEquality().hash(screenshots));
+int get hashCode {
+  final _this = this as AppProjectModel;
+  return Object.hash(runtimeType,_this.index,_this.id,_this.name,_this.category,_this.tagline,_this.featured,_this.storeLinks,_this.iconAsset,_this.description,const DeepCollectionEquality().hash(_this.screenshots));
+}
 
 @override
 String toString() {
-  return 'AppProjectModel(index: $index, id: $id, name: $name, category: $category, tagline: $tagline, featured: $featured, storeLinks: $storeLinks, iconAsset: $iconAsset, description: $description, screenshots: $screenshots)';
+  final _this = this as AppProjectModel;
+  return 'AppProjectModel(index: ${_this.index}, id: ${_this.id}, name: ${_this.name}, category: ${_this.category}, tagline: ${_this.tagline}, featured: ${_this.featured}, storeLinks: ${_this.storeLinks}, iconAsset: ${_this.iconAsset}, description: ${_this.description}, screenshots: ${_this.screenshots})';
 }
 
 
@@ -326,7 +339,7 @@ class _$AppProjectModelCopyWithImpl<$Res>
 /// Create a copy of AppProjectModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? index = null,Object? id = null,Object? name = null,Object? category = null,Object? tagline = null,Object? featured = null,Object? storeLinks = freezed,Object? iconAsset = freezed,Object? description = freezed,Object? screenshots = null,}) {
-  return _then(_self.copyWith(
+  return _then(AppProjectModel(
 index: null == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
 as int,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -484,7 +497,7 @@ return $default(_that.index,_that.id,_that.name,_that.category,_that.tagline,_th
 @JsonSerializable()
 
 class _AppProjectModel extends AppProjectModel {
-  const _AppProjectModel({required this.index, required this.id, required this.name, required this.category, required this.tagline, this.featured = false, this.storeLinks, this.iconAsset, this.description, final  List<String> screenshots = const <String>[]}): _screenshots = screenshots,super._();
+  const _AppProjectModel({required this.index, required this.id, required this.name, required this.category, required this.tagline, this.featured = false, this.storeLinks, this.iconAsset, this.description,  List<String> screenshots = const <String>[]}): _screenshots = screenshots,super._();
   factory _AppProjectModel.fromJson(Map<String, dynamic> json) => _$AppProjectModelFromJson(json);
 
 @override final  int index;
@@ -517,16 +530,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppProjectModel&&(identical(other.index, index) || other.index == index)&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.tagline, tagline) || other.tagline == tagline)&&(identical(other.featured, featured) || other.featured == featured)&&(identical(other.storeLinks, storeLinks) || other.storeLinks == storeLinks)&&(identical(other.iconAsset, iconAsset) || other.iconAsset == iconAsset)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._screenshots, _screenshots));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppProjectModel&&(identical(other.index, index) || other.index == index)&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.category, category) || other.category == category)&&(identical(other.tagline, tagline) || other.tagline == tagline)&&(identical(other.featured, featured) || other.featured == featured)&&(identical(other.storeLinks, storeLinks) || other.storeLinks == storeLinks)&&(identical(other.iconAsset, iconAsset) || other.iconAsset == iconAsset)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.screenshots, _screenshots));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,index,id,name,category,tagline,featured,storeLinks,iconAsset,description,const DeepCollectionEquality().hash(_screenshots));
+int get hashCode {
+    return Object.hash(runtimeType,index,id,name,category,tagline,featured,storeLinks,iconAsset,description,const DeepCollectionEquality().hash(_screenshots));
+}
 
 @override
 String toString() {
-  return 'AppProjectModel(index: $index, id: $id, name: $name, category: $category, tagline: $tagline, featured: $featured, storeLinks: $storeLinks, iconAsset: $iconAsset, description: $description, screenshots: $screenshots)';
+    return 'AppProjectModel(index: $index, id: $id, name: $name, category: $category, tagline: $tagline, featured: $featured, storeLinks: $storeLinks, iconAsset: $iconAsset, description: $description, screenshots: $screenshots)';
 }
 
 

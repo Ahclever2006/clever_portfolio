@@ -97,7 +97,7 @@ class <Feature>Model {
   <Feature>Entity toEntity() => <Feature>Entity(id: id);
 }
 ```
-Remind the user to run: `dart run build_runner build --delete-conflicting-outputs`.
+Remind the user to run: `dart run build_runner build`.
 
 #### Remote data source — `data/datasources/<feature>_remote_data_source.dart`
 ```dart

@@ -9,8 +9,10 @@ sealed class Failure extends Equatable {
   /// Human-readable description.
   final String message;
 
+  // equatable 3 no longer compares runtimeType, so it is part of props here:
+  // an AssetFailure must never equal a CacheFailure with the same message.
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [runtimeType, message];
 }
 
 /// Local asset / bundled-JSON load or parse failure.
@@ -34,7 +36,7 @@ final class ServerFailure extends Failure {
   final int? statusCode;
 
   @override
-  List<Object?> get props => [message, statusCode];
+  List<Object?> get props => [runtimeType, message, statusCode];
 }
 
 /// No connectivity when a network call was attempted.

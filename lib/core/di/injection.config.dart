@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:clever_portfolio/core/analytics/analytics_service.dart'
     as _i218;
 import 'package:clever_portfolio/core/di/register_module.dart' as _i150;
@@ -56,7 +57,7 @@ import 'package:clever_portfolio/features/projects/domain/usecases/get_projects.
 import 'package:clever_portfolio/features/projects/presentation/cubit/projects_cubit.dart'
     as _i213;
 import 'package:clever_portfolio/shared/navigation/cubit/navigation_cubit.dart'
-    as _i345;
+    as _i346;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter/services.dart' as _i281;
 import 'package:get_it/get_it.dart' as _i174;
@@ -80,8 +81,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i218.AnalyticsService>(() => registerModule.analytics);
     gh.lazySingleton<_i281.AssetBundle>(() => registerModule.assetBundle);
     gh.lazySingleton<_i345.AppRouter>(() => _i345.AppRouter());
-    gh.factory<_i345.NavigationCubit>(
-      () => _i345.NavigationCubit(gh<_i218.AnalyticsService>()),
+    gh.factory<_i346.NavigationCubit>(
+      () => _i346.NavigationCubit(gh<_i218.AnalyticsService>()),
     );
     gh.lazySingleton<_i923.DioClient>(() => _i923.DioClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i178.ContactRepository>(

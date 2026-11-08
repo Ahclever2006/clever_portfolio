@@ -17,7 +17,7 @@ This is the single source of truth for building **Ahmed Maher's Flutter Web port
 
 ## 2. Tech Stack & Packages
 
-> Build target: **Flutter Web only** (the scaffolded desktop/mobile platforms are ignored). Flutter 3.41.4 / Dart 3.11.1 (SDK `^3.11.1`). Versions are floor constraints (`^`) compatible with this SDK; pin exact versions from the `pub get` resolution at install time.
+> Build target: **Flutter Web only** (the scaffolded desktop/mobile platforms are ignored). Flutter 3.47.9 / Dart 3.13.7 (SDK `^3.13.7`, `flutter: ">=3.47.9"`). Versions are floor constraints (`^`) compatible with this SDK; pin exact versions from the `pub get` resolution at install time.
 
 **A note on the mandated `sizeHelper` package (read first):** there is **no maintained pub.dev package literally named `sizeHelper`/`size_helper`** (verified — only `size_config`, `sized_context`, `responsive_size_widget`, etc. exist, none authoritative). The rule's *intent* is "a responsive sizing helper." We satisfy it with **`flutter_screenutil`** (de-facto standard, CSS-like `.w/.h/.sp/.r` scaling + breakpoints), wrapped behind our own `core/responsive/` abstraction (`AppBreakpoints`, `Responsive<T>`, `context.bp`) so widgets never call the package directly and it can be swapped without touching the UI. This **is** the mandated "sizeHelper" for this build — **confirmed as the house standard**: the user's other production projects (e.g. *Rolli*) standardize on `flutter_screenutil` for responsive sizing (`.sp`/`.w`/`.h`/`.r`).
 
@@ -1227,11 +1227,11 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: 3.41.4
+          flutter-version: 3.47.9
       - name: Install dependencies
         run: flutter pub get
       - name: Codegen (freezed / json_serializable / injectable)
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build
       - name: Design-token gate
         run: bash scripts/check_design_tokens.sh
       - name: Analyze

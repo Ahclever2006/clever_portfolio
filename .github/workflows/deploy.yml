@@ -17,20 +17,23 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Pinned instead of ubuntu-latest (which is migrating to Ubuntu 26 and
+    # annotates every run with a notice). Bump deliberately, not implicitly.
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: 3.41.4
+          # Keep in sync with pubspec.yaml `environment: flutter: ">=3.47.9"`.
+          flutter-version: 3.47.9
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Codegen (freezed / json_serializable / injectable)
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build
 
       - name: Design-token gate
         run: bash scripts/check_design_tokens.sh
@@ -56,7 +59,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

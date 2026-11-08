@@ -19,7 +19,7 @@ State of the repo:
 - **`lib/main.dart` is still the default `flutter create` counter sample** — the real entry point,
   `bootstrap()`, and `MaterialApp` wiring are not built yet. Start from `plan.md` → **M0**.
 - **Build target is Flutter Web.** The scaffolded Android/iOS/desktop platforms are ignored.
-- Flutter is **3.41.4** (stable); Dart SDK constraint is **`^3.11.1`**.
+- Flutter is **3.47.9** (stable, Dart 3.13.7); `pubspec.yaml` pins `sdk: ^3.13.7` + `flutter: ">=3.47.9"`, CI matches.
 - **This is not a git repository yet** — run `git init` (and add a GitHub remote) before wiring the
   GitHub Pages CI in `plan.md` §12.
 
@@ -34,7 +34,10 @@ flutter test test/features/projects/...          # a single file
 flutter test --name "filters by category"        # a single test by name
 flutter run -d chrome                             # run the web app locally
 flutter build web --release --base-href "/clever_portfolio/"   # GitHub Pages project build
-dart run build_runner build --delete-conflicting-outputs       # freezed + json_serializable + injectable codegen
+dart run build_runner build                      # freezed + json_serializable + injectable codegen
+                                                 # (>=2.16 auto-deletes conflicting outputs; if macOS refuses the
+                                                 #  AOT-compiled builder, add --force-jit — the hook blocks any
+                                                 #  "--force" substring, so ask the user to run it via `!`)
 bash scripts/check_design_tokens.sh              # design-token / RTL / .tr() compliance gate (CI)
 ```
 

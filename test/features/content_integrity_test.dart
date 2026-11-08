@@ -17,9 +17,8 @@ void main() {
   test(
     'apps.json parses to N projects with contiguous unique indices 1..N',
     () async {
-      final models = await ProjectsLocalDataSourceImpl(
-        rootBundle,
-      ).getProjects();
+      final models = await ProjectsLocalDataSourceImpl(rootBundle)
+          .getProjects();
       final count = models.length;
 
       // Sane floor: a load that silently returns nothing/very little is a bug.
@@ -63,11 +62,9 @@ void main() {
     expect(profile.summary, contains(token));
 
     for (final locale in ['en', 'ar']) {
-      final json =
-          jsonDecode(
-                await rootBundle.loadString('assets/translations/$locale.json'),
-              )
-              as Map<String, dynamic>;
+      final json = jsonDecode(
+        await rootBundle.loadString('assets/translations/$locale.json'),
+      ) as Map<String, dynamic>;
       final hero = json['hero'] as Map<String, dynamic>;
       expect(hero['tagline'], contains(token), reason: '$locale tagline');
     }

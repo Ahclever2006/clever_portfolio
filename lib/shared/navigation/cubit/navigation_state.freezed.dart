@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'navigation_state.dart';
@@ -9,6 +9,7 @@ part of 'navigation_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $NavigationStateCopyWith<NavigationState> get copyWith => _$NavigationStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NavigationState&&(identical(other.activeSection, activeSection) || other.activeSection == activeSection)&&(identical(other.navElevated, navElevated) || other.navElevated == navElevated));
+  final _this = this as NavigationState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NavigationState&&(identical(other.activeSection, _this.activeSection) || other.activeSection == _this.activeSection)&&(identical(other.navElevated, _this.navElevated) || other.navElevated == _this.navElevated));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,activeSection,navElevated);
+int get hashCode {
+  final _this = this as NavigationState;
+  return Object.hash(runtimeType,_this.activeSection,_this.navElevated);
+}
 
 @override
 String toString() {
-  return 'NavigationState(activeSection: $activeSection, navElevated: $navElevated)';
+  final _this = this as NavigationState;
+  return 'NavigationState(activeSection: ${_this.activeSection}, navElevated: ${_this.navElevated})';
 }
 
 
@@ -63,7 +69,7 @@ class _$NavigationStateCopyWithImpl<$Res>
 /// Create a copy of NavigationState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? activeSection = null,Object? navElevated = null,}) {
-  return _then(_self.copyWith(
+  return _then(NavigationState(
 activeSection: null == activeSection ? _self.activeSection : activeSection // ignore: cast_nullable_to_non_nullable
 as SectionId,navElevated: null == navElevated ? _self.navElevated : navElevated // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -217,16 +223,18 @@ _$NavigationStateCopyWith<_NavigationState> get copyWith => __$NavigationStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NavigationState&&(identical(other.activeSection, activeSection) || other.activeSection == activeSection)&&(identical(other.navElevated, navElevated) || other.navElevated == navElevated));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NavigationState&&(identical(other.activeSection, activeSection) || other.activeSection == activeSection)&&(identical(other.navElevated, navElevated) || other.navElevated == navElevated));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,activeSection,navElevated);
+int get hashCode {
+    return Object.hash(runtimeType,activeSection,navElevated);
+}
 
 @override
 String toString() {
-  return 'NavigationState(activeSection: $activeSection, navElevated: $navElevated)';
+    return 'NavigationState(activeSection: $activeSection, navElevated: $navElevated)';
 }
 
 

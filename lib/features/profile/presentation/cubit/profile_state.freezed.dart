@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'profile_state.dart';
@@ -9,6 +9,7 @@ part of 'profile_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$ProfileState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProfileState()';
+    return 'ProfileState()';
 }
 
 
@@ -197,7 +198,7 @@ class ProfileInitial implements ProfileState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileInitial);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileInitial);
 }
 
 
@@ -206,7 +207,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProfileState.initial()';
+    return 'ProfileState.initial()';
 }
 
 
@@ -229,7 +230,7 @@ class ProfileLoading implements ProfileState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileLoading);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileLoading);
 }
 
 
@@ -238,7 +239,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProfileState.loading()';
+    return 'ProfileState.loading()';
 }
 
 
@@ -266,16 +267,18 @@ $ProfileLoadedCopyWith<ProfileLoaded> get copyWith => _$ProfileLoadedCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileLoaded&&(identical(other.profile, profile) || other.profile == profile));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileLoaded&&(identical(other.profile, profile) || other.profile == profile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile);
+int get hashCode {
+    return Object.hash(runtimeType,profile);
+}
 
 @override
 String toString() {
-  return 'ProfileState.loaded(profile: $profile)';
+    return 'ProfileState.loaded(profile: $profile)';
 }
 
 
@@ -332,16 +335,18 @@ $ProfileErrorCopyWith<ProfileError> get copyWith => _$ProfileErrorCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileError&&(identical(other.failure, failure) || other.failure == failure));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileError&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,failure);
+int get hashCode {
+    return Object.hash(runtimeType,failure);
+}
 
 @override
 String toString() {
-  return 'ProfileState.error(failure: $failure)';
+    return 'ProfileState.error(failure: $failure)';
 }
 
 

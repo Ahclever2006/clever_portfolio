@@ -359,9 +359,8 @@ class _TransmissionForm extends StatelessWidget {
                   if (v == null || v.trim().isEmpty) {
                     return AppStrings.contactValidateEmail.tr();
                   }
-                  final ok = RegExp(
-                    r'^[\w.+-]+@[\w-]+\.[\w.]{2,}$',
-                  ).hasMatch(v.trim());
+                  final ok = RegExp(r'^[\w.+-]+@[\w-]+\.[\w.]{2,}$')
+                      .hasMatch(v.trim());
                   return ok ? null : AppStrings.contactValidateEmail.tr();
                 },
               ),

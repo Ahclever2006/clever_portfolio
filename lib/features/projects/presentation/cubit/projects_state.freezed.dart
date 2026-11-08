@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'projects_state.dart';
@@ -9,6 +9,7 @@ part of 'projects_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$ProjectsState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsState);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsState);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProjectsState()';
+    return 'ProjectsState()';
 }
 
 
@@ -197,7 +198,7 @@ class ProjectsInitial implements ProjectsState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsInitial);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsInitial);
 }
 
 
@@ -206,7 +207,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProjectsState.initial()';
+    return 'ProjectsState.initial()';
 }
 
 
@@ -229,7 +230,7 @@ class ProjectsLoading implements ProjectsState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsLoading);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsLoading);
 }
 
 
@@ -238,7 +239,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProjectsState.loading()';
+    return 'ProjectsState.loading()';
 }
 
 
@@ -266,16 +267,18 @@ $ProjectsErrorCopyWith<ProjectsError> get copyWith => _$ProjectsErrorCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsError&&(identical(other.failure, failure) || other.failure == failure));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsError&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,failure);
+int get hashCode {
+    return Object.hash(runtimeType,failure);
+}
 
 @override
 String toString() {
-  return 'ProjectsState.error(failure: $failure)';
+    return 'ProjectsState.error(failure: $failure)';
 }
 
 
@@ -317,7 +320,7 @@ as Failure,
 
 
 class ProjectsLoaded implements ProjectsState {
-  const ProjectsLoaded({required final  List<AppProject> all, required final  List<AppProject> visible, this.activeCategory, this.activePlatform, this.query = '', this.viewMode = ProjectViewMode.grid}): _all = all,_visible = visible;
+  const ProjectsLoaded({required  List<AppProject> all, required  List<AppProject> visible, this.activeCategory, this.activePlatform, this.query = '', this.viewMode = ProjectViewMode.grid}): _all = all,_visible = visible;
   
 
  final  List<AppProject> _all;
@@ -349,16 +352,18 @@ $ProjectsLoadedCopyWith<ProjectsLoaded> get copyWith => _$ProjectsLoadedCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsLoaded&&const DeepCollectionEquality().equals(other._all, _all)&&const DeepCollectionEquality().equals(other._visible, _visible)&&(identical(other.activeCategory, activeCategory) || other.activeCategory == activeCategory)&&(identical(other.activePlatform, activePlatform) || other.activePlatform == activePlatform)&&(identical(other.query, query) || other.query == query)&&(identical(other.viewMode, viewMode) || other.viewMode == viewMode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProjectsLoaded&&const DeepCollectionEquality().equals(other.all, _all)&&const DeepCollectionEquality().equals(other.visible, _visible)&&(identical(other.activeCategory, activeCategory) || other.activeCategory == activeCategory)&&(identical(other.activePlatform, activePlatform) || other.activePlatform == activePlatform)&&(identical(other.query, query) || other.query == query)&&(identical(other.viewMode, viewMode) || other.viewMode == viewMode));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_all),const DeepCollectionEquality().hash(_visible),activeCategory,activePlatform,query,viewMode);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_all),const DeepCollectionEquality().hash(_visible),activeCategory,activePlatform,query,viewMode);
+}
 
 @override
 String toString() {
-  return 'ProjectsState.loaded(all: $all, visible: $visible, activeCategory: $activeCategory, activePlatform: $activePlatform, query: $query, viewMode: $viewMode)';
+    return 'ProjectsState.loaded(all: $all, visible: $visible, activeCategory: $activeCategory, activePlatform: $activePlatform, query: $query, viewMode: $viewMode)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'profile_model.dart';
@@ -9,6 +9,7 @@ part of 'profile_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $LanguageModelCopyWith<LanguageModel> get copyWith => _$LanguageModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LanguageModel&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level));
+  final _this = this as LanguageModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LanguageModel&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.level, _this.level) || other.level == _this.level));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,level);
+int get hashCode {
+  final _this = this as LanguageModel;
+  return Object.hash(runtimeType,_this.name,_this.level);
+}
 
 @override
 String toString() {
-  return 'LanguageModel(name: $name, level: $level)';
+  final _this = this as LanguageModel;
+  return 'LanguageModel(name: ${_this.name}, level: ${_this.level})';
 }
 
 
@@ -66,7 +72,7 @@ class _$LanguageModelCopyWithImpl<$Res>
 /// Create a copy of LanguageModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? level = null,}) {
-  return _then(_self.copyWith(
+  return _then(LanguageModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
 as String,
@@ -223,16 +229,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LanguageModel&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LanguageModel&&(identical(other.name, name) || other.name == name)&&(identical(other.level, level) || other.level == level));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,level);
+int get hashCode {
+    return Object.hash(runtimeType,name,level);
+}
 
 @override
 String toString() {
-  return 'LanguageModel(name: $name, level: $level)';
+    return 'LanguageModel(name: $name, level: $level)';
 }
 
 
@@ -288,16 +296,21 @@ $SocialLinkModelCopyWith<SocialLinkModel> get copyWith => _$SocialLinkModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SocialLinkModel&&(identical(other.label, label) || other.label == label)&&(identical(other.url, url) || other.url == url));
+  final _this = this as SocialLinkModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SocialLinkModel&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.url, _this.url) || other.url == _this.url));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,label,url);
+int get hashCode {
+  final _this = this as SocialLinkModel;
+  return Object.hash(runtimeType,_this.label,_this.url);
+}
 
 @override
 String toString() {
-  return 'SocialLinkModel(label: $label, url: $url)';
+  final _this = this as SocialLinkModel;
+  return 'SocialLinkModel(label: ${_this.label}, url: ${_this.url})';
 }
 
 
@@ -326,7 +339,7 @@ class _$SocialLinkModelCopyWithImpl<$Res>
 /// Create a copy of SocialLinkModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? label = null,Object? url = null,}) {
-  return _then(_self.copyWith(
+  return _then(SocialLinkModel(
 label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,
@@ -483,16 +496,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SocialLinkModel&&(identical(other.label, label) || other.label == label)&&(identical(other.url, url) || other.url == url));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SocialLinkModel&&(identical(other.label, label) || other.label == label)&&(identical(other.url, url) || other.url == url));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,label,url);
+int get hashCode {
+    return Object.hash(runtimeType,label,url);
+}
 
 @override
 String toString() {
-  return 'SocialLinkModel(label: $label, url: $url)';
+    return 'SocialLinkModel(label: $label, url: $url)';
 }
 
 
@@ -548,16 +563,21 @@ $StatMetricModelCopyWith<StatMetricModel> get copyWith => _$StatMetricModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatMetricModel&&(identical(other.value, value) || other.value == value)&&(identical(other.label, label) || other.label == label));
+  final _this = this as StatMetricModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatMetricModel&&(identical(other.value, _this.value) || other.value == _this.value)&&(identical(other.label, _this.label) || other.label == _this.label));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,value,label);
+int get hashCode {
+  final _this = this as StatMetricModel;
+  return Object.hash(runtimeType,_this.value,_this.label);
+}
 
 @override
 String toString() {
-  return 'StatMetricModel(value: $value, label: $label)';
+  final _this = this as StatMetricModel;
+  return 'StatMetricModel(value: ${_this.value}, label: ${_this.label})';
 }
 
 
@@ -586,7 +606,7 @@ class _$StatMetricModelCopyWithImpl<$Res>
 /// Create a copy of StatMetricModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? value = null,Object? label = null,}) {
-  return _then(_self.copyWith(
+  return _then(StatMetricModel(
 value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,
@@ -743,16 +763,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatMetricModel&&(identical(other.value, value) || other.value == value)&&(identical(other.label, label) || other.label == label));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatMetricModel&&(identical(other.value, value) || other.value == value)&&(identical(other.label, label) || other.label == label));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,value,label);
+int get hashCode {
+    return Object.hash(runtimeType,value,label);
+}
 
 @override
 String toString() {
-  return 'StatMetricModel(value: $value, label: $label)';
+    return 'StatMetricModel(value: $value, label: $label)';
 }
 
 
@@ -808,16 +830,21 @@ $SkillGroupModelCopyWith<SkillGroupModel> get copyWith => _$SkillGroupModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SkillGroupModel&&(identical(other.label, label) || other.label == label)&&const DeepCollectionEquality().equals(other.skills, skills));
+  final _this = this as SkillGroupModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SkillGroupModel&&(identical(other.label, _this.label) || other.label == _this.label)&&const DeepCollectionEquality().equals(other.skills, _this.skills));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,label,const DeepCollectionEquality().hash(skills));
+int get hashCode {
+  final _this = this as SkillGroupModel;
+  return Object.hash(runtimeType,_this.label,const DeepCollectionEquality().hash(_this.skills));
+}
 
 @override
 String toString() {
-  return 'SkillGroupModel(label: $label, skills: $skills)';
+  final _this = this as SkillGroupModel;
+  return 'SkillGroupModel(label: ${_this.label}, skills: ${_this.skills})';
 }
 
 
@@ -846,7 +873,7 @@ class _$SkillGroupModelCopyWithImpl<$Res>
 /// Create a copy of SkillGroupModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? label = null,Object? skills = null,}) {
-  return _then(_self.copyWith(
+  return _then(SkillGroupModel(
 label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,skills: null == skills ? _self.skills : skills // ignore: cast_nullable_to_non_nullable
 as List<String>,
@@ -984,7 +1011,7 @@ return $default(_that.label,_that.skills);case _:
 @JsonSerializable()
 
 class _SkillGroupModel extends SkillGroupModel {
-  const _SkillGroupModel({required this.label, final  List<String> skills = const <String>[]}): _skills = skills,super._();
+  const _SkillGroupModel({required this.label,  List<String> skills = const <String>[]}): _skills = skills,super._();
   factory _SkillGroupModel.fromJson(Map<String, dynamic> json) => _$SkillGroupModelFromJson(json);
 
 @override final  String label;
@@ -1009,16 +1036,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SkillGroupModel&&(identical(other.label, label) || other.label == label)&&const DeepCollectionEquality().equals(other._skills, _skills));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SkillGroupModel&&(identical(other.label, label) || other.label == label)&&const DeepCollectionEquality().equals(other.skills, _skills));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,label,const DeepCollectionEquality().hash(_skills));
+int get hashCode {
+    return Object.hash(runtimeType,label,const DeepCollectionEquality().hash(_skills));
+}
 
 @override
 String toString() {
-  return 'SkillGroupModel(label: $label, skills: $skills)';
+    return 'SkillGroupModel(label: $label, skills: $skills)';
 }
 
 
@@ -1074,16 +1103,21 @@ $ExperienceItemModelCopyWith<ExperienceItemModel> get copyWith => _$ExperienceIt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExperienceItemModel&&(identical(other.role, role) || other.role == role)&&(identical(other.company, company) || other.company == company)&&(identical(other.location, location) || other.location == location)&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other.bullets, bullets));
+  final _this = this as ExperienceItemModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExperienceItemModel&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.company, _this.company) || other.company == _this.company)&&(identical(other.location, _this.location) || other.location == _this.location)&&(identical(other.period, _this.period) || other.period == _this.period)&&const DeepCollectionEquality().equals(other.bullets, _this.bullets));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,role,company,location,period,const DeepCollectionEquality().hash(bullets));
+int get hashCode {
+  final _this = this as ExperienceItemModel;
+  return Object.hash(runtimeType,_this.role,_this.company,_this.location,_this.period,const DeepCollectionEquality().hash(_this.bullets));
+}
 
 @override
 String toString() {
-  return 'ExperienceItemModel(role: $role, company: $company, location: $location, period: $period, bullets: $bullets)';
+  final _this = this as ExperienceItemModel;
+  return 'ExperienceItemModel(role: ${_this.role}, company: ${_this.company}, location: ${_this.location}, period: ${_this.period}, bullets: ${_this.bullets})';
 }
 
 
@@ -1112,7 +1146,7 @@ class _$ExperienceItemModelCopyWithImpl<$Res>
 /// Create a copy of ExperienceItemModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? role = null,Object? company = null,Object? location = null,Object? period = null,Object? bullets = null,}) {
-  return _then(_self.copyWith(
+  return _then(ExperienceItemModel(
 role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,company: null == company ? _self.company : company // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
@@ -1253,7 +1287,7 @@ return $default(_that.role,_that.company,_that.location,_that.period,_that.bulle
 @JsonSerializable()
 
 class _ExperienceItemModel extends ExperienceItemModel {
-  const _ExperienceItemModel({required this.role, required this.company, required this.location, required this.period, final  List<String> bullets = const <String>[]}): _bullets = bullets,super._();
+  const _ExperienceItemModel({required this.role, required this.company, required this.location, required this.period,  List<String> bullets = const <String>[]}): _bullets = bullets,super._();
   factory _ExperienceItemModel.fromJson(Map<String, dynamic> json) => _$ExperienceItemModelFromJson(json);
 
 @override final  String role;
@@ -1281,16 +1315,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExperienceItemModel&&(identical(other.role, role) || other.role == role)&&(identical(other.company, company) || other.company == company)&&(identical(other.location, location) || other.location == location)&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other._bullets, _bullets));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExperienceItemModel&&(identical(other.role, role) || other.role == role)&&(identical(other.company, company) || other.company == company)&&(identical(other.location, location) || other.location == location)&&(identical(other.period, period) || other.period == period)&&const DeepCollectionEquality().equals(other.bullets, _bullets));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,role,company,location,period,const DeepCollectionEquality().hash(_bullets));
+int get hashCode {
+    return Object.hash(runtimeType,role,company,location,period,const DeepCollectionEquality().hash(_bullets));
+}
 
 @override
 String toString() {
-  return 'ExperienceItemModel(role: $role, company: $company, location: $location, period: $period, bullets: $bullets)';
+    return 'ExperienceItemModel(role: $role, company: $company, location: $location, period: $period, bullets: $bullets)';
 }
 
 
@@ -1349,16 +1385,21 @@ $EducationItemModelCopyWith<EducationItemModel> get copyWith => _$EducationItemM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EducationItemModel&&(identical(other.degree, degree) || other.degree == degree)&&(identical(other.institution, institution) || other.institution == institution)&&(identical(other.period, period) || other.period == period)&&(identical(other.grade, grade) || other.grade == grade));
+  final _this = this as EducationItemModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EducationItemModel&&(identical(other.degree, _this.degree) || other.degree == _this.degree)&&(identical(other.institution, _this.institution) || other.institution == _this.institution)&&(identical(other.period, _this.period) || other.period == _this.period)&&(identical(other.grade, _this.grade) || other.grade == _this.grade));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,degree,institution,period,grade);
+int get hashCode {
+  final _this = this as EducationItemModel;
+  return Object.hash(runtimeType,_this.degree,_this.institution,_this.period,_this.grade);
+}
 
 @override
 String toString() {
-  return 'EducationItemModel(degree: $degree, institution: $institution, period: $period, grade: $grade)';
+  final _this = this as EducationItemModel;
+  return 'EducationItemModel(degree: ${_this.degree}, institution: ${_this.institution}, period: ${_this.period}, grade: ${_this.grade})';
 }
 
 
@@ -1387,7 +1428,7 @@ class _$EducationItemModelCopyWithImpl<$Res>
 /// Create a copy of EducationItemModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? degree = null,Object? institution = null,Object? period = null,Object? grade = null,}) {
-  return _then(_self.copyWith(
+  return _then(EducationItemModel(
 degree: null == degree ? _self.degree : degree // ignore: cast_nullable_to_non_nullable
 as String,institution: null == institution ? _self.institution : institution // ignore: cast_nullable_to_non_nullable
 as String,period: null == period ? _self.period : period // ignore: cast_nullable_to_non_nullable
@@ -1548,16 +1589,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EducationItemModel&&(identical(other.degree, degree) || other.degree == degree)&&(identical(other.institution, institution) || other.institution == institution)&&(identical(other.period, period) || other.period == period)&&(identical(other.grade, grade) || other.grade == grade));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EducationItemModel&&(identical(other.degree, degree) || other.degree == degree)&&(identical(other.institution, institution) || other.institution == institution)&&(identical(other.period, period) || other.period == period)&&(identical(other.grade, grade) || other.grade == grade));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,degree,institution,period,grade);
+int get hashCode {
+    return Object.hash(runtimeType,degree,institution,period,grade);
+}
 
 @override
 String toString() {
-  return 'EducationItemModel(degree: $degree, institution: $institution, period: $period, grade: $grade)';
+    return 'EducationItemModel(degree: $degree, institution: $institution, period: $period, grade: $grade)';
 }
 
 
@@ -1615,16 +1658,21 @@ $ProfileModelCopyWith<ProfileModel> get copyWith => _$ProfileModelCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileModel&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.location, location) || other.location == location)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.summary, summary) || other.summary == summary)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.socials, socials)&&const DeepCollectionEquality().equals(other.stats, stats)&&const DeepCollectionEquality().equals(other.skillGroups, skillGroups)&&const DeepCollectionEquality().equals(other.experience, experience)&&const DeepCollectionEquality().equals(other.education, education));
+  final _this = this as ProfileModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileModel&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.location, _this.location) || other.location == _this.location)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.phone, _this.phone) || other.phone == _this.phone)&&(identical(other.summary, _this.summary) || other.summary == _this.summary)&&const DeepCollectionEquality().equals(other.languages, _this.languages)&&const DeepCollectionEquality().equals(other.socials, _this.socials)&&const DeepCollectionEquality().equals(other.stats, _this.stats)&&const DeepCollectionEquality().equals(other.skillGroups, _this.skillGroups)&&const DeepCollectionEquality().equals(other.experience, _this.experience)&&const DeepCollectionEquality().equals(other.education, _this.education));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,title,location,email,phone,summary,const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(socials),const DeepCollectionEquality().hash(stats),const DeepCollectionEquality().hash(skillGroups),const DeepCollectionEquality().hash(experience),const DeepCollectionEquality().hash(education));
+int get hashCode {
+  final _this = this as ProfileModel;
+  return Object.hash(runtimeType,_this.name,_this.title,_this.location,_this.email,_this.phone,_this.summary,const DeepCollectionEquality().hash(_this.languages),const DeepCollectionEquality().hash(_this.socials),const DeepCollectionEquality().hash(_this.stats),const DeepCollectionEquality().hash(_this.skillGroups),const DeepCollectionEquality().hash(_this.experience),const DeepCollectionEquality().hash(_this.education));
+}
 
 @override
 String toString() {
-  return 'ProfileModel(name: $name, title: $title, location: $location, email: $email, phone: $phone, summary: $summary, languages: $languages, socials: $socials, stats: $stats, skillGroups: $skillGroups, experience: $experience, education: $education)';
+  final _this = this as ProfileModel;
+  return 'ProfileModel(name: ${_this.name}, title: ${_this.title}, location: ${_this.location}, email: ${_this.email}, phone: ${_this.phone}, summary: ${_this.summary}, languages: ${_this.languages}, socials: ${_this.socials}, stats: ${_this.stats}, skillGroups: ${_this.skillGroups}, experience: ${_this.experience}, education: ${_this.education})';
 }
 
 
@@ -1653,7 +1701,7 @@ class _$ProfileModelCopyWithImpl<$Res>
 /// Create a copy of ProfileModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? title = null,Object? location = null,Object? email = null,Object? phone = null,Object? summary = null,Object? languages = null,Object? socials = null,Object? stats = null,Object? skillGroups = null,Object? experience = null,Object? education = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProfileModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
@@ -1801,7 +1849,7 @@ return $default(_that.name,_that.title,_that.location,_that.email,_that.phone,_t
 @JsonSerializable()
 
 class _ProfileModel extends ProfileModel {
-  const _ProfileModel({required this.name, required this.title, required this.location, required this.email, required this.phone, required this.summary, final  List<LanguageModel> languages = const <LanguageModel>[], final  List<SocialLinkModel> socials = const <SocialLinkModel>[], final  List<StatMetricModel> stats = const <StatMetricModel>[], final  List<SkillGroupModel> skillGroups = const <SkillGroupModel>[], final  List<ExperienceItemModel> experience = const <ExperienceItemModel>[], final  List<EducationItemModel> education = const <EducationItemModel>[]}): _languages = languages,_socials = socials,_stats = stats,_skillGroups = skillGroups,_experience = experience,_education = education,super._();
+  const _ProfileModel({required this.name, required this.title, required this.location, required this.email, required this.phone, required this.summary,  List<LanguageModel> languages = const <LanguageModel>[],  List<SocialLinkModel> socials = const <SocialLinkModel>[],  List<StatMetricModel> stats = const <StatMetricModel>[],  List<SkillGroupModel> skillGroups = const <SkillGroupModel>[],  List<ExperienceItemModel> experience = const <ExperienceItemModel>[],  List<EducationItemModel> education = const <EducationItemModel>[]}): _languages = languages,_socials = socials,_stats = stats,_skillGroups = skillGroups,_experience = experience,_education = education,super._();
   factory _ProfileModel.fromJson(Map<String, dynamic> json) => _$ProfileModelFromJson(json);
 
 @override final  String name;
@@ -1866,16 +1914,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileModel&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.location, location) || other.location == location)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.summary, summary) || other.summary == summary)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._socials, _socials)&&const DeepCollectionEquality().equals(other._stats, _stats)&&const DeepCollectionEquality().equals(other._skillGroups, _skillGroups)&&const DeepCollectionEquality().equals(other._experience, _experience)&&const DeepCollectionEquality().equals(other._education, _education));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileModel&&(identical(other.name, name) || other.name == name)&&(identical(other.title, title) || other.title == title)&&(identical(other.location, location) || other.location == location)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.summary, summary) || other.summary == summary)&&const DeepCollectionEquality().equals(other.languages, _languages)&&const DeepCollectionEquality().equals(other.socials, _socials)&&const DeepCollectionEquality().equals(other.stats, _stats)&&const DeepCollectionEquality().equals(other.skillGroups, _skillGroups)&&const DeepCollectionEquality().equals(other.experience, _experience)&&const DeepCollectionEquality().equals(other.education, _education));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,title,location,email,phone,summary,const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_socials),const DeepCollectionEquality().hash(_stats),const DeepCollectionEquality().hash(_skillGroups),const DeepCollectionEquality().hash(_experience),const DeepCollectionEquality().hash(_education));
+int get hashCode {
+    return Object.hash(runtimeType,name,title,location,email,phone,summary,const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_socials),const DeepCollectionEquality().hash(_stats),const DeepCollectionEquality().hash(_skillGroups),const DeepCollectionEquality().hash(_experience),const DeepCollectionEquality().hash(_education));
+}
 
 @override
 String toString() {
-  return 'ProfileModel(name: $name, title: $title, location: $location, email: $email, phone: $phone, summary: $summary, languages: $languages, socials: $socials, stats: $stats, skillGroups: $skillGroups, experience: $experience, education: $education)';
+    return 'ProfileModel(name: $name, title: $title, location: $location, email: $email, phone: $phone, summary: $summary, languages: $languages, socials: $socials, stats: $stats, skillGroups: $skillGroups, experience: $experience, education: $education)';
 }
 
 
